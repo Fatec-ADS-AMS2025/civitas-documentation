@@ -1,0 +1,371 @@
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,
+	openright,
+	oneside,
+	a4paper,
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,
+	%section=TITLE,
+	%subsection=TITLE,
+	%subsubsection=TITLE,
+	% -- opções do pacote babel --
+	english,
+	%french,
+	%spanish,
+	brazil
+	]{abntex2}
+
+% Permite incluir PDFs 1.7 sem warning do pdfTeX
+\pdfminorversion=7
+
+% ---------------------
+% Pacotes OBRIGATÓRIOS
+% ---------------------			
+\usepackage[T1]{fontenc}			% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}			% Indenta o primeiro parágrafo de cada seção.
+%\usepackage{color}				% Controle das cores
+\usepackage{graphicx}
+% Evita erro de keyval "artifact" ao incluir PDFs via pdfpages
+\makeatletter
+\define@key{Gin}{artifact}[]{}
+\makeatother
+%figuras
+\usepackage{csquotes}
+\usepackage{subcaption}
+
+%-----------------------
+% Configuração de Quadros
+%-----------------------
+\usepackage{caption}
+\usepackage{newfloat}
+% --- QUADROS (longtable saindo na "Lista de quadros")
+\usepackage{float,longtable,xpatch}
+\usepackage{tabularx,array,ragged2e}
+\newcolumntype{P}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.15}
+
+\makeatletter
+\@ifundefined{c@quadro}{%
+	\DeclareCaptionType[fileext=loq,placement=H]{quadro}[Quadro][Lista de quadros]%
+}{}
+\makeatother
+
+% --- Definições do tipo "quadro" (no preâmbulo, fora do \captionsbrazil) ---
+\DeclareCaptionLabelFormat{quadrolabel}{#1~#2}
+
+%\DeclareCaptionListFormat{listofquadros}{Quadro~#1\space -- \space#2}
+
+\DeclareCaptionListFormat{listofquadros}{#2}
+
+% define um separador com traço
+\DeclareCaptionLabelSeparator{traco}{\space--\space}
+
+\makeatletter
+\newcommand\patch@longtable@quadro{%
+	\@ifundefined{ltcaption@ORI@LT@array}{}{%
+		\xpatchcmd\ltcaption@ORI@LT@array
+		{\refstepcounter{table}}{\refstepcounter{quadro}}{}{}%
+	}%
+	\renewcommand\LTcaptype{quadro}%
+}
+\newenvironment{longquadro}[1]
+{\patch@longtable@quadro\longtable{#1}}
+{\endlongtable}
+\makeatother
+
+% "Fonte:" abaixo do quadro
+\providecommand{\fonte}[1]{%
+	\begin{flushleft}\footnotesize\textit{Fonte:} #1\end{flushleft}
+}
+
+% ------------------------------------------------------
+% Legendas: caption acima das figuras
+\captionsetup[figure]{position=top} 
+
+% Formato do \subref: gera (a), (b), ou a, b ...
+\captionsetup[subfigure]{labelformat=parens}   % (a) no rótulo das subfiguras
+\captionsetup{subrefformat=parens}             % \subref -> (a)
+
+%\captionsetup[subfigure]{labelformat=simple}   % a
+%\captionsetup{subrefformat=simple}             % \subref -> a
+
+
+\usepackage{lmodern} 
+\usepackage{microtype} 			% Melhorias de justificação
+\setlength{\emergencystretch}{3em}
+
+% legendas mais “flexíveis”
+\captionsetup{
+	format=hang,
+	justification=RaggedRight,
+	singlelinecheck=false
+}
+
+\captionsetup[quadro]{%
+	format=hang,
+	justification=raggedright, % ou RaggedRight se usar ragged2e
+	singlelinecheck=false,
+	labelformat=quadrolabel,
+	listformat=listofquadros,
+	labelsep=traco
+}
+
+% --- Nomes PT-BR (opcional) ---
+\addto\captionsbrazil{%
+	\renewcommand{\listquadroname}{Lista de quadros}%
+}
+
+% aplica às tabelas em geral (inclui longtable)
+\captionsetup[table]{%
+	format=hang,
+	justification=raggedright,
+	singlelinecheck=false,
+	labelsep=traco
+}
+
+% largura da legenda nos longtable (se usar)
+%\setlength{\LTcapwidth}{\linewidth}
+
+
+%margem para longtable e longquadro
+%\setlength\LTleft{0pt}
+%\setlength\LTright{0pt}
+
+% --- CONFIGURAÇÃO GLOBAL PARA SQL EM ABNT ---
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{sqlkeyword}{RGB}{0,0,150}
+\definecolor{sqlcomment}{RGB}{100,100,100}
+\definecolor{sqlstring}{RGB}{120,0,0}
+
+\lstdefinestyle{academic-sql}{
+	language=SQL,
+	basicstyle=\ttfamily\small,              % fonte monoespaçada
+	keywordstyle=\color{sqlkeyword}\bfseries,% palavras-chave em azul e negrito
+	commentstyle=\color{sqlcomment}\itshape, % comentários em cinza e itálico
+	stringstyle=\color{sqlstring},           % strings em vinho discreto
+	numbers=left,                            % numeração de linhas
+	numberstyle=\scriptsize\color{black!60}, % estilo da numeração
+	stepnumber=1,
+	numbersep=10pt,
+	frame=single,
+	framerule=0.8pt,
+	framesep=6pt,
+	tabsize=2,
+	breaklines=true,
+	breakatwhitespace=true,
+	showspaces=false,
+	showtabs=false,
+	showstringspaces=false,
+}
+
+
+% ---------------------
+% Pacotes ADICIONAIS
+% ---------------------
+\usepackage{lipsum}						% Geração de dummy text
+\usepackage{amsmath,amssymb,mathrsfs}	% Comandos matemáticos avançados 
+\usepackage{setspace}  					% Para permitir espaçamento simples, 1 1/2 e duplo
+\usepackage{verbatim}					% Para poder usar o ambiente "comment"
+\usepackage{afterpage} 					% Para executar um comando depois do fim da página corrente
+\usepackage{url} 						% Para formatar URLs (endereços da Web)
+\usepackage{pdfpages}
+\usepackage{booktabs}   % \toprule, \midrule, \bottomrule
+
+
+
+% ---------------------
+% Pacotes de CITAÇÕES
+% ---------------------
+%\usepackage[brazilian,hyperpageref]{backref}	% Paginas com as citações na bibl
+%\usepackage[alf]{abntex2cite}				% Citações padrão ABNT (alfa)
+%\usepackage[num]{abntex2cite}				% Citações padrão ABNT (numericas)
+\usepackage[
+	style=abnt,
+	backend=biber,
+	language=brazilian,
+	backref=true,
+	backrefstyle=three+,
+	giveninits=true
+]{biblatex}
+
+
+\addbibresource{bibliografia.bib}
+% ---------------------
+
+% O tamanho da identação do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+%-----------------------
+% Configuração da numeração de tabelas e figuras
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+\counterwithin{quadro}{chapter}
+%-----------------------
+
+% ---------------------
+% Compila o indice
+% ---------------------
+\makeindex
+% ---------------------
+
+
+% Configurações de CITAÇÕES para abntex2
+\input{extras/conf_citacoes}
+
+% Inclusão de dados para CAPA e FOLHA DE ROSTO (título, autor, orientador, etc.)
+\input{extras/dados}
+
+% Inclui Configurações de aparência do PDF Final
+\input{extras/conf_pdf}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  INICIO DO DOCUMENTO  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS (Capa, Resumo, Abstract, etc.)
+% ----------------------------------------------------------
+\hypersetup{pageanchor=false}
+\pretextual
+% Capa
+\include{pretextual/capa}
+
+\hypersetup{pageanchor=true}
+
+% Elementos textuais com numeração arábica
+%\pagenumbering{arabic}
+
+% Reinicia a contagem do número de páginas
+%\setcounter{page}{1}
+
+% Folha de rosto (o * indica que haverá a ficha bibliográfica)
+\imprimirfolhaderosto
+
+% Imprimir Ficha Catalográfica
+%\include{pretextual/catalografica}
+
+% Reinicia a contagem do número de páginas
+\setcounter{page}{2}
+
+% Inserir Folha de Aprovação
+%\include{pretextual/assinaturas}
+
+% Dedicatória
+%\include{pretextual/dedicatoria}
+
+% Agradecimentos
+%\include{pretextual/agradecimentos}
+
+% Epígrafe
+%\include{pretextual/epigrafe}
+
+% Resumo e Abstract
+\include{pretextual/resumos}
+
+% Lista de ilustrações
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+% Lista de tabelas
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+% Exibir Lista de quadros com bookmark no PDF e no sumário
+%\pdfbookmark[0]{Lista de quadros}{loq}
+%\begingroup
+%	\let\addcontentsline\relax
+%	\listof{quadro}{Lista de quadros}% ou \listofquadros*
+%\endgroup
+%\cleardoublepage
+\listof{quadro}{Lista de quadros}
+\cleardoublepage
+
+
+
+% Lista de abreviaturas e siglas
+%\begin{siglas}
+%  \item[ABNT] Associação Brasileira de Normas Técnicas
+ % \item[abnTeX] Absurdas Normas para TeX
+%\end{siglas}
+
+% Lista de símbolos
+%\begin{simbolos}
+%  \item[$ \Gamma $] Letra grega Gama
+%  \item[$ \Lambda $] Lambda
+%  \item[$ \zeta $] Letra grega minúscula zeta
+%  \item[$ \in $] Pertence
+%\end{simbolos}
+
+% Inserir o SUMÁRIO
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS (Capítulos)
+% ----------------------------------------------------------
+\textual
+
+
+
+% Inclui a documentação do projeto
+\include{01Projeto}
+
+% Inclui o controle de trabalho realizado pelo aluno
+\include{02Horas}
+
+
+% PARTE - Define a divisão do documento em partes (Não é obrigatório)
+%\part{Preparação da pesquisa}
+%\include{capitulos/referencias}
+%\include{capitulos/estadodaarte}
+%\include{capitulos/ferramentas}
+
+% PARTE
+%\part{Proposta}
+%\include{capitulos/proposta}
+
+% PARTE
+%\part{Parte Final}
+%\include{capitulos/resultados}
+\include{conclusao}
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS (Referências, Glossário, Apêndices)
+% ----------------------------------------------------------
+\postextual
+
+% Referências bibliográficas
+%\bibliographystyle{abntex2-alf.bst}
+%\bibliography{bibliografia}
+\printbibliography[heading=bibintoc,title={Referências}]
+
+
+% Glossário (Consulte o manual)
+% \glossary
+
+% Apêndices
+% \include{postextual/apendices}
+
+% Anexos
+%\include{postextual/apendice}
+
+% Índice remissivo (Consultar manual)
+% \phantompart
+% \printindex
+
+\end{document}
