@@ -19,6 +19,38 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{OneDoc2026}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=1358b1b847124b52f96617adad7d5272}{%
+           family={{1Doc}},
+           familyi={1\bibinitperiod}}}%
+      }
+      \strng{namehash}{1358b1b847124b52f96617adad7d5272}
+      \strng{fullhash}{1358b1b847124b52f96617adad7d5272}
+      \strng{bibnamehash}{1358b1b847124b52f96617adad7d5272}
+      \strng{authorbibnamehash}{1358b1b847124b52f96617adad7d5272}
+      \strng{authornamehash}{1358b1b847124b52f96617adad7d5272}
+      \strng{authorfullhash}{1358b1b847124b52f96617adad7d5272}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Página oficial da plataforma 1Doc}
+      \field{title}{Processos digitais, seguros e transparentes}
+      \field{urlday}{29}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://1doc.com.br/
+      \endverb
+      \verb{url}
+      \verb https://1doc.com.br/
+      \endverb
+    \endentry
     \entry{Anderson2021}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=e027c8df89339344ddc4de634d17acf1}{%
@@ -81,36 +113,36 @@
       \verb https://astah.net/products/astah-uml/
       \endverb
     \endentry
-    \entry{ongfacil2025}{online}{}
+    \entry{BethaContabilCloud2026}{online}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=1e29a84810b68018b6baa5b306cef57b}{%
-           family={Bliks},
+        {{un=0,uniquepart=base,hash=ca92c4526f1529cf5ac154d0e1042cbe}{%
+           family={{Betha Sistemas}},
            familyi={B\bibinitperiod}}}%
       }
-      \strng{namehash}{1e29a84810b68018b6baa5b306cef57b}
-      \strng{fullhash}{1e29a84810b68018b6baa5b306cef57b}
-      \strng{bibnamehash}{1e29a84810b68018b6baa5b306cef57b}
-      \strng{authorbibnamehash}{1e29a84810b68018b6baa5b306cef57b}
-      \strng{authornamehash}{1e29a84810b68018b6baa5b306cef57b}
-      \strng{authorfullhash}{1e29a84810b68018b6baa5b306cef57b}
+      \strng{namehash}{ca92c4526f1529cf5ac154d0e1042cbe}
+      \strng{fullhash}{ca92c4526f1529cf5ac154d0e1042cbe}
+      \strng{bibnamehash}{ca92c4526f1529cf5ac154d0e1042cbe}
+      \strng{authorbibnamehash}{ca92c4526f1529cf5ac154d0e1042cbe}
+      \strng{authornamehash}{ca92c4526f1529cf5ac154d0e1042cbe}
+      \strng{authorfullhash}{ca92c4526f1529cf5ac154d0e1042cbe}
       \field{sortinit}{B}
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Plataforma oficial do ONGFácil}
-      \field{title}{ONGFÁCIL — Sistema de Gestão para Organizações Não Governamentais}
-      \field{urlday}{6}
-      \field{urlmonth}{10}
-      \field{urlyear}{2025}
-      \field{year}{2025}
+      \field{note}{Central de ajuda Betha}
+      \field{title}{Contábil Cloud: visão geral}
+      \field{urlday}{29}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
       \field{urldateera}{ce}
       \verb{urlraw}
-      \verb https://www.ongfacil.org.br/
+      \verb https://contabil.ajuda.betha.cloud/contabil-cloud/ajuda/visao-geral/
       \endverb
       \verb{url}
-      \verb https://www.ongfacil.org.br/
+      \verb https://contabil.ajuda.betha.cloud/contabil-cloud/ajuda/visao-geral/
       \endverb
     \endentry
     \entry{Bradley2020}{book}{}
@@ -143,30 +175,6 @@
       \field{title}{JWT Handbook}
       \field{year}{2020}
     \endentry
-    \entry{brasil1988constituicao}{misc}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=aa43becf0d21463be7540bf3b40bf243}{%
-           family={Brasil},
-           familyi={B\bibinitperiod}}}%
-      }
-      \strng{namehash}{aa43becf0d21463be7540bf3b40bf243}
-      \strng{fullhash}{aa43becf0d21463be7540bf3b40bf243}
-      \strng{bibnamehash}{aa43becf0d21463be7540bf3b40bf243}
-      \strng{authorbibnamehash}{aa43becf0d21463be7540bf3b40bf243}
-      \strng{authornamehash}{aa43becf0d21463be7540bf3b40bf243}
-      \strng{authorfullhash}{aa43becf0d21463be7540bf3b40bf243}
-      \field{extraname}{1}
-      \field{sortinit}{B}
-      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm}}
-      \field{note}{Promulgada em 5 de outubro de 1988. Disponível em: \url{https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm}. Acesso em: 6 out. 2025.}
-      \field{title}{Constituição da República Federativa do Brasil de 1988}
-      \field{year}{1988}
-    \endentry
     \entry{Brasil2004}{misc}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=aa43becf0d21463be7540bf3b40bf243}{%
@@ -185,7 +193,7 @@
       \strng{authorbibnamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authornamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authorfullhash}{aa43becf0d21463be7540bf3b40bf243}
-      \field{extraname}{2}
+      \field{extraname}{1}
       \field{sortinit}{B}
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
@@ -223,7 +231,7 @@
       \strng{authorbibnamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authornamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authorfullhash}{aa43becf0d21463be7540bf3b40bf243}
-      \field{extraname}{3}
+      \field{extraname}{2}
       \field{sortinit}{B}
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
@@ -262,7 +270,7 @@
       \strng{authorbibnamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authornamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authorfullhash}{aa43becf0d21463be7540bf3b40bf243}
-      \field{extraname}{4}
+      \field{extraname}{3}
       \field{sortinit}{B}
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
@@ -294,7 +302,7 @@
       \strng{authorbibnamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authornamehash}{aa43becf0d21463be7540bf3b40bf243}
       \strng{authorfullhash}{aa43becf0d21463be7540bf3b40bf243}
-      \field{extraname}{5}
+      \field{extraname}{4}
       \field{sortinit}{B}
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
@@ -305,6 +313,38 @@
       \field{note}{Disponível em: \url{https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm}. Acesso em: 6 out. 2025.}
       \field{title}{Lei nº 13.709, de 14 de agosto de 2018: Lei Geral de Proteção de Dados Pessoais (LGPD)}
       \field{year}{2018}
+    \endentry
+    \entry{eCidadeSoftwarePublico2026}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=abb731c6281e92d9b59bdeb032ac6b0b}{%
+           family={{Brasil. Ministério do Planejamento, Desenvolvimento e Gestão}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{abb731c6281e92d9b59bdeb032ac6b0b}
+      \strng{fullhash}{abb731c6281e92d9b59bdeb032ac6b0b}
+      \strng{bibnamehash}{abb731c6281e92d9b59bdeb032ac6b0b}
+      \strng{authorbibnamehash}{abb731c6281e92d9b59bdeb032ac6b0b}
+      \strng{authornamehash}{abb731c6281e92d9b59bdeb032ac6b0b}
+      \strng{authorfullhash}{abb731c6281e92d9b59bdeb032ac6b0b}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Portal do Software Público Brasileiro}
+      \field{title}{e-Cidade: sobre o software}
+      \field{urlday}{29}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://softwarepublico.gov.br/social/e-cidade
+      \endverb
+      \verb{url}
+      \verb https://softwarepublico.gov.br/social/e-cidade
+      \endverb
     \endentry
     \entry{DartSite2024}{online}{}
       \name{author}{1}{}{%
@@ -586,6 +626,38 @@
       \endverb
       \verb{url}
       \verb https://github.com
+      \endverb
+    \endentry
+    \entry{GovbrCidade3602026}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=40d86c58aef6bdd0c51cd3c509771cd4}{%
+           family={{GovernançaBrasil}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{40d86c58aef6bdd0c51cd3c509771cd4}
+      \strng{fullhash}{40d86c58aef6bdd0c51cd3c509771cd4}
+      \strng{bibnamehash}{40d86c58aef6bdd0c51cd3c509771cd4}
+      \strng{authorbibnamehash}{40d86c58aef6bdd0c51cd3c509771cd4}
+      \strng{authornamehash}{40d86c58aef6bdd0c51cd3c509771cd4}
+      \strng{authorfullhash}{40d86c58aef6bdd0c51cd3c509771cd4}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Página oficial da plataforma GOVBR}
+      \field{title}{Cidade 360}
+      \field{urlday}{29}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://govbr.com.br/cidade-360/
+      \endverb
+      \verb{url}
+      \verb https://govbr.com.br/cidade-360/
       \endverb
     \endentry
     \entry{Guedes2018}{book}{}
@@ -1389,43 +1461,6 @@
       \verb https://softdesign.com.br/blog/prototipo-baixa-e-alta-fidelidade/#Qual-a-diferenca-entreum-wireframe-e-prototipo
       \endverb
     \endentry
-    \entry{ministeriosaude2022}{report}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=239a0c701b37aa294684b7ee05b1b57c}{%
-           family={Saúde\bibnamedelima (Brasil)},
-           familyi={S\bibinitperiod\bibinitdelim (\bibinitperiod},
-           given={Ministério},
-           giveni={M\bibinitperiod},
-           givenun=0,
-           prefix={da},
-           prefixi={d\bibinitperiod},
-           prefixun=0}}%
-      }
-      \list{institution}{1}{%
-        {Secretaria de Atenção Primária à Saúde}%
-      }
-      \list{location}{1}{%
-        {Brasília}%
-      }
-      \strng{namehash}{239a0c701b37aa294684b7ee05b1b57c}
-      \strng{fullhash}{239a0c701b37aa294684b7ee05b1b57c}
-      \strng{bibnamehash}{239a0c701b37aa294684b7ee05b1b57c}
-      \strng{authorbibnamehash}{239a0c701b37aa294684b7ee05b1b57c}
-      \strng{authornamehash}{239a0c701b37aa294684b7ee05b1b57c}
-      \strng{authorfullhash}{239a0c701b37aa294684b7ee05b1b57c}
-      \field{extraname}{1}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://aps.saude.gov.br/ape/esus}}
-      \field{note}{Disponível em: \url{https://aps.saude.gov.br/ape/esus}. Acesso em: 6 out. 2025.}
-      \field{title}{Manual Técnico do Sistema e-SUS APS: especificações e requisitos para prontuário eletrônico do cidadão}
-      \field{type}{techreport}
-      \field{year}{2022}
-    \endentry
     \entry{ministeriosaude2023esus}{report}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=239a0c701b37aa294684b7ee05b1b57c}{%
@@ -1450,7 +1485,6 @@
       \strng{authorbibnamehash}{239a0c701b37aa294684b7ee05b1b57c}
       \strng{authornamehash}{239a0c701b37aa294684b7ee05b1b57c}
       \strng{authorfullhash}{239a0c701b37aa294684b7ee05b1b57c}
-      \field{extraname}{2}
       \field{sortinit}{S}
       \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
       \field{extradatescope}{labelyear}
@@ -1567,73 +1601,6 @@
       \field{langid}{portuguese}
       \field{title}{Sistema de Banco de Dados}
       \field{year}{2012}
-    \endentry
-    \entry{silpi2025}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=beba893ef4bad87c35a1441835a01d35}{%
-           family={SILPI},
-           familyi={S\bibinitperiod}}}%
-      }
-      \strng{namehash}{beba893ef4bad87c35a1441835a01d35}
-      \strng{fullhash}{beba893ef4bad87c35a1441835a01d35}
-      \strng{bibnamehash}{beba893ef4bad87c35a1441835a01d35}
-      \strng{authorbibnamehash}{beba893ef4bad87c35a1441835a01d35}
-      \strng{authornamehash}{beba893ef4bad87c35a1441835a01d35}
-      \strng{authorfullhash}{beba893ef4bad87c35a1441835a01d35}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{note}{Página oficial do sistema SILPI}
-      \field{title}{SILPI — Sistemas Humanizados: sistema para gestão de ILPIs, casas geriátricas e asilos}
-      \field{urlday}{6}
-      \field{urlmonth}{10}
-      \field{urlyear}{2025}
-      \field{year}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://www.silpi.com.br/
-      \endverb
-      \verb{url}
-      \verb https://www.silpi.com.br/
-      \endverb
-    \endentry
-    \entry{gestao360}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=c66596d0dcc4e10bafc0d6b6d9fbf977}{%
-           family={Sistemas},
-           familyi={S\bibinitperiod},
-           given={Seta},
-           giveni={S\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{c66596d0dcc4e10bafc0d6b6d9fbf977}
-      \strng{fullhash}{c66596d0dcc4e10bafc0d6b6d9fbf977}
-      \strng{bibnamehash}{c66596d0dcc4e10bafc0d6b6d9fbf977}
-      \strng{authorbibnamehash}{c66596d0dcc4e10bafc0d6b6d9fbf977}
-      \strng{authornamehash}{c66596d0dcc4e10bafc0d6b6d9fbf977}
-      \strng{authorfullhash}{c66596d0dcc4e10bafc0d6b6d9fbf977}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{note}{Plataforma Gestão Social 360}
-      \field{title}{Gestão 360® — Software para Gestão Social}
-      \field{urlday}{6}
-      \field{urlmonth}{10}
-      \field{urlyear}{2025}
-      \field{year}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://www.gestaosocial.plataformagestao360.com.br/
-      \endverb
-      \verb{url}
-      \verb https://www.gestaosocial.plataformagestao360.com.br/
-      \endverb
     \endentry
     \entry{Skeet2019}{book}{}
       \name{author}{1}{}{%
