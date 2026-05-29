@@ -1,39 +1,42 @@
 \babel@toc {brazil}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Interface do sistema SILPI – Sistemas Humanizados.}}{15}{figure.caption.10}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagrama de Classe}}{23}{figure.caption.12}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagrama de Atores}}{47}{figure.caption.63}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagrama de Caso de Uso Geral - Administrador}}{54}{figure.caption.64}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagrama de Caso de Uso Geral - Enfermeiro}}{55}{figure.caption.65}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagrama de Caso de Uso Geral - Profissional}}{56}{figure.caption.66}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de Caso: Prontuário SOAP}}{58}{figure.caption.67}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Diagrama de sequência para listagem de parente de residente.}}{64}{figure.caption.73}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagrama de sequência para cadastro de parente de residente.}}{65}{figure.caption.74}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagrama de sequência para edição de parente de residente.}}{66}{figure.caption.75}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama de sequência para remoção de parente de residente.}}{67}{figure.caption.76}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de atividade para o processo de autenticação do usuário.}}{68}{figure.caption.77}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagrama de Classe}}{24}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagrama de Atores}}{48}{figure.caption.63}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagrama de Caso de Uso Geral - Administrador}}{55}{figure.caption.64}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagrama de Caso de Uso Geral - Enfermeiro}}{56}{figure.caption.65}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagrama de Caso de Uso Geral - Profissional}}{57}{figure.caption.66}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de Caso: Prontuário SOAP}}{59}{figure.caption.67}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Diagrama de sequência para listagem de parente de residente.}}{65}{figure.caption.73}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagrama de sequência para cadastro de parente de residente.}}{66}{figure.caption.74}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagrama de sequência para edição de parente de residente.}}{67}{figure.caption.75}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama de sequência para remoção de parente de residente.}}{68}{figure.caption.76}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de atividade para o processo de autenticação do usuário.}}{69}{figure.caption.77}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Persona 1 — Enfermeira-chefe (Carla Regina de Souza)}}{72}{figure.caption.80}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Persona 2 — Recepcionista (Fernando Costa)}}{73}{figure.caption.81}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Wireframes — (a) Tela Inicial para Módulo de Cuidado (Home Care) e (b) Tela Inicial para Módulo de Estoque (Home Stock)}}{74}{figure.caption.82}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Wireframes — (a) Tela de Login para o Módulo de Cuidado (Care) e (b) Tela de Login para o Módulo de Estoque (Stock)}}{75}{figure.caption.83}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Wireframes — (a) Tela de Cadastro de Instituição e (b) Tela de Gestão de Religião}}{76}{figure.caption.84}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces SeniorCareManager — Tela de Abertura}}{77}{figure.caption.85}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces SeniorStockManager — Tela de Abertura}}{78}{figure.caption.86}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces SeniorCareManager — Tela de Login}}{79}{figure.caption.87}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces SeniorStockManager — Tela de Login}}{79}{figure.caption.88}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces SeniorCareManager — Gestão de Religiões (listagem, busca e manutenção)}}{80}{figure.caption.89}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces SeniorStockManager — Tela de Manutenção de Produtos}}{81}{figure.caption.90}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Alto Contraste — (a) Tela de login com alto contraste ativado e (b) Tela de login sem alto contraste}}{84}{figure.caption.92}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Alto Contraste — Dispositivos Móveis — (a) Tela de login com alto contraste ativado e (b) Tela de login sem alto contraste}}{85}{figure.caption.93}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Fonte Redimensionada - (a) Tela principal (b) Menu Lateral com fonte redimensinada.}}{86}{figure.caption.94}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Persona 1 — Enfermeira-chefe (Carla Regina de Souza)}}{73}{figure.caption.80}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Persona 2 — Recepcionista (Fernando Costa)}}{74}{figure.caption.81}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Wireframes — (a) Tela Inicial para Módulo de Cuidado (Home Care) e (b) Tela Inicial para Módulo de Estoque (Home Stock)}}{75}{figure.caption.82}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Wireframes — (a) Tela de Login para o Módulo de Cuidado (Care) e (b) Tela de Login para o Módulo de Estoque (Stock)}}{76}{figure.caption.83}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Wireframes — (a) Tela de Cadastro de Instituição e (b) Tela de Gestão de Religião}}{77}{figure.caption.84}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces SeniorCareManager — Tela de Abertura}}{78}{figure.caption.85}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces SeniorStockManager — Tela de Abertura}}{79}{figure.caption.86}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces SeniorCareManager — Tela de Login}}{80}{figure.caption.87}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces SeniorStockManager — Tela de Login}}{80}{figure.caption.88}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces SeniorCareManager — Gestão de Religiões (listagem, busca e manutenção)}}{81}{figure.caption.89}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces SeniorStockManager — Tela de Manutenção de Produtos}}{82}{figure.caption.90}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Alto Contraste — (a) Tela de login com alto contraste ativado e (b) Tela de login sem alto contraste}}{85}{figure.caption.92}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Alto Contraste — Dispositivos Móveis — (a) Tela de login com alto contraste ativado e (b) Tela de login sem alto contraste}}{86}{figure.caption.93}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Fonte Redimensionada - (a) Tela principal (b) Menu Lateral com fonte redimensinada.}}{87}{figure.caption.94}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Mapeamento Objeto-Relacional}}{89}{figure.caption.95}%
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Mapeamento Objeto-Relacional}}{90}{figure.caption.95}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
 \babel@toc {brazil}{}\relax 
 \babel@toc {brazil}{}\relax 
 \babel@toc {brazil}{}\relax 

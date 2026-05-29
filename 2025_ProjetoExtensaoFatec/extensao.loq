@@ -1,92 +1,93 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {2.1}{\ignorespaces Requisitos Não Funcionais}}{19}{quadro.caption.11}%
+\contentsline {quadro}{\numberline {2.1}{\ignorespaces Comparação entre sistemas existentes e o Civitas}}{17}{quadro.caption.10}%
+\contentsline {quadro}{\numberline {2.2}{\ignorespaces Requisitos Não Funcionais}}{20}{quadro.caption.11}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {3.1}{\ignorespaces Entidade Product}}{24}{quadro.caption.13}%
-\contentsline {quadro}{\numberline {3.2}{\ignorespaces Entidade ProductBatch}}{25}{quadro.caption.14}%
-\contentsline {quadro}{\numberline {3.3}{\ignorespaces Entidade ProductType}}{25}{quadro.caption.15}%
-\contentsline {quadro}{\numberline {3.4}{\ignorespaces Entidade UnitOfMeasure}}{25}{quadro.caption.16}%
-\contentsline {quadro}{\numberline {3.5}{\ignorespaces Entidade Manufacturer}}{26}{quadro.caption.17}%
-\contentsline {quadro}{\numberline {3.6}{\ignorespaces Entidade StockMovement}}{26}{quadro.caption.18}%
-\contentsline {quadro}{\numberline {3.7}{\ignorespaces Entidade Supplier}}{27}{quadro.caption.19}%
-\contentsline {quadro}{\numberline {3.8}{\ignorespaces Enum StockMovementType}}{27}{quadro.caption.20}%
-\contentsline {quadro}{\numberline {3.9}{\ignorespaces Enum StockRequestType}}{28}{quadro.caption.21}%
-\contentsline {quadro}{\numberline {3.10}{\ignorespaces Entidade PurchaseRequest}}{28}{quadro.caption.22}%
-\contentsline {quadro}{\numberline {3.11}{\ignorespaces Entidade PurchaseRequestItem}}{29}{quadro.caption.23}%
-\contentsline {quadro}{\numberline {3.12}{\ignorespaces Entidade Employee}}{30}{quadro.caption.24}%
-\contentsline {quadro}{\numberline {3.13}{\ignorespaces Entidade Position}}{30}{quadro.caption.25}%
-\contentsline {quadro}{\numberline {3.14}{\ignorespaces Enum PurchaseStatus}}{31}{quadro.caption.26}%
-\contentsline {quadro}{\numberline {3.15}{\ignorespaces Enum YesNo}}{31}{quadro.caption.27}%
-\contentsline {quadro}{\numberline {3.16}{\ignorespaces Entidade StockRequest}}{31}{quadro.caption.28}%
-\contentsline {quadro}{\numberline {3.17}{\ignorespaces Entidade StockRequestItem}}{32}{quadro.caption.29}%
-\contentsline {quadro}{\numberline {3.18}{\ignorespaces Entidade Invoice}}{32}{quadro.caption.30}%
-\contentsline {quadro}{\numberline {3.19}{\ignorespaces Entidade InvoiceItem}}{33}{quadro.caption.31}%
-\contentsline {quadro}{\numberline {3.20}{\ignorespaces Entidade ProductGroup}}{33}{quadro.caption.32}%
-\contentsline {quadro}{\numberline {3.21}{\ignorespaces Interface IStockDocument}}{34}{quadro.caption.33}%
-\contentsline {quadro}{\numberline {3.22}{\ignorespaces Entidade Carrier}}{34}{quadro.caption.34}%
-\contentsline {quadro}{\numberline {3.23}{\ignorespaces Entidade User}}{35}{quadro.caption.35}%
-\contentsline {quadro}{\numberline {3.24}{\ignorespaces Enum UserType}}{35}{quadro.caption.36}%
-\contentsline {quadro}{\numberline {3.25}{\ignorespaces Enum UserStatus}}{35}{quadro.caption.37}%
-\contentsline {quadro}{\numberline {3.26}{\ignorespaces Entidade Religion}}{36}{quadro.caption.38}%
-\contentsline {quadro}{\numberline {3.27}{\ignorespaces Enum MaritalStatus}}{36}{quadro.caption.39}%
-\contentsline {quadro}{\numberline {3.28}{\ignorespaces Enum EducationLevel}}{36}{quadro.caption.40}%
-\contentsline {quadro}{\numberline {3.29}{\ignorespaces Enum Ethnicity}}{37}{quadro.caption.41}%
-\contentsline {quadro}{\numberline {3.30}{\ignorespaces Enum Sex}}{37}{quadro.caption.42}%
-\contentsline {quadro}{\numberline {3.31}{\ignorespaces Entidade Resident}}{38}{quadro.caption.43}%
-\contentsline {quadro}{\numberline {3.32}{\ignorespaces Entidade HealthInsurancePlan}}{38}{quadro.caption.44}%
-\contentsline {quadro}{\numberline {3.33}{\ignorespaces Enum HealthPlanType}}{39}{quadro.caption.45}%
-\contentsline {quadro}{\numberline {3.34}{\ignorespaces Entidade ResidentAllergy}}{39}{quadro.caption.46}%
-\contentsline {quadro}{\numberline {3.35}{\ignorespaces Entidade Allergy}}{39}{quadro.caption.47}%
-\contentsline {quadro}{\numberline {3.36}{\ignorespaces Entidade ResidentRelative}}{40}{quadro.caption.48}%
-\contentsline {quadro}{\numberline {3.37}{\ignorespaces Enum Relationship}}{40}{quadro.caption.49}%
-\contentsline {quadro}{\numberline {3.38}{\ignorespaces Enum AllergyType}}{41}{quadro.caption.50}%
-\contentsline {quadro}{\numberline {3.39}{\ignorespaces Entidade NursingCarePlan}}{41}{quadro.caption.51}%
-\contentsline {quadro}{\numberline {3.40}{\ignorespaces Entidade NursingService}}{41}{quadro.caption.52}%
-\contentsline {quadro}{\numberline {3.41}{\ignorespaces Entidade Prescription}}{42}{quadro.caption.53}%
-\contentsline {quadro}{\numberline {3.42}{\ignorespaces Entidade Schedule}}{42}{quadro.caption.54}%
-\contentsline {quadro}{\numberline {3.43}{\ignorespaces Entidade CID10}}{42}{quadro.caption.55}%
-\contentsline {quadro}{\numberline {3.44}{\ignorespaces Entidade Company}}{43}{quadro.caption.56}%
-\contentsline {quadro}{\numberline {3.45}{\ignorespaces Entidade TechnicalResponsibility}}{43}{quadro.caption.57}%
-\contentsline {quadro}{\numberline {3.46}{\ignorespaces Entidade SystemParameters}}{44}{quadro.caption.58}%
-\contentsline {quadro}{\numberline {3.47}{\ignorespaces Entidade SystemModule}}{44}{quadro.caption.59}%
-\contentsline {quadro}{\numberline {3.48}{\ignorespaces Entidade SystemModuloScreen}}{45}{quadro.caption.60}%
-\contentsline {quadro}{\numberline {3.49}{\ignorespaces Entidade UserTypeDefaultAccess}}{45}{quadro.caption.61}%
-\contentsline {quadro}{\numberline {3.50}{\ignorespaces Enum StatusEmployee}}{45}{quadro.caption.62}%
-\contentsline {quadro}{\numberline {3.51}{\ignorespaces Casos de Uso — Administrador}}{48}{quadro.3.51}%
-\contentsline {quadro}{\numberline {3.52}{\ignorespaces Casos de Uso — Funcionário}}{50}{quadro.3.52}%
-\contentsline {quadro}{\numberline {3.53}{\ignorespaces Casos de Uso — Enfermeiro}}{51}{quadro.3.53}%
-\contentsline {quadro}{\numberline {3.54}{\ignorespaces UC: Acessar SOAP}}{59}{quadro.caption.68}%
-\contentsline {quadro}{\numberline {3.55}{\ignorespaces UC: Registrar Anamnese}}{59}{quadro.caption.69}%
-\contentsline {quadro}{\numberline {3.56}{\ignorespaces UC: Registrar Avaliação}}{60}{quadro.caption.70}%
-\contentsline {quadro}{\numberline {3.57}{\ignorespaces UC: Registrar Exames}}{61}{quadro.caption.71}%
-\contentsline {quadro}{\numberline {3.58}{\ignorespaces UC: Registrar Plano de Cuidado}}{62}{quadro.caption.72}%
+\contentsline {quadro}{\numberline {3.1}{\ignorespaces Entidade Product}}{25}{quadro.caption.13}%
+\contentsline {quadro}{\numberline {3.2}{\ignorespaces Entidade ProductBatch}}{26}{quadro.caption.14}%
+\contentsline {quadro}{\numberline {3.3}{\ignorespaces Entidade ProductType}}{26}{quadro.caption.15}%
+\contentsline {quadro}{\numberline {3.4}{\ignorespaces Entidade UnitOfMeasure}}{26}{quadro.caption.16}%
+\contentsline {quadro}{\numberline {3.5}{\ignorespaces Entidade Manufacturer}}{27}{quadro.caption.17}%
+\contentsline {quadro}{\numberline {3.6}{\ignorespaces Entidade StockMovement}}{27}{quadro.caption.18}%
+\contentsline {quadro}{\numberline {3.7}{\ignorespaces Entidade Supplier}}{28}{quadro.caption.19}%
+\contentsline {quadro}{\numberline {3.8}{\ignorespaces Enum StockMovementType}}{28}{quadro.caption.20}%
+\contentsline {quadro}{\numberline {3.9}{\ignorespaces Enum StockRequestType}}{29}{quadro.caption.21}%
+\contentsline {quadro}{\numberline {3.10}{\ignorespaces Entidade PurchaseRequest}}{29}{quadro.caption.22}%
+\contentsline {quadro}{\numberline {3.11}{\ignorespaces Entidade PurchaseRequestItem}}{30}{quadro.caption.23}%
+\contentsline {quadro}{\numberline {3.12}{\ignorespaces Entidade Employee}}{31}{quadro.caption.24}%
+\contentsline {quadro}{\numberline {3.13}{\ignorespaces Entidade Position}}{31}{quadro.caption.25}%
+\contentsline {quadro}{\numberline {3.14}{\ignorespaces Enum PurchaseStatus}}{32}{quadro.caption.26}%
+\contentsline {quadro}{\numberline {3.15}{\ignorespaces Enum YesNo}}{32}{quadro.caption.27}%
+\contentsline {quadro}{\numberline {3.16}{\ignorespaces Entidade StockRequest}}{32}{quadro.caption.28}%
+\contentsline {quadro}{\numberline {3.17}{\ignorespaces Entidade StockRequestItem}}{33}{quadro.caption.29}%
+\contentsline {quadro}{\numberline {3.18}{\ignorespaces Entidade Invoice}}{33}{quadro.caption.30}%
+\contentsline {quadro}{\numberline {3.19}{\ignorespaces Entidade InvoiceItem}}{34}{quadro.caption.31}%
+\contentsline {quadro}{\numberline {3.20}{\ignorespaces Entidade ProductGroup}}{34}{quadro.caption.32}%
+\contentsline {quadro}{\numberline {3.21}{\ignorespaces Interface IStockDocument}}{35}{quadro.caption.33}%
+\contentsline {quadro}{\numberline {3.22}{\ignorespaces Entidade Carrier}}{35}{quadro.caption.34}%
+\contentsline {quadro}{\numberline {3.23}{\ignorespaces Entidade User}}{36}{quadro.caption.35}%
+\contentsline {quadro}{\numberline {3.24}{\ignorespaces Enum UserType}}{36}{quadro.caption.36}%
+\contentsline {quadro}{\numberline {3.25}{\ignorespaces Enum UserStatus}}{36}{quadro.caption.37}%
+\contentsline {quadro}{\numberline {3.26}{\ignorespaces Entidade Religion}}{37}{quadro.caption.38}%
+\contentsline {quadro}{\numberline {3.27}{\ignorespaces Enum MaritalStatus}}{37}{quadro.caption.39}%
+\contentsline {quadro}{\numberline {3.28}{\ignorespaces Enum EducationLevel}}{37}{quadro.caption.40}%
+\contentsline {quadro}{\numberline {3.29}{\ignorespaces Enum Ethnicity}}{38}{quadro.caption.41}%
+\contentsline {quadro}{\numberline {3.30}{\ignorespaces Enum Sex}}{38}{quadro.caption.42}%
+\contentsline {quadro}{\numberline {3.31}{\ignorespaces Entidade Resident}}{39}{quadro.caption.43}%
+\contentsline {quadro}{\numberline {3.32}{\ignorespaces Entidade HealthInsurancePlan}}{39}{quadro.caption.44}%
+\contentsline {quadro}{\numberline {3.33}{\ignorespaces Enum HealthPlanType}}{40}{quadro.caption.45}%
+\contentsline {quadro}{\numberline {3.34}{\ignorespaces Entidade ResidentAllergy}}{40}{quadro.caption.46}%
+\contentsline {quadro}{\numberline {3.35}{\ignorespaces Entidade Allergy}}{40}{quadro.caption.47}%
+\contentsline {quadro}{\numberline {3.36}{\ignorespaces Entidade ResidentRelative}}{41}{quadro.caption.48}%
+\contentsline {quadro}{\numberline {3.37}{\ignorespaces Enum Relationship}}{41}{quadro.caption.49}%
+\contentsline {quadro}{\numberline {3.38}{\ignorespaces Enum AllergyType}}{42}{quadro.caption.50}%
+\contentsline {quadro}{\numberline {3.39}{\ignorespaces Entidade NursingCarePlan}}{42}{quadro.caption.51}%
+\contentsline {quadro}{\numberline {3.40}{\ignorespaces Entidade NursingService}}{42}{quadro.caption.52}%
+\contentsline {quadro}{\numberline {3.41}{\ignorespaces Entidade Prescription}}{43}{quadro.caption.53}%
+\contentsline {quadro}{\numberline {3.42}{\ignorespaces Entidade Schedule}}{43}{quadro.caption.54}%
+\contentsline {quadro}{\numberline {3.43}{\ignorespaces Entidade CID10}}{43}{quadro.caption.55}%
+\contentsline {quadro}{\numberline {3.44}{\ignorespaces Entidade Company}}{44}{quadro.caption.56}%
+\contentsline {quadro}{\numberline {3.45}{\ignorespaces Entidade TechnicalResponsibility}}{44}{quadro.caption.57}%
+\contentsline {quadro}{\numberline {3.46}{\ignorespaces Entidade SystemParameters}}{45}{quadro.caption.58}%
+\contentsline {quadro}{\numberline {3.47}{\ignorespaces Entidade SystemModule}}{45}{quadro.caption.59}%
+\contentsline {quadro}{\numberline {3.48}{\ignorespaces Entidade SystemModuloScreen}}{46}{quadro.caption.60}%
+\contentsline {quadro}{\numberline {3.49}{\ignorespaces Entidade UserTypeDefaultAccess}}{46}{quadro.caption.61}%
+\contentsline {quadro}{\numberline {3.50}{\ignorespaces Enum StatusEmployee}}{46}{quadro.caption.62}%
+\contentsline {quadro}{\numberline {3.51}{\ignorespaces Casos de Uso — Administrador}}{49}{quadro.3.51}%
+\contentsline {quadro}{\numberline {3.52}{\ignorespaces Casos de Uso — Funcionário}}{51}{quadro.3.52}%
+\contentsline {quadro}{\numberline {3.53}{\ignorespaces Casos de Uso — Enfermeiro}}{52}{quadro.3.53}%
+\contentsline {quadro}{\numberline {3.54}{\ignorespaces UC: Acessar SOAP}}{60}{quadro.caption.68}%
+\contentsline {quadro}{\numberline {3.55}{\ignorespaces UC: Registrar Anamnese}}{60}{quadro.caption.69}%
+\contentsline {quadro}{\numberline {3.56}{\ignorespaces UC: Registrar Avaliação}}{61}{quadro.caption.70}%
+\contentsline {quadro}{\numberline {3.57}{\ignorespaces UC: Registrar Exames}}{62}{quadro.caption.71}%
+\contentsline {quadro}{\numberline {3.58}{\ignorespaces UC: Registrar Plano de Cuidado}}{63}{quadro.caption.72}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {4.1}{\ignorespaces Cenário — Registro de Religião}}{71}{quadro.caption.78}%
-\contentsline {quadro}{\numberline {4.2}{\ignorespaces Cenário — Registro e Consulta de Alergias}}{71}{quadro.caption.79}%
+\contentsline {quadro}{\numberline {4.1}{\ignorespaces Cenário — Registro de Religião}}{72}{quadro.caption.78}%
+\contentsline {quadro}{\numberline {4.2}{\ignorespaces Cenário — Registro e Consulta de Alergias}}{72}{quadro.caption.79}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {5.1}{\ignorespaces Script SQL --- Tabela \texttt {address}}}{90}{quadro.caption.96}%
-\contentsline {quadro}{\numberline {5.2}{\ignorespaces Script SQL --- Tabela \texttt {allergy}}}{90}{quadro.caption.97}%
-\contentsline {quadro}{\numberline {5.3}{\ignorespaces Script SQL --- Tabela \texttt {carrier}}}{90}{quadro.caption.98}%
-\contentsline {quadro}{\numberline {5.4}{\ignorespaces Script SQL --- Tabela \texttt {city}}}{91}{quadro.caption.99}%
-\contentsline {quadro}{\numberline {5.5}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance}}}{91}{quadro.caption.100}%
-\contentsline {quadro}{\numberline {5.6}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance\_plan}}}{91}{quadro.caption.101}%
-\contentsline {quadro}{\numberline {5.7}{\ignorespaces Script SQL --- Tabela \texttt {login}}}{92}{quadro.caption.102}%
-\contentsline {quadro}{\numberline {5.8}{\ignorespaces Script SQL --- Tabela \texttt {manufacturer}}}{92}{quadro.caption.103}%
-\contentsline {quadro}{\numberline {5.9}{\ignorespaces Script SQL --- Tabela \texttt {product}}}{92}{quadro.caption.104}%
-\contentsline {quadro}{\numberline {5.10}{\ignorespaces Script SQL --- Tabela \texttt {product\_category}}}{93}{quadro.caption.105}%
-\contentsline {quadro}{\numberline {5.11}{\ignorespaces Script SQL --- Tabela \texttt {product\_group}}}{93}{quadro.caption.106}%
-\contentsline {quadro}{\numberline {5.12}{\ignorespaces Script SQL --- Tabela \texttt {product\_type}}}{93}{quadro.caption.107}%
-\contentsline {quadro}{\numberline {5.13}{\ignorespaces Script SQL --- Tabela \texttt {profile}}}{93}{quadro.caption.108}%
-\contentsline {quadro}{\numberline {5.14}{\ignorespaces Script SQL --- Tabela \texttt {profile\_claim}}}{94}{quadro.caption.109}%
-\contentsline {quadro}{\numberline {5.15}{\ignorespaces Script SQL --- Tabela \texttt {profile\_resource}}}{94}{quadro.caption.110}%
-\contentsline {quadro}{\numberline {5.16}{\ignorespaces Script SQL --- Tabela \texttt {resident}}}{94}{quadro.caption.111}%
-\contentsline {quadro}{\numberline {5.17}{\ignorespaces Script SQL --- Tabela \texttt {resident\_allergy}}}{95}{quadro.caption.112}%
-\contentsline {quadro}{\numberline {5.18}{\ignorespaces Script SQL --- Tabela \texttt {resident\_health\_insurance}}}{95}{quadro.caption.113}%
-\contentsline {quadro}{\numberline {5.19}{\ignorespaces Script SQL --- Tabela \texttt {resident\_relative}}}{95}{quadro.caption.114}%
-\contentsline {quadro}{\numberline {5.20}{\ignorespaces Script SQL --- Tabela \texttt {resource}}}{96}{quadro.caption.115}%
-\contentsline {quadro}{\numberline {5.21}{\ignorespaces Script SQL --- Tabela \texttt {state}}}{96}{quadro.caption.116}%
-\contentsline {quadro}{\numberline {5.22}{\ignorespaces Script SQL --- Tabela \texttt {unitofmeasure}}}{96}{quadro.caption.117}%
-\contentsline {quadro}{\numberline {5.23}{\ignorespaces Script SQL --- Tabela \texttt {user}}}{96}{quadro.caption.118}%
+\contentsline {quadro}{\numberline {5.1}{\ignorespaces Script SQL --- Tabela \texttt {address}}}{91}{quadro.caption.96}%
+\contentsline {quadro}{\numberline {5.2}{\ignorespaces Script SQL --- Tabela \texttt {allergy}}}{91}{quadro.caption.97}%
+\contentsline {quadro}{\numberline {5.3}{\ignorespaces Script SQL --- Tabela \texttt {carrier}}}{91}{quadro.caption.98}%
+\contentsline {quadro}{\numberline {5.4}{\ignorespaces Script SQL --- Tabela \texttt {city}}}{92}{quadro.caption.99}%
+\contentsline {quadro}{\numberline {5.5}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance}}}{92}{quadro.caption.100}%
+\contentsline {quadro}{\numberline {5.6}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance\_plan}}}{92}{quadro.caption.101}%
+\contentsline {quadro}{\numberline {5.7}{\ignorespaces Script SQL --- Tabela \texttt {login}}}{93}{quadro.caption.102}%
+\contentsline {quadro}{\numberline {5.8}{\ignorespaces Script SQL --- Tabela \texttt {manufacturer}}}{93}{quadro.caption.103}%
+\contentsline {quadro}{\numberline {5.9}{\ignorespaces Script SQL --- Tabela \texttt {product}}}{93}{quadro.caption.104}%
+\contentsline {quadro}{\numberline {5.10}{\ignorespaces Script SQL --- Tabela \texttt {product\_category}}}{94}{quadro.caption.105}%
+\contentsline {quadro}{\numberline {5.11}{\ignorespaces Script SQL --- Tabela \texttt {product\_group}}}{94}{quadro.caption.106}%
+\contentsline {quadro}{\numberline {5.12}{\ignorespaces Script SQL --- Tabela \texttt {product\_type}}}{94}{quadro.caption.107}%
+\contentsline {quadro}{\numberline {5.13}{\ignorespaces Script SQL --- Tabela \texttt {profile}}}{94}{quadro.caption.108}%
+\contentsline {quadro}{\numberline {5.14}{\ignorespaces Script SQL --- Tabela \texttt {profile\_claim}}}{95}{quadro.caption.109}%
+\contentsline {quadro}{\numberline {5.15}{\ignorespaces Script SQL --- Tabela \texttt {profile\_resource}}}{95}{quadro.caption.110}%
+\contentsline {quadro}{\numberline {5.16}{\ignorespaces Script SQL --- Tabela \texttt {resident}}}{95}{quadro.caption.111}%
+\contentsline {quadro}{\numberline {5.17}{\ignorespaces Script SQL --- Tabela \texttt {resident\_allergy}}}{96}{quadro.caption.112}%
+\contentsline {quadro}{\numberline {5.18}{\ignorespaces Script SQL --- Tabela \texttt {resident\_health\_insurance}}}{96}{quadro.caption.113}%
+\contentsline {quadro}{\numberline {5.19}{\ignorespaces Script SQL --- Tabela \texttt {resident\_relative}}}{96}{quadro.caption.114}%
+\contentsline {quadro}{\numberline {5.20}{\ignorespaces Script SQL --- Tabela \texttt {resource}}}{97}{quadro.caption.115}%
+\contentsline {quadro}{\numberline {5.21}{\ignorespaces Script SQL --- Tabela \texttt {state}}}{97}{quadro.caption.116}%
+\contentsline {quadro}{\numberline {5.22}{\ignorespaces Script SQL --- Tabela \texttt {unitofmeasure}}}{97}{quadro.caption.117}%
+\contentsline {quadro}{\numberline {5.23}{\ignorespaces Script SQL --- Tabela \texttt {user}}}{97}{quadro.caption.118}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
