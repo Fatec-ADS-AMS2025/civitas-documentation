@@ -1,7 +1,7 @@
-PWD c:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec
+PWD C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec
 INPUT C:\Users\Yasmin Moura\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\extensao.tex
-OUTPUT extensao.log
+INPUT extensao.tex
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.log
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\abntex2\abntex2.cls
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\abntex2\abntex2.cls
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\base\ifthen.sty
@@ -267,7 +267,7 @@ INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\lbx
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\lbx\brazilian.lbx
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\blx-case-expl3.sty
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\blx-case-expl3.sty
-OUTPUT extensao.idx
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.idx
 INPUT .\extras\conf_citacoes.tex
 INPUT .\extras\conf_citacoes.tex
 INPUT .\extras\conf_citacoes.tex
@@ -287,27 +287,12 @@ INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmr.fd
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmr.fd
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmr.fd
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr12.tfm
-INPUT .\extensao.aux
-INPUT .\extensao.aux
-INPUT extensao.aux
-INPUT .\pretextual\capa.aux
-INPUT .\pretextual\capa.aux
-INPUT pretextual\capa.aux
-INPUT .\pretextual\resumos.aux
-INPUT .\pretextual\resumos.aux
-INPUT pretextual\resumos.aux
-INPUT .\01Projeto.aux
-INPUT .\01Projeto.aux
-INPUT 01Projeto.aux
-INPUT .\02Horas.aux
-INPUT .\02Horas.aux
-INPUT 02Horas.aux
-INPUT .\conclusao.aux
-INPUT .\conclusao.aux
-INPUT conclusao.aux
-OUTPUT extensao.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.aux
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\graphics\color.sty
-OUTPUT extensao.pdf
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.pdf
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
@@ -363,7 +348,7 @@ INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\lbx
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\lbx\english.lbx
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\lbx\english.lbx
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\tex\latex\biblatex\lbx\english.lbx
-OUTPUT extensao.bcf
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.bcf
 INPUT extensao.bbl
 INPUT .\extensao.bbl
 INPUT .\extensao.bbl
@@ -371,7 +356,7 @@ INPUT .\extensao.bbl
 INPUT extensao.bbl
 INPUT .\pretextual\capa.tex
 INPUT .\pretextual\capa.tex
-OUTPUT pretextual\capa.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\capa.aux
 INPUT .\pretextual\capa.tex
 INPUT .\pretextual\capa.tex
 INPUT pretextual\capa.tex
@@ -441,7 +426,7 @@ INPUT C:\Users\Yasmin Moura\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs5.tfm
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr12.tfm
 INPUT .\pretextual\resumos.tex
 INPUT .\pretextual\resumos.tex
-OUTPUT pretextual\resumos.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\resumos.aux
 INPUT .\pretextual\resumos.tex
 INPUT .\pretextual\resumos.tex
 INPUT pretextual\resumos.tex
@@ -465,7 +450,7 @@ INPUT .\extensao.toc
 INPUT extensao.toc
 INPUT .\01Projeto.tex
 INPUT .\01Projeto.tex
-OUTPUT 01Projeto.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\01Projeto.aux
 INPUT .\01Projeto.tex
 INPUT .\01Projeto.tex
 INPUT 01Projeto.tex
@@ -723,7 +708,7 @@ INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtk10.tfm
 INPUT .\02Horas.tex
 INPUT .\02Horas.tex
-OUTPUT 02Horas.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\02Horas.aux
 INPUT .\02Horas.tex
 INPUT .\02Horas.tex
 INPUT 02Horas.tex
@@ -1069,32 +1054,32 @@ INPUT .\sprints\Sprint05_SeniorCareManager-Frontend.pdf
 INPUT .\sprints\Sprint05_SeniorCareManager-Frontend.pdf
 INPUT .\conclusao.tex
 INPUT .\conclusao.tex
-OUTPUT conclusao.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\conclusao.aux
 INPUT .\conclusao.tex
 INPUT .\conclusao.tex
 INPUT conclusao.tex
-OUTPUT extensao.lof
-OUTPUT extensao.lot
-OUTPUT extensao.loq
-OUTPUT extensao.toc
-INPUT extensao.aux
-INPUT .\pretextual\capa.aux
-INPUT .\pretextual\capa.aux
-INPUT pretextual\capa.aux
-INPUT .\pretextual\resumos.aux
-INPUT .\pretextual\resumos.aux
-INPUT pretextual\resumos.aux
-INPUT .\01Projeto.aux
-INPUT .\01Projeto.aux
-INPUT 01Projeto.aux
-INPUT .\02Horas.aux
-INPUT .\02Horas.aux
-INPUT 02Horas.aux
-INPUT .\conclusao.aux
-INPUT .\conclusao.aux
-INPUT conclusao.aux
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.lof
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.lot
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.loq
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.toc
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\capa.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\capa.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\capa.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\resumos.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\resumos.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\pretextual\resumos.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\01Projeto.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\01Projeto.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\01Projeto.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\02Horas.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\02Horas.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\02Horas.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\conclusao.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\conclusao.aux
+INPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\conclusao.aux
 INPUT extensao.run.xml
-OUTPUT extensao.run.xml
+OUTPUT C:\Users\Yasmin Moura\Desktop\civitas-documentation\2025_ProjetoExtensaoFatec\build\extensao.run.xml
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Users\Yasmin Moura\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb

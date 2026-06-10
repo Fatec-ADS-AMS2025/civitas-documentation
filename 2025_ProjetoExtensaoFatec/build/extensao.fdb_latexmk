@@ -1,0 +1,9 @@
+# Fdb version 4
+["pdflatex"] 0 "extensao.tex" "build/extensao.pdf" "extensao" 0 -1
+  "build/extensao.aux" 0 -1 0 "pdflatex"
+  "extensao.tex" 0 -1 0 ""
+  (generated)
+  "build/extensao.aux"
+  "build/extensao.log"
+  "build/extensao.pdf"
+  (rewritten before read)
