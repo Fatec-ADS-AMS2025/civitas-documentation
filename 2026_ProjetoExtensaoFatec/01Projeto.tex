@@ -144,19 +144,58 @@ A fim de assegurar a qualidade, robustez e confiabilidade do sistema proposto, t
 
 \subsection{Descrição dos Requisitos Funcionais}
 
-Os requisitos funcionais representam uma das etapas mais importantes no processo de desenvolvimento de sistemas, uma vez que permitem identificar as necessidades dos usuários e definir as funcionalidades específicas que o software deverá executar. De acordo com \textcite{Sommerville2018ES10}, tais requisitos estabelecem uma base sólida para o planejamento, a implementação e os testes, garantindo que o produto final esteja alinhado às expectativas e aos objetivos do projeto.
+Os requisitos funcionais descrevem os serviços, as operações e as respostas que devem ser oferecidos pelo sistema aos seus usuários. Conforme \textcite{Sommerville2018ES10}, esse tipo de requisito deve expressar o comportamento esperado da solução diante das entradas recebidas e das situações próprias do domínio. No \textit{Civitas}, sua definição foi realizada a partir das necessidades de organização administrativa, planejamento orçamentário, acompanhamento de despesas e rastreabilidade das ações relacionadas à gestão pública municipal.
 
-O sistema \textit{SeniorCareManager} foi projetado para otimizar o gerenciamento das atividades do Lar dos Velhinhos São Vicente de Paulo e da APAE de Jales, integrando processos administrativos e assistenciais em uma única plataforma. Dessa forma, seus requisitos funcionais delineiam os serviços e operações essenciais que devem ser disponibilizados aos usuários, assegurando eficiência, rastreabilidade e segurança das informações.
+A plataforma deverá centralizar informações que, sem um sistema integrado, permaneceriam distribuídas entre planilhas, documentos e setores distintos. Para isso, as funcionalidades foram agrupadas em módulos coerentes com a estrutura do projeto. Os cadastros organizacionais fornecem a base para os lançamentos financeiros; os orçamentos estabelecem os limites e as classificações do planejamento; as despesas registram a execução dos recursos; e os recursos de consulta, exportação e auditoria apoiam o acompanhamento e a prestação de contas. Essa organização reduz a duplicidade de registros e permite que o usuário compreenda os vínculos entre secretarias, instituições, fornecedores, tipos de despesa e movimentações financeiras.
 
-Entre as funcionalidades principais, destacam-se os módulos de cadastro e manutenção de dados, que permitem incluir, editar e excluir registros de residentes, colaboradores, familiares, fornecedores e doações. Essas operações são realizadas por meio de botões de ação intuitivos, que facilitam o uso por diferentes perfis de profissionais da instituição.  
+O acesso ao ambiente interno deverá ocorrer mediante autenticação por e-mail e senha. Após a validação das credenciais de um usuário ativo, o sistema emitirá um \textit{token} JWT e manterá a sessão durante seu prazo de validade. As operações da API, exceto o próprio acesso, permanecerão protegidas por autenticação. O cadastro de usuários deverá registrar dados pessoais, endereço, matrícula, situação e tipo de usuário, distinguindo os perfis Visitante, Administrador e Funcionário. A inativação lógica permitirá suspender o acesso sem eliminar o histórico associado ao usuário.
 
-O sistema também dispõe de um módulo de prontuário eletrônico, no qual enfermeiros e cuidadores podem registrar e consultar informações clínicas, evoluções, prescrições, planos de cuidado e histórico vacinal. Essa estrutura segue a lógica dos modelos do \textit{e-SUS Atenção Primária} \textcite{ministeriosaude2023esus}, adaptada às particularidades da assistência em Instituições de Longa Permanência para Idosos (ILPIs).
+No núcleo administrativo, o sistema deverá manter secretarias municipais, instituições e fornecedores. As instituições serão vinculadas a uma secretaria e a um tipo de instituição, enquanto os fornecedores concentrarão dados de identificação, localização e contato necessários aos lançamentos de despesas e documentos. Cadastros auxiliares de tipos de instituição, tipos de despesa e unidades de medida permitirão configurar classificações reutilizadas nos demais módulos. Para os registros que admitem alteração de situação, a exclusão operacional ocorrerá por ativação ou inativação, preservando os relacionamentos já existentes.
 
-Outros recursos incluem o módulo de estoque, destinado ao controle de insumos, medicamentos e materiais de uso contínuo; o módulo de compras e doações, que organiza o recebimento, a distribuição e a prestação de contas dos recursos; e o módulo de vacinas, que gerencia as campanhas de imunização, alertas de vencimento e registros de aplicação.  
+O módulo financeiro deverá possibilitar o registro de orçamentos por exercício, instituição e tipo de despesa. Cada despesa será associada ao orçamento correspondente, à instituição responsável, ao fornecedor, ao tipo de despesa e ao usuário que efetuou o cadastro. Também serão mantidos número do documento, data de emissão, data de vencimento, consumo previsto e, quando exigido pela categoria da despesa, o código da unidade consumidora. Essa vinculação permite confrontar valores orçados e realizados, identificar o saldo disponível e acompanhar a execução financeira por diferentes recortes.
 
-O sistema incorpora ainda mecanismos de pesquisa e filtragem de informações, com campos dinâmicos e categorização por grupos e subgrupos, permitindo consultas rápidas e precisas. A acessibilidade também é um aspecto prioritário, assegurando que o \textit{SeniorCareManager} possa ser utilizado por diferentes perfis de usuários, incluindo profissionais com limitações visuais ou motoras.  
+A baixa de uma obrigação deverá ser representada por um fluxo financeiro contendo valor pago, consumo realizado e situação do pagamento, com estados como a pagar, pago ou atrasado. O usuário poderá anexar o comprovante correspondente em formato digital, relacionando o documento ao fornecedor e ao fluxo. No painel inicial, os dados consolidados deverão apresentar total orçado, total gasto, saldo, quantitativos cadastrais, despesas recentes e vencimentos próximos. Os avisos de vencimento exibidos no painel não constituem um serviço externo de notificação; sua finalidade é destacar obrigações que exigem atenção durante o uso da plataforma.
 
-Por fim, o sistema mantém integração com serviços externos, como geolocalização para registro de visitas domiciliares e notificações automáticas via e-mail, ampliando a conectividade e a eficiência das rotinas institucionais.
+Para apoiar consultas e relatórios operacionais, o sistema deverá oferecer listagens de usuários, despesas, fornecedores, secretarias, instituições e orçamentos. Nessas visualizações, o usuário poderá pesquisar, aplicar filtros, ordenar registros, escolher colunas, paginar resultados e utilizar recortes previamente definidos. A visualização resultante poderá ser exportada nos formatos PDF e XLSX, inclusive com as colunas e os filtros selecionados, facilitando o compartilhamento, a conferência e a elaboração de prestações de contas. Além disso, registros de auditoria poderão ser consultados por usuário, entidade e operação, permitindo identificar a data, o horário e os valores relacionados a uma ocorrência cadastrada.
+
+O Quadro~\ref{quad:requisitos_funcionais} consolida os requisitos funcionais do \textit{Civitas}. A identificação individual favorece a rastreabilidade entre a documentação, as interfaces e os serviços disponibilizados pelos repositórios do projeto.
+
+\small
+\begin{longquadro}{|p{0.08\textwidth}|p{0.20\textwidth}|p{0.62\textwidth}|}
+	\caption{Requisitos funcionais do sistema Civitas}
+	\label{quad:requisitos_funcionais}\\
+	\hline
+	\textbf{ID} & \textbf{Módulo} & \textbf{Descrição do requisito funcional} \\ \hline
+	\endfirsthead
+
+	\multicolumn{3}{c}{Quadro~\thequadro{} -- continuação} \\
+	\hline
+	\textbf{ID} & \textbf{Módulo} & \textbf{Descrição do requisito funcional} \\ \hline
+	\endhead
+
+	RF01 & Autenticação & Autenticar o usuário por e-mail e senha, permitindo o ingresso apenas quando as credenciais forem válidas e o cadastro estiver ativo. \\ \hline
+	RF02 & Autenticação & Emitir e validar \textit{token} JWT, manter a sessão autenticada até sua expiração e permitir o encerramento da sessão pelo usuário. \\ \hline
+	RF03 & Usuários e permissões & Cadastrar, consultar e atualizar usuários, bem como ativar ou inativar seus registros e classificá-los como Visitante, Administrador ou Funcionário. \\ \hline
+	RF04 & Usuários e permissões & Consultar usuários ativos e inativos e localizar um cadastro por identificador ou CPF, preservando a relação entre o autor autenticado e as operações registradas. \\ \hline
+	RF05 & Estrutura administrativa & Cadastrar, consultar, atualizar e alterar a situação de secretarias, mantendo seus dados de identificação, endereço e contato. \\ \hline
+	RF06 & Estrutura administrativa & Cadastrar, consultar, atualizar e alterar a situação de instituições, vinculando cada registro à secretaria responsável e ao respectivo tipo de instituição. \\ \hline
+	RF07 & Fornecedores & Cadastrar, consultar, atualizar e alterar a situação de fornecedores e prestadores de serviço, mantendo informações fiscais, comerciais, de endereço e de contato. \\ \hline
+	RF08 & Configurações & Gerenciar tipos de instituição, tipos de despesa e unidades de medida, incluindo consulta de ativos e inativos e alteração da situação desses cadastros auxiliares. \\ \hline
+	RF09 & Orçamentos & Cadastrar, consultar e atualizar orçamentos, informando exercício, valor, instituição e tipo de despesa ao qual o recurso se destina. \\ \hline
+	RF10 & Despesas & Cadastrar, consultar, atualizar e inativar despesas, relacionando-as ao orçamento, à instituição, ao fornecedor, ao tipo de despesa e ao usuário responsável pelo lançamento. \\ \hline
+	RF11 & Despesas & Registrar número do documento, emissão, vencimento e consumo previsto e exigir a unidade consumidora quando essa regra estiver configurada para o tipo de despesa selecionado. \\ \hline
+	RF12 & Pagamentos & Registrar e atualizar o fluxo de pagamento de uma despesa, incluindo valor efetivamente pago, consumo realizado e estado da obrigação. \\ \hline
+	RF13 & Documentos & Cadastrar, consultar e atualizar documentos digitalizados, vinculando comprovantes, notas fiscais ou boletos ao fornecedor e ao fluxo financeiro correspondente. \\ \hline
+	RF14 & Painel gerencial & Apresentar total orçado, total gasto, saldo disponível, quantitativos da base, despesas recentes e obrigações vencidas ou com vencimento nos sete dias seguintes. \\ \hline
+	RF15 & Consultas & Disponibilizar listagens com pesquisa, filtros, ordenação, paginação, seleção de colunas e recortes predefinidos para os principais cadastros administrativos e financeiros. \\ \hline
+	RF16 & Relatórios & Exportar listagens e comparações nos formatos PDF e XLSX, considerando o conjunto de dados, os filtros e as colunas escolhidos pelo usuário. \\ \hline
+	RF17 & Auditoria & Cadastrar e consultar ocorrências de auditoria contendo usuário, data, horário, operação, entidade afetada, valores anteriores e novos valores. \\ \hline
+	RF18 & Auditoria & Filtrar os registros de auditoria por usuário, entidade ou operação e controlar sua situação para apoiar a rastreabilidade das atividades administrativas. \\ \hline
+	RF19 & Perfil & Permitir que o usuário autenticado consulte seus dados de conta, seu e-mail e o perfil associado ao acesso. \\
+\end{longquadro}
+\normalsize
+
+\fonte{Elaborado pelos autores com base nos repositórios do projeto (2026).}
 
 
 \chapter{Visão de Caso de Uso - UML}
