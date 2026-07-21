@@ -2,7 +2,7 @@
 
 O avanço da tecnologia e da informatização tem transformado significativamente a maneira como organizações públicas e privadas realizam seus processos administrativos, financeiros e operacionais. Atualmente, os sistemas de informação desempenham papel fundamental no armazenamento, processamento, controle e gerenciamento de dados, contribuindo diretamente para maior eficiência, segurança e organização das informações. A utilização de recursos tecnológicos permite automatizar tarefas que anteriormente eram executadas manualmente, reduzindo falhas humanas, aumentando a produtividade e melhorando a tomada de decisão nas instituições. De acordo com \textcite{Sommerville2018ES10}, os sistemas de software tornaram-se essenciais para o funcionamento das organizações modernas, auxiliando no gerenciamento de processos cada vez mais complexos e contribuindo para maior confiabilidade e eficiência nas atividades desenvolvidas.
 
-A ausência de ferramentas integradas pode ocasionar atrasos em processos administrativos, dificuldades no controle de despesas e limitações no monitoramento de documentos e registros financeiros. A falta de centralização das informações também dificulta a tomada de decisão, uma vez que gestores públicos necessitam de dados organizados e atualizados para planejar ações e administrar adequadamente os recursos municipais. Conforme afirmam \textcite{Pressman2021ES9}, a engenharia de software possui papel importante no desenvolvimento de sistemas capazes de atender às necessidades organizacionais de forma estruturada, segura e confiável, contribuindo para maior qualidade e eficiência nos processos informatizados.
+A ausência de ferramentas integradas pode ocasionar atrasos em processos administrativos, dificuldades no controle de despesas e limitações no monitoramento de documentos e registros financeiros. A falta de centralização das informações também dificulta a tomada de decisão, uma vez que gestores públicos necessitam de dados organizados e atualizados para planejar ações e administrar adequadamente os recursos municipais. Conforme afirmam \textcite{Pressman2021}, a engenharia de software possui papel importante no desenvolvimento de sistemas capazes de atender às necessidades organizacionais de forma estruturada, segura e confiável, contribuindo para maior qualidade e eficiência nos processos informatizados.
 
 Pensando nas dificuldades enfrentadas pelos órgãos públicos municipais em relação ao controle administrativo e financeiro, surgiu o desenvolvimento do \textit{Civitas}, um sistema web criado para apoiar a gestão pública municipal por meio da centralização e organização das informações administrativas e financeiras. O sistema foi projetado para oferecer funcionalidades relacionadas ao gerenciamento de cadastros administrativos, controle orçamentário, registro e acompanhamento de despesas, gerenciamento documental e registro de auditorias, permitindo maior controle das operações realizadas pelos órgãos públicos municipais.
 
@@ -93,51 +93,62 @@ Diante dessas dificuldades, justifica-se o desenvolvimento do sistema Civitas, c
 
 \subsection{Descrição dos Requisitos Não Funcionais}
 
-Os requisitos não funcionais abrangem os atributos de qualidade e desempenho do sistema, sendo responsáveis por assegurar que o software opere de forma eficiente, segura e estável. Segundo \textcite{PaulaFilho2015ES}, esses requisitos devem ser expressos de maneira precisa e, sempre que possível, quantitativa, uma vez que sua mensuração contribui para o controle da qualidade do produto final.
+Os requisitos não funcionais determinam as condições de qualidade sob as quais as funcionalidades do sistema devem ser entregues. Diferentemente dos requisitos funcionais, eles não descrevem uma operação isolada, mas estabelecem limites mensuráveis para o comportamento da solução, para a proteção das informações e para a experiência de uso. A ISO/IEC 25010 organiza essas propriedades em um modelo destinado à especificação e à avaliação da qualidade de produtos de software \parencite{ISOIEC25010_2023}. No contexto do \textit{Civitas}, tais propriedades são particularmente relevantes porque decisões administrativas e financeiras dependem de dados disponíveis, íntegros e rastreáveis.
 
-\begin{citacao}
-	Os requisitos não funcionais surgem das necessidades dos usuários, que se devem a restrições orçamentárias, políticas organizacionais, necessidade de interoperabilidade com outros sistemas de software ou hardware, ou fatores externos, como normas de segurança (\textit{safety}) ou legislação relativa à privacidade. 
-	\textcite[p.~91]{Sommerville2018ES10} 
-\end{citacao}
+Para reduzir ambiguidades, cada requisito foi associado a um critério de verificação. Os valores apresentados constituem metas iniciais de aceitação e deverão ser aferidos em ambiente de homologação representativo do ambiente de produção. Essa abordagem permite transformar expressões subjetivas, como ``sistema rápido'' ou ``interface simples'', em condições que possam ser verificadas por testes, monitoramento e inspeções técnicas, conforme recomendado para a especificação de requisitos de software \parencite{Sommerville2018ES10}.
 
-O \textit{SeniorCareManager} foi desenvolvido em linguagem \textit{C\#} com arquitetura orientada a serviços, garantindo robustez e escalabilidade. O sistema utiliza um banco de dados relacional gratuito, adequado à realidade financeira das instituições filantrópicas, assegurando o armazenamento eficiente de informações sem comprometer a performance.  
+\textbf{Desempenho.} Nas operações interativas mais frequentes --- autenticação, consulta, inclusão e atualização de cadastros, despesas e documentos ---, pelo menos 95\% das requisições deverão ser concluídas em até dois segundos. Relatórios e consolidações financeiras poderão demandar até cinco segundos, considerando uma carga de 50 usuários autenticados simultaneamente. A medição deverá ocorrer no servidor, desconsiderando oscilações da conexão do usuário. Paginação, índices nas colunas de busca e consultas que recuperem apenas os dados necessários são decisões técnicas que reduzem consumo de memória e processamento e tornam essa meta sustentável à medida que a base cresce.
 
-Em relação ao desempenho, o sistema foi projetado para apresentar tempo de resposta inferior a três segundos para as principais operações e disponibilidade mínima de 99,8\%, assegurando acesso contínuo às informações. Em casos de falhas, o tempo máximo para correção ou atualização é de sete dias úteis, o que garante a manutenção da estabilidade e a confiança dos usuários.
+\textbf{Segurança.} Todo acesso autenticado deverá empregar contas individuais, autorização por perfil e o princípio do menor privilégio. As comunicações entre navegador e servidor deverão utilizar HTTPS; senhas deverão ser armazenadas somente por meio de função de derivação criptográfica com sal; e os \textit{tokens} de autenticação deverão possuir validade limitada. Eventos de autenticação e alterações em registros administrativos ou financeiros deverão compor uma trilha de auditoria que identifique usuário, data, horário e operação, sem registrar senhas ou segredos. Essas medidas apoiam os princípios de segurança e prevenção e a obrigação de proteção dos dados pessoais estabelecidos pela Lei Geral de Proteção de Dados Pessoais \parencite{brasil2018lgpd}.
 
-A segurança das informações constitui um dos pilares do projeto. O controle de acesso é realizado por meio de autenticação baseada em tokens JWT (JSON Web Token), assegurando a integridade das sessões e a proteção contra acessos indevidos. Todas as transações são registradas em logs de auditoria, possibilitando o rastreamento de eventos, modificações e acessos ao sistema.  
+\textbf{Disponibilidade.} O \textit{Civitas} deverá permanecer disponível em, no mínimo, 99,5\% do tempo mensal, excetuadas as janelas de manutenção comunicadas previamente. Em um mês de 30 dias, esse índice admite, no máximo, aproximadamente três horas e trinta e seis minutos de indisponibilidade não planejada. A aplicação deverá contar com monitoramento de saúde da API e do banco de dados, além de registro de falhas, para que interrupções sejam detectadas e diagnosticadas. A meta equilibra a continuidade das rotinas municipais com os custos de infraestrutura compatíveis com o escopo do projeto.
 
-A privacidade dos dados dos residentes é preservada em conformidade com a Lei nº 13.709/2018 — Lei Geral de Proteção de Dados Pessoais (LGPD) \textcite{brasil2018lgpd}, sendo vedado o compartilhamento de informações sensíveis sem autorização expressa.  
+\textbf{Escalabilidade.} A solução deverá suportar o dobro da carga inicial --- 100 usuários simultâneos e duas vezes o volume de dados utilizado no ensaio-base --- sem ultrapassar em mais de 20\% os limites de tempo definidos para desempenho. Para viabilizar o crescimento, a API deverá evitar estado de sessão armazenado localmente, as consultas deverão ser paginadas e o banco de dados deverá utilizar índices definidos a partir dos padrões reais de acesso. Desse modo, será possível ampliar os recursos da aplicação ou distribuir instâncias sem reescrever as regras de negócio.
 
-O sistema é compatível com diferentes navegadores e dispositivos, permitindo seu uso em computadores, tablets e smartphones. Além disso, a interface foi desenvolvida segundo princípios de usabilidade e design responsivo, favorecendo a experiência do usuário e a inclusão digital de profissionais de diferentes níveis de familiaridade tecnológica.  
+\textbf{Usabilidade.} Os fluxos essenciais deverão apresentar terminologia compatível com a administração municipal, navegação consistente, confirmação para ações destrutivas e mensagens de erro que expliquem como corrigir a entrada. Em testes com representantes dos perfis previstos, pelo menos 85\% dos participantes deverão concluir, sem auxílio do avaliador, as tarefas de consultar um orçamento, registrar uma despesa e localizar um documento. O critério permite avaliar a eficácia da interface com usuários reais, em vez de presumir facilidade de uso apenas a partir da aparência das telas.
 
-A supervisão e validação de dados são realizadas por administradores autorizados, garantindo a qualidade das informações inseridas. Assim, o \textit{SeniorCareManager} alia desempenho, segurança e acessibilidade, constituindo uma solução tecnológica estável, ética e socialmente responsável.
+\textbf{Acessibilidade.} As páginas e os componentes próprios deverão atender aos critérios de sucesso dos níveis A e AA das WCAG 2.2. Isso inclui operação completa por teclado, foco visível, rótulos programaticamente associados aos campos, alternativas textuais, contraste adequado e redimensionamento do conteúdo sem perda de informação a partir de 320 pixels de largura. As WCAG estruturam a acessibilidade pelos princípios de conteúdo perceptível, operável, compreensível e robusto, além de fornecerem critérios verificáveis por testes automatizados e avaliação humana \parencite{W3CWCAG22_2024}.
 
-A fim de assegurar a qualidade, robustez e confiabilidade do sistema proposto, torna-se imprescindível a definição clara dos requisitos não funcionais. Esses requisitos estabelecem parâmetros essenciais relacionados ao desempenho, segurança, disponibilidade e integridade das informações, servindo como base para orientar decisões arquiteturais e garantir que o sistema atenda às expectativas de uso em ambientes reais. O Quadro~\ref{quad:requisitos_nao_funcionais} apresenta a consolidação dos principais requisitos não funcionais identificados ao longo do processo de análise, ressaltando aspectos fundamentais para o funcionamento adequado e sustentável da solução.
+\textbf{Integridade dos dados.} O banco de dados deverá impedir registros órfãos, duplicidades em identificadores únicos e valores incompatíveis com as regras de negócio. Para isso, serão utilizadas chaves primárias e estrangeiras, restrições de nulidade e unicidade, tipos numéricos adequados a valores monetários, validação no servidor e transações atômicas nas operações que alterem mais de um registro. Alterações relevantes deverão ser auditáveis. O uso conjunto de restrições e transações preserva a consistência mesmo diante de concorrência ou falha durante uma operação \parencite{Silberschatz2012}.
 
+\textbf{Compatibilidade.} A interface web deverá funcionar nas versões estável corrente e imediatamente anterior dos navegadores Google Chrome, Microsoft Edge e Mozilla Firefox na data de cada entrega. O conteúdo deverá adaptar-se a telas com largura entre 360 e 1920 pixels, sem perda das operações essenciais. Antes de cada versão, os fluxos críticos deverão ser executados na matriz de navegadores e dimensões definida para o projeto, pois testes em um único ambiente não asseguram comportamento equivalente em diferentes mecanismos de renderização.
 
-\begin{quadro}[H]
-	\centering
-	\caption{Requisitos Não Funcionais}
-	\label{quad:requisitos_nao_funcionais}
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\textbf{Requisitos Não Funcionais} & \textbf{Descrição} \\ \hline
-		
-		Desempenho & Garantir tempos de resposta rápidos para consultas e transações, mantendo alta eficiência. \\ \hline
-		
-		Segurança & Implementar medidas robustas, como controle de acesso e criptografia, para proteger dados sensíveis. \\ \hline
-		
-		Escalabilidade & Capacidade de lidar com um aumento substancial no volume de dados e transações. \\ \hline
-		
-		Disponibilidade & Assegurar que o banco de dados esteja acessível a maior parte do tempo, minimizando períodos de inatividade. \\ \hline
-		
-		Consistência & Manter a integridade e a consistência dos dados, garantindo precisão e atualização constante. \\ \hline
-		
-		Backup e Restauração & Estabelecer procedimentos eficientes para backup regular e recuperação rápida em caso de falhas. \\ \hline
-	\end{tabularx}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
+\textbf{Backup e recuperação.} Deverá ser realizado \textit{backup} completo e automatizado do banco de dados a cada 24 horas, com arquivos criptografados, retenção mínima de 30 dias e armazenamento separado do ambiente principal. O objetivo de ponto de recuperação (RPO) será de, no máximo, 24 horas, e o objetivo de tempo de recuperação (RTO), de até quatro horas após a disponibilização da infraestrutura. A restauração deverá ser ensaiada e registrada ao menos uma vez por trimestre, visto que a existência do arquivo não comprova sua recuperabilidade. A documentação do PostgreSQL recomenda cópias periódicas para dados valiosos e apresenta mecanismos de cópia e restauração que fundamentam esse procedimento \parencite{PostgreSQL18Backup}.
+
+O Quadro~\ref{quad:requisitos_nao_funcionais} consolida os requisitos e os respectivos critérios de aceitação. Os identificadores permitem relacioná-los posteriormente aos casos de teste, aos registros de monitoramento e às decisões de arquitetura.
+
+{
+\small
+\begin{longquadro}{|P{0.11\textwidth}|P{0.19\textwidth}|P{0.61\textwidth}|}
+	\caption{Requisitos não funcionais do Civitas}
+	\label{quad:requisitos_nao_funcionais}\\
+	\hline
+	\textbf{ID} & \textbf{Requisito} & \textbf{Descrição e critério de aceitação} \\ \hline
+	\endfirsthead
+
+	\hline
+	\textbf{ID} & \textbf{Requisito} & \textbf{Descrição e critério de aceitação} \\ \hline
+	\endhead
+
+	\hline
+	\multicolumn{3}{r}{\textit{Continua na próxima página}} \\
+	\endfoot
+
+	\hline
+	\multicolumn{3}{l}{\textit{Fonte: elaborado pelos autores (2026).}}
+	\endlastfoot
+
+	RNF-01 & Desempenho & Concluir 95\% das operações interativas em até dois segundos e relatórios em até cinco segundos, sob carga de 50 usuários simultâneos. \\ \hline
+	RNF-02 & Segurança & Aplicar HTTPS, autenticação com validade limitada, autorização por perfil, armazenamento seguro de senhas e auditoria das operações relevantes, em conformidade com a LGPD. \\ \hline
+	RNF-03 & Disponibilidade & Manter disponibilidade mensal mínima de 99,5\%, desconsideradas as manutenções previamente comunicadas, com monitoramento da API e do banco de dados. \\ \hline
+	RNF-04 & Escalabilidade & Suportar 100 usuários simultâneos e o dobro do volume do ensaio-base sem exceder em mais de 20\% as metas de tempo de resposta. \\ \hline
+	RNF-05 & Usabilidade & Possibilitar que ao menos 85\% dos usuários avaliados concluam, sem auxílio, os três fluxos essenciais definidos para o teste. \\ \hline
+	RNF-06 & Acessibilidade & Atender aos critérios A e AA das WCAG 2.2, incluindo teclado, foco, rótulos, contraste, alternativas textuais e adaptação a partir de 320 pixels. \\ \hline
+	RNF-07 & Integridade dos dados & Preservar validade, unicidade e relações entre os registros por validações, restrições relacionais, transações e trilha de auditoria. \\ \hline
+	RNF-08 & Compatibilidade & Operar nas versões corrente e anterior de Chrome, Edge e Firefox, com interface responsiva entre 360 e 1920 pixels. \\ \hline
+	RNF-09 & Backup e recuperação & Executar cópia completa diária, criptografada, separada do ambiente principal e retida por 30 dias, com RPO de 24 horas, RTO de quatro horas e teste trimestral de restauração. \\ \hline
+\end{longquadro}
+}
 
 
 \subsection{Descrição dos Requisitos Funcionais}
