@@ -157,37 +157,67 @@ O sistema incorpora ainda mecanismos de pesquisa e filtragem de informações, c
 Por fim, o sistema mantém integração com serviços externos, como geolocalização para registro de visitas domiciliares e notificações automáticas via e-mail, ampliando a conectividade e a eficiência das rotinas institucionais.
 
 
-\chapter{Visão de Caso de Uso - UML}
+\chapter{Modelagem UML do Sistema}
 
-O entendimento profundo de um sistema é crucial para o sucesso de qualquer projeto de desenvolvimento de software. Nesse contexto, a Linguagem de Modelagem Unificada (UML) configura-se como uma ferramenta essencial para representar visualmente a estrutura e as interações entre os componentes de um sistema. Conforme afirmam \textcite{Guedes2018}, a UML possibilita a modelagem clara e estruturada de artefatos de software, contribuindo para o entendimento e a comunicação entre os envolvidos no projeto. De forma complementar, \textcite{Miro2024} destaca que “desenvolvedores criam diagramas UML para entender projetos, arquitetura de código e propostas de implementação de sistemas de software complexos.”
+Antes da implementação, decisões sobre limites do domínio, responsabilidades e interações precisam ser registradas de modo que possam ser discutidas pela equipe. A Linguagem de Modelagem Unificada, conhecida como UML, oferece um vocabulário gráfico para esse fim, tornando explícitos os elementos de uma solução computacional e as relações entre eles, especialmente em sistemas compostos por vários módulos e regras de negócio.
 
-A análise apresentada a seguir dedica-se à exploração dos principais diagramas da UML aplicados no desenvolvimento do sistema. Esses diagramas desempenham um papel fundamental na compreensão da estrutura e na narrativa do processo de desenvolvimento, oferecendo uma visão aprofundada de sua arquitetura. Ao examinar cada diagrama, busca-se desvendar não apenas a organização técnica, mas também a lógica e a dinâmica subjacentes ao desenvolvimento, proporcionando uma base sólida para a compreensão abrangente do projeto.
+De acordo com \textcite{Guedes2018}, a UML é uma linguagem visual utilizada para modelar sistemas, permitindo representar aspectos como requisitos, comportamento, processos e estrutura lógica. Sua utilização possibilita que as características do software sejam analisadas antes e durante sua implementação, contribuindo para a redução de ambiguidades e para o alinhamento entre os integrantes envolvidos no projeto.
+
+A modelagem não busca reproduzir todos os detalhes do sistema, mas apresentar uma abstração de seus elementos mais relevantes. Segundo \textcite{Sommerville2018ES10}, diferentes modelos podem representar perspectivas distintas de uma mesma solução, como sua estrutura, comportamento, contexto e interação. Essa divisão permite analisar o sistema de forma gradual, destacando somente as informações necessárias para cada etapa do desenvolvimento.
+
+A UML também contribui para a comunicação entre os membros da equipe, pois estabelece uma representação padronizada para documentar requisitos e decisões de projeto. Conforme \textcite{PressmanMaxim2021}, sua notação pode ser utilizada tanto na modelagem dos requisitos quanto na representação do projeto do software, auxiliando na transformação das necessidades levantadas em uma estrutura adequada para implementação.
+
+No desenvolvimento do Civitas, os diagramas UML são utilizados para representar os componentes relacionados à gestão pública municipal, permitindo compreender como usuários, secretarias, instituições, orçamentos, despesas, fornecedores, documentos, fluxos e auditorias se organizam dentro do sistema. Essa documentação facilita a validação da solução proposta e contribui para que as regras de negócio sejam implementadas de maneira coerente com o levantamento de requisitos.
+
+Entre os diagramas utilizados no projeto, destaca-se o Diagrama de Classes, apresentado na seção seguinte. Esse diagrama fornece uma visão estrutural do sistema e permite identificar as entidades do domínio, seus atributos, responsabilidades, associações e multiplicidades.
 
 \section{Diagrama de Classes}
 
-O diagrama de classes é fundamental na UML, sendo essencial para a criação dos demais diagramas do conjunto. Seu principal enfoque está em permitir a visualização das classes que comporão o sistema, juntamente com seus respectivos atributos e métodos, além de demonstrar como essas classes se relacionam, complementam e transmitem informações entre si.
+Entre os recursos estruturais da UML, o Diagrama de Classes descreve os tipos relevantes do domínio, as propriedades associadas a eles e os vínculos que mantêm entre si. \textcite{Guedes2018} ressalta que esse modelo auxilia a organizar os elementos do sistema e pode orientar a construção de outras representações da UML.
 
-\begin{citacao}
-	Seu principal enfoque está em permitir a visualização das classes que comporão o sistema com seus respectivos atributos e métodos, bem como em demonstrar como as classes do diagrama se relacionam, complementam e transmitem informações entre si. Esse diagrama apresenta uma visão estática de como as classes estão organizadas, preocupando-se em como definir a estrutura lógica delas. (\textcite[p.~133]{Guedes2018})
-\end{citacao}
+Para \textcite{Sommerville2018ES10}, os diagramas de classes são utilizados na modelagem de sistemas orientados a objetos para representar as classes e suas associações. As multiplicidades adicionadas aos relacionamentos indicam a quantidade de objetos que podem participar de cada associação, permitindo representar regras como relações de um para um e de um para muitos.
 
-De acordo com \textcite{Sommerville2018ES10}, os diagramas de classes são estruturados em torno de um retângulo simples que representa uma classe. No interior desse retângulo, o nome da classe é apresentado na parte superior, seguido pelos atributos e seus tipos na área intermediária. As relações entre as classes são representadas por linhas conectando os retângulos, indicando as associações entre elas e demonstrando como os elementos se interligam no modelo estático.
+A Figura~\ref{fig:diagrama-classes-civitas} apresenta o Diagrama de Classes desenvolvido para o sistema Civitas.
 
-O diagrama de classes apresentado descreve uma arquitetura robusta e modular que integra informações administrativas, assistenciais, clínicas e operacionais do sistema. No núcleo do modelo destaca-se a classe \texttt{Resident}, responsável por concentrar os dados pessoais, sociais e de saúde dos residentes. Essa classe se relaciona diretamente com entidades auxiliares, como \texttt{Religion}, \texttt{Sex}, \texttt{Ethnicity}, \texttt{HealthInsurancePlan} e \texttt{NursingCarePlan}, permitindo representar características individuais, plano de saúde, cuidados prescritos e dimensões culturais. A estrutura do residente também é estendida por classes especializadas, como \texttt{ResidentRelative}, que registra contatos familiares e vínculos de parentesco, \texttt{ResidentAllergy}, que mapeia alergias vinculadas à classe \texttt{Allergy}, e \texttt{CID10}, utilizada para classificação padronizada de diagnósticos médicos.
-
-A dimensão assistencial do modelo é reforçada pelas classes \texttt{Employee}, \texttt{Position}, \texttt{User} e \texttt{TechnicalResponsibility}, que compõem o conjunto de profissionais do sistema. Essas classes representam funções institucionais, níveis de acesso, responsabilidades técnicas e informações de cadastro, evidenciando como os colaboradores interagem com o sistema e executam ações clínicas e administrativas. Elementos como \texttt{Prescription} e \texttt{NursingService} reforçam o subsistema de cuidado, permitindo o registro estruturado de intervenções, serviços e condutas.
-
-A segunda grande área modelada refere-se ao \textit{módulo de estoque e suprimentos}. Nessa seção do diagrama, encontram-se classes como \texttt{Product}, \texttt{ProductGroup}, \texttt{ProductType}, \texttt{ProductBatch}, \texttt{Supplier}, \texttt{Invoice}, \texttt{Carrier} e \texttt{UnitOfMeasure}, que juntas garantem o registro completo de produtos, fornecedores, unidades de medida, lotes e movimentações fiscais. O ciclo de solicitação e movimentação de materiais é detalhado por classes como \texttt{PurchaseRequest}, \texttt{PurchaseRequestItem}, \texttt{StockRequest}, \texttt{StockRequestItem}, \texttt{StockMovement} e \texttt{StockDocument}. Os enumeradores associados descrevem estados dos processos, tipos de movimentação e etapas de aprovação, permitindo rastreabilidade precisa de entradas, saídas, ajustes e solicitações internas.
-
-De maneira geral, o diagrama revela um sistema amplamente integrado, no qual módulos assistenciais, administrativos e logísticos se articulam de maneira coesa. As associações, multiplicidades e enumerações indicam regras de negócio específicas, vínculos hierárquicos, dependências obrigatórias e processos padronizados. Assim, o diagrama de classes fornece uma visão estática abrangente da estrutura do sistema, desempenhando papel fundamental na compreensão dos componentes que o compõem e nas inter-relações que sustentam seu funcionamento, conforme enfatizado por \textcite{Guedes2018} e \textcite{Sommerville2018ES10}.
-
-\begin{figure}[H]
-	%\centering
-	\caption{Diagrama de Classe}
-	\includegraphics[width=0.7\textwidth]{figs/ClassDiagram.png}
-	\label{fig:diagramaclasse}
-	\fonte{Elaborado pelos autores (2025).}
+\begin{figure}[p]
+	\centering
+	\caption{Diagrama de Classes do sistema Civitas}
+	\label{fig:diagrama-classes-civitas}
+	\includegraphics[
+		width=\textwidth,
+		height=0.82\textheight,
+		keepaspectratio
+	]{figs/ClassDiagram.png}
+	\fonte{Elaborado pelos autores (2026).}
 \end{figure}
+
+O diagrama foi estruturado como um modelo de domínio, priorizando as entidades responsáveis pelo armazenamento e pela organização das informações do Civitas. Embora o backend esteja organizado em camadas, com Controllers, Services e Repositories, o diagrama concentra-se nas classes persistentes e em seus relacionamentos. As regras de aplicação são executadas pelas demais camadas, enquanto as entidades representadas concentram os atributos, estados e vínculos necessários ao funcionamento do sistema.
+
+Na área administrativa, a classe \textit{Secretaria} representa os órgãos responsáveis pelo gerenciamento municipal. Uma secretaria pode administrar diversas instituições, enquanto cada instituição permanece vinculada a uma única secretaria. Essa associação estabelece a hierarquia administrativa do sistema e permite identificar o órgão responsável por cada unidade cadastrada.
+
+A classe \textit{Instituicao} representa as unidades executoras, como escolas, unidades de saúde e outros órgãos públicos. Cada instituição também está associada a um \textit{TipoInstituicao}, responsável por classificá-la conforme sua finalidade. Dessa forma, um mesmo tipo pode ser utilizado para categorizar diversas instituições, enquanto cada instituição possui somente uma classificação.
+
+O planejamento financeiro é representado principalmente pelas classes \textit{Orcamento}, \textit{TipoDespesa} e \textit{UnidadeMedida}. Cada orçamento pertence a uma instituição e corresponde a um determinado exercício, valor disponível e tipo de despesa. Uma instituição pode possuir diversos orçamentos, permitindo separar os recursos de acordo com o período e com a finalidade prevista.
+
+A classe \textit{TipoDespesa} define a categoria dos gastos registrados no sistema. Além da descrição, ela determina a unidade de medida utilizada e informa se o preenchimento de uma Unidade Consumidora é obrigatório. A associação com \textit{UnidadeMedida} permite padronizar valores relacionados a consumo, como quilowatt-hora, metro cúbico ou unidade. Uma unidade de medida pode ser utilizada por diversos tipos de despesa.
+
+No núcleo da execução financeira encontra-se a classe \textit{Despesa}, responsável por representar obrigações, contas e documentos que deverão ser pagos. Cada despesa está vinculada a uma instituição, a um orçamento, a um tipo de despesa, a um fornecedor e ao usuário responsável pelo cadastro. Em sentido inverso, cada uma dessas entidades pode possuir diversas despesas associadas.
+
+Esse conjunto de relacionamentos permite identificar qual instituição originou o gasto, de qual orçamento o valor será descontado, qual categoria foi utilizada, quem receberá o pagamento e qual usuário realizou o lançamento. A estrutura também possibilita acompanhar informações como número do documento, consumo previsto, data de emissão, vencimento e situação cadastral da despesa.
+
+A classe \textit{Fornecedor} representa empresas e prestadores de serviços vinculados às operações financeiras. Seus atributos armazenam informações cadastrais, fiscais e de contato. O relacionamento com as despesas permite manter o histórico dos gastos direcionados a cada fornecedor, enquanto sua associação com os documentos possibilita identificar a origem dos comprovantes, notas fiscais, contratos e boletos armazenados no sistema.
+
+A classe \textit{Fluxo} representa a execução financeira de pagamentos ou medições, registrando o valor pago, o consumo realizado e o estado da operação. O atributo de status permite distinguir fluxos que ainda estão pendentes, que já foram pagos ou que se encontram atrasados. Essa estrutura contribui para o acompanhamento do pagamento e para a comparação entre consumo previsto e realizado.
+
+Os arquivos relacionados à execução financeira são representados pela classe \textit{Documento}. Cada documento possui uma digitalização e um número de identificação, além de estar vinculado ao fornecedor emissor e ao fluxo que comprova. Um fluxo pode apresentar diversos documentos, permitindo reunir os comprovantes necessários para justificar e rastrear determinada operação financeira.
+
+O controle de acesso é representado pela classe \textit{Usuario}, que armazena informações pessoais, credenciais e dados de endereço. O atributo \textit{TipoUsuario} diferencia os níveis de permissão, permitindo separar visitantes, funcionários e administradores. A associação com \textit{Despesa} identifica o responsável por cada lançamento realizado.
+
+A rastreabilidade das operações é complementada pela classe \textit{Auditoria}. Essa entidade registra a data, o horário, o tipo de operação, a entidade afetada, os valores anteriores e os novos valores resultantes da alteração. Cada registro de auditoria está relacionado ao usuário que executou a ação, permitindo identificar responsabilidades e manter um histórico das modificações realizadas no sistema.
+
+As enumerações presentes no modelo, como \textit{Situacao}, \textit{Status}, \textit{TipoUsuario} e \textit{SolicitaUc}, padronizam valores utilizados por diferentes classes. Esses elementos limitam os estados possíveis de cada atributo, reduzem inconsistências e facilitam a aplicação das regras de negócio.
+
+Na leitura do modelo do Civitas, a hierarquia administrativa aparece conectada diretamente aos registros orçamentários e às operações financeiras. As multiplicidades esclarecem quem administra cada instituição, como os recursos se vinculam às despesas e de que forma usuários, fornecedores, documentos e auditorias participam do processo. Assim, o diagrama funciona como um mapa das responsabilidades e dos caminhos de rastreabilidade previstos para o sistema.
 
 \section{Dicionário de Classes}
 
