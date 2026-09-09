@@ -638,39 +638,93 @@ O cadastro de usuário foi selecionado para detalhamento por envolver autentica�
 \section{Diagrama de Sequência}
 \label{sec:diagrama-sequencia-civitas-final}
 
-O fluxo de cadastro de usuário inicia-se na interface utilizada pelo Administrador. A requisição é recebida pelo \textit{UsuarioController}, encaminhada ao \textit{UsuarioService} para normalização, validação dos campos e verificação de CPF, e-mail e matrícula, e então persistida pelo \textit{UsuarioRepository}. Depois da confirmação do banco de dados, a operação pode originar o registro de auditoria e a interface apresenta o resultado ao ator.
+Os diagramas de sequência são diagramas comportamentais utilizados para representar a interação entre os participantes de um sistema ao longo do tempo. Por meio das linhas de vida e das mensagens trocadas durante uma interação, torna-se possível identificar a ordem em que as operações são executadas e compreender como diferentes componentes colaboram para realizar determinada funcionalidade \cite{omg2017uml}.
 
-\begin{quadro}[H]
-	\centering
-	\caption{Sequência de interações do cadastro de usuário}
-	\label{quad:sequencia-cadastrar-usuario}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.08\textwidth}|p{0.30\textwidth}|X|}
-		\hline
-		\textbf{Ordem} & \textbf{Participantes} & \textbf{Mensagem} \\ \hline
-		1 & Administrador $\rightarrow$ Interface & Informa os dados e confirma o cadastro. \\ \hline
-		2 & Interface $\rightarrow$ UsuarioController & Envia a requisição de criação do usuário. \\ \hline
-		3 & UsuarioController $\rightarrow$ UsuarioService & Solicita a validação do cadastro. \\ \hline
-		4 & UsuarioService $\rightarrow$ UsuarioRepository & Consulta possíveis duplicidades. \\ \hline
-		5 & UsuarioRepository $\rightarrow$ Banco de dados & Executa as consultas por CPF, e-mail e matrícula. \\ \hline
-		6 & UsuarioService $\rightarrow$ UsuarioRepository & Solicita a persistência quando os dados são válidos. \\ \hline
-		7 & UsuarioRepository $\rightarrow$ Banco de dados & Insere o novo usuário. \\ \hline
-		8 & UsuarioController $\rightarrow$ Interface & Retorna sucesso ou a mensagem de validação. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base na arquitetura do Civitas (2026).}
-\end{quadro}
+\textcite{larman2005} destaca a importância dos diagramas de interação na atribuição e compreensão das responsabilidades existentes entre os objetos de um sistema. No Civitas, esse tipo de representação permite acompanhar a comunicação entre a aplicação Web e as diferentes camadas do backend, evidenciando a divisão de responsabilidades entre controle da requisição, aplicação das regras de negócio e acesso aos dados. Essa organização está relacionada ao princípio de separação de responsabilidades existente nas arquiteturas em camadas \cite{buschmann1996}.
+
+No contexto do Civitas, os diagramas de sequência foram elaborados para representar operações relacionadas ao gerenciamento de usuários. Foram consideradas as funcionalidades de listar, cadastrar, editar e remover usuários, permitindo demonstrar o percurso das requisições entre a WebApp, o UsuarioController, o UsuarioService, o UsuarioRepository e a camada de persistência. Durante essas interações também ocorre a utilização de DTOs (Data Transfer Objects), empregados para transportar informações entre diferentes partes da aplicação sem expor diretamente as entidades persistidas \cite{Fowler2012PEAA}.
+
+A seguir, são apresentados os quatro diagramas de sequência desenvolvidos para o módulo de usuários, acompanhados da descrição do comportamento representado em cada operação.
+
+\subsection{Diagrama de Sequência: Listar Usuários}
+
+O diagrama de sequência de listagem, apresentado na Figura~\ref{fig:seq_listar_usuario}, demonstra o processo executado quando o administrador acessa a página de usuários. A WebApp encaminha a solicitação ao UsuarioController, que transfere o processamento para o UsuarioService. O serviço solicita ao UsuarioRepository os registros correspondentes aos usuários ativos, utilizando parâmetros de paginação para controlar a quantidade de elementos retornados. O repositório realiza as consultas por intermédio do AppDbContext, aplicando os filtros, a ordenação e a paginação antes de recuperar os dados. Após o retorno dos registros, o serviço realiza o mapeamento para objetos UsuarioDTO e constrói o resultado paginado, que retorna ao controller e posteriormente à interface. A utilização de paginação em consultas de coleções permite limitar o volume de informações enviado em cada resposta e organizar a navegação pelos resultados \cite{microsoft2025api}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Diagrama de sequência para listagem de usuários.}
+    \includegraphics[width=0.4\textwidth]{figs/Usuario_Listar.png}
+    \label{fig:seq_listar_usuario}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+\subsection{Diagrama de Sequência: Cadastrar Usuário}
+
+O cadastro de um novo usuário é representado na Figura~\ref{fig:seq_cadastrar_usuario}. O processo inicia-se quando o administrador acessa o formulário, informa os dados necessários e confirma a operação. A WebApp envia o UsuarioDTO ao UsuarioController, que aciona o método de criação existente no UsuarioService. Antes de persistir o registro, o serviço normaliza e valida os dados recebidos e verifica a existência de outro usuário com o mesmo CPF, e-mail ou matrícula. A validação realizada no servidor contribui para impedir o processamento de informações que não estejam de acordo com as regras da aplicação \cite{owasp2026input}. Quando as informações são válidas, o DTO é mapeado para a entidade Usuario, a senha é processada por meio de BCrypt e a entidade é encaminhada ao UsuarioRepository. O repositório utiliza o AppDbContext para registrar o novo usuário e efetivar a operação no banco de dados. Após a persistência, o identificador gerado é atribuído ao DTO e a senha é retirada da resposta, permitindo que o controller retorne a confirmação do cadastro sem expor a credencial. O uso de funções apropriadas para armazenamento de senhas é recomendado para impedir que credenciais sejam mantidas em texto puro \cite{owasp2026password}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Diagrama de sequência para cadastro de usuário.}
+    \includegraphics[width=0.45\textwidth]{figs/Usuario_Cadastrar.png}
+    \label{fig:seq_cadastrar_usuario}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+\subsection{Diagrama de Sequência: Editar Usuário}
+
+A Figura~\ref{fig:seq_editar_usuario} apresenta o processo de edição de um usuário existente. A interação começa quando o administrador seleciona o registro desejado e acessa seu formulário de edição. Depois das alterações, a WebApp envia ao UsuarioController o identificador do usuário e os dados atualizados, que são encaminhados ao UsuarioService. O serviço verifica a existência do registro e executa novamente as regras de normalização e validação, incluindo a verificação de conflitos de CPF, e-mail e matrícula, desconsiderando o próprio usuário que está sendo alterado. Caso uma nova senha não seja informada, o hash anteriormente armazenado é preservado; da mesma forma, os atributos relacionados à exclusão lógica são mantidos durante uma atualização convencional. Finalizadas essas etapas, a entidade é encaminhada ao UsuarioRepository, que utiliza o AppDbContext para persistir as modificações. Ao término da operação, o DTO atualizado retorna ao controller, sem a senha, e a aplicação apresenta ao administrador a confirmação da alteração.
+
+\begin{figure}[H]
+    \centering
+    \caption{Diagrama de sequência para edição de usuário.}
+    \includegraphics[width=0.45\textwidth]{figs/Usuario_Editar.png}
+    \label{fig:seq_editar_usuario}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+\subsection{Diagrama de Sequência: Remover Usuário}
+
+A operação de remoção é demonstrada na Figura~\ref{fig:seq_remover_usuario} e utiliza o mecanismo de exclusão lógica adotado pelo Civitas. O processo inicia-se quando o administrador seleciona um usuário para remoção e confirma a ação na interface. A WebApp encaminha a solicitação ao UsuarioController, que transfere o processamento para o UsuarioService. O registro é localizado pelo repositório incluindo aqueles anteriormente excluídos, pois o mesmo mecanismo permite alterar o estado lógico do usuário. Quando o registro ainda não está excluído, o atributo Excluido é marcado e DataExclusao recebe a data da operação; quando o registro já se encontra excluído, o processo inverso possibilita sua restauração. A alteração é encaminhada ao repositório e persistida pelo AppDbContext. Dessa forma, a remoção lógica mantém o registro armazenado na base de dados, diferenciando-se da alteração de situação funcional entre ATIVO e INATIVO.
+
+\begin{figure}[H]
+    \centering
+    \caption{Diagrama de sequência para remoção de usuário.}
+    \includegraphics[width=0.45\textwidth]{figs/Usuario_Remover.png}
+    \label{fig:seq_remover_usuario}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+Em conjunto, os diagramas de sequência permitem observar o fluxo completo das principais operações de manutenção dos usuários no Civitas. As representações evidenciam a ordem das mensagens e a colaboração entre interface, controller, serviço, repositório e persistência, além de demonstrarem aspectos específicos do sistema, como utilização de DTOs, validações de dados, proteção da senha e exclusão lógica. Essa perspectiva comportamental complementa as informações estruturais apresentadas pelo diagrama de classes e amplia a compreensão sobre a execução das funcionalidades do sistema.
 
 \section{Diagrama de Atividade}
 \label{sec:diagrama-atividade-civitas-final}
 
-A Figura~\ref{fig:atividade-login-civitas-final} representa o processo de autenticação utilizado como pré-condição das operações internas. O usuário informa e-mail e senha, a API valida os dados e o fluxo segue para o módulo solicitado quando as credenciais estão corretas. Informações incorretas produzem um alerta e permitem nova tentativa.
+O diagrama de atividade integra o conjunto de diagramas comportamentais da UML e é utilizado para representar o fluxo de execução de um comportamento. Sua composição permite modelar ações, fluxos de controle, decisões e diferentes caminhos possíveis durante a realização de um processo \cite{omg2017uml}.
+
+Entre os elementos disponíveis nesse tipo de diagrama encontram-se os nós inicial e final, responsáveis por delimitar o início e o término do fluxo, além dos nós de decisão, utilizados quando a continuidade da atividade depende da avaliação de determinada condição. As transições originadas desses pontos podem possuir condições de guarda (guards), indicando qual caminho deverá ser percorrido de acordo com o resultado obtido \cite{omg2017uml}.
+
+A Figura~\ref{fig:atividade_cadastrar_usuario} apresenta o diagrama de atividade desenvolvido para representar o processo de cadastro de usuário no Civitas, abrangendo as ações realizadas desde o acesso ao formulário até a conclusão ou interrupção do cadastro em razão das validações executadas pelo sistema.
 
 \begin{figure}[H]
-	\centering
-	\caption{Diagrama de Atividade -- Realizar Login}
-	\label{fig:atividade-login-civitas-final}
-	\includegraphics[width=0.78\textwidth]{figs/atividade_login.jpg}
-	\fonte{Elaborado pelos autores (2026).}
+    \centering
+    \caption{Diagrama de atividade para o processo de cadastro de usuário.}
+    \includegraphics[width=0.95\textwidth]{figs/atividade_cadastrar_usuario.png}
+    \label{fig:atividade_cadastrar_usuario}
+    \fonte{Elaborada pelos autores.}
 \end{figure}
+
+O diagrama inicia-se pelo nó inicial, indicando o começo da atividade. Em seguida, o administrador acessa a área de usuários, seleciona a opção de cadastro e recebe da aplicação o formulário necessário para informar os dados do novo usuário. Após o preenchimento, o administrador confirma a operação e as informações são encaminhadas para validação.
+
+Durante essa etapa, o sistema verifica a conformidade dos dados recebidos e analisa se existem conflitos relacionados ao CPF, e-mail ou matrícula. A validação no lado do servidor é relevante porque os mecanismos presentes na interface não são suficientes para garantir, isoladamente, a validade das informações recebidas \cite{owasp2026input}.
+
+Após as verificações, o fluxo alcança um nó de decisão e pode seguir dois caminhos:
+
+\begin{itemize}
+    \item Dados inválidos ou conflitantes: o sistema impede a persistência do usuário e apresenta uma mensagem indicando a ocorrência encontrada. O administrador pode corrigir as informações no formulário e realizar uma nova tentativa de cadastro.
+
+\item Dados válidos e sem conflitos: o sistema continua o processamento, cria a entidade correspondente, gera o hash da senha e realiza sua persistência. Depois da conclusão, a aplicação apresenta uma mensagem confirmando que o usuário foi cadastrado com sucesso.
+\end{itemize}
+
+Por fim, o fluxo alcança o nó final, representando o encerramento da atividade. A utilização do diagrama permite visualizar de forma direta tanto o caminho principal do cadastro quanto o comportamento adotado diante de informações inválidas, evidenciando as decisões existentes no processo e complementando a visão apresentada pelo diagrama de sequência.
 
 \let\dicionariocivitas\relax
