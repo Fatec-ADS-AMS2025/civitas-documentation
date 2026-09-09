@@ -650,49 +650,57 @@ A seguir, são apresentados os quatro diagramas de sequência desenvolvidos para
 
 O diagrama de sequência de listagem, apresentado na Figura~\ref{fig:seq_listar_usuario}, demonstra o processo executado quando o administrador acessa a página de usuários. A WebApp encaminha a solicitação ao UsuarioController, que transfere o processamento para o UsuarioService. O serviço solicita ao UsuarioRepository os registros correspondentes aos usuários ativos, utilizando parâmetros de paginação para controlar a quantidade de elementos retornados. O repositório realiza as consultas por intermédio do AppDbContext, aplicando os filtros, a ordenação e a paginação antes de recuperar os dados. Após o retorno dos registros, o serviço realiza o mapeamento para objetos UsuarioDTO e constrói o resultado paginado, que retorna ao controller e posteriormente à interface. A utilização de paginação em consultas de coleções permite limitar o volume de informações enviado em cada resposta e organizar a navegação pelos resultados \cite{microsoft2025api}.
 
+\clearpage
 \begin{figure}[H]
     \centering
     \caption{Diagrama de sequência para listagem de usuários.}
-    \includegraphics[width=0.4\textwidth]{figs/Usuario_Listar.png}
+    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Listar.png}
     \label{fig:seq_listar_usuario}
     \fonte{Elaborada pelos autores.}
 \end{figure}
+\clearpage
 
 \subsection{Diagrama de Sequência: Cadastrar Usuário}
 
 O cadastro de um novo usuário é representado na Figura~\ref{fig:seq_cadastrar_usuario}. O processo inicia-se quando o administrador acessa o formulário, informa os dados necessários e confirma a operação. A WebApp envia o UsuarioDTO ao UsuarioController, que aciona o método de criação existente no UsuarioService. Antes de persistir o registro, o serviço normaliza e valida os dados recebidos e verifica a existência de outro usuário com o mesmo CPF, e-mail ou matrícula. A validação realizada no servidor contribui para impedir o processamento de informações que não estejam de acordo com as regras da aplicação \cite{owasp2026input}. Quando as informações são válidas, o DTO é mapeado para a entidade Usuario, a senha é processada por meio de BCrypt e a entidade é encaminhada ao UsuarioRepository. O repositório utiliza o AppDbContext para registrar o novo usuário e efetivar a operação no banco de dados. Após a persistência, o identificador gerado é atribuído ao DTO e a senha é retirada da resposta, permitindo que o controller retorne a confirmação do cadastro sem expor a credencial. O uso de funções apropriadas para armazenamento de senhas é recomendado para impedir que credenciais sejam mantidas em texto puro \cite{owasp2026password}.
 
+\clearpage
 \begin{figure}[H]
     \centering
     \caption{Diagrama de sequência para cadastro de usuário.}
-    \includegraphics[width=0.45\textwidth]{figs/Usuario_Cadastrar.png}
+    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Cadastrar.png}
     \label{fig:seq_cadastrar_usuario}
     \fonte{Elaborada pelos autores.}
 \end{figure}
+\clearpage
 
 \subsection{Diagrama de Sequência: Editar Usuário}
 
 A Figura~\ref{fig:seq_editar_usuario} apresenta o processo de edição de um usuário existente. A interação começa quando o administrador seleciona o registro desejado e acessa seu formulário de edição. Depois das alterações, a WebApp envia ao UsuarioController o identificador do usuário e os dados atualizados, que são encaminhados ao UsuarioService. O serviço verifica a existência do registro e executa novamente as regras de normalização e validação, incluindo a verificação de conflitos de CPF, e-mail e matrícula, desconsiderando o próprio usuário que está sendo alterado. Caso uma nova senha não seja informada, o hash anteriormente armazenado é preservado; da mesma forma, os atributos relacionados à exclusão lógica são mantidos durante uma atualização convencional. Finalizadas essas etapas, a entidade é encaminhada ao UsuarioRepository, que utiliza o AppDbContext para persistir as modificações. Ao término da operação, o DTO atualizado retorna ao controller, sem a senha, e a aplicação apresenta ao administrador a confirmação da alteração.
 
+\clearpage
 \begin{figure}[H]
     \centering
     \caption{Diagrama de sequência para edição de usuário.}
-    \includegraphics[width=0.45\textwidth]{figs/Usuario_Editar.png}
+    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Editar.png}
     \label{fig:seq_editar_usuario}
     \fonte{Elaborada pelos autores.}
 \end{figure}
+\clearpage
 
 \subsection{Diagrama de Sequência: Remover Usuário}
 
 A operação de remoção é demonstrada na Figura~\ref{fig:seq_remover_usuario} e utiliza o mecanismo de exclusão lógica adotado pelo Civitas. O processo inicia-se quando o administrador seleciona um usuário para remoção e confirma a ação na interface. A WebApp encaminha a solicitação ao UsuarioController, que transfere o processamento para o UsuarioService. O registro é localizado pelo repositório incluindo aqueles anteriormente excluídos, pois o mesmo mecanismo permite alterar o estado lógico do usuário. Quando o registro ainda não está excluído, o atributo Excluido é marcado e DataExclusao recebe a data da operação; quando o registro já se encontra excluído, o processo inverso possibilita sua restauração. A alteração é encaminhada ao repositório e persistida pelo AppDbContext. Dessa forma, a remoção lógica mantém o registro armazenado na base de dados, diferenciando-se da alteração de situação funcional entre ATIVO e INATIVO.
 
+\clearpage
 \begin{figure}[H]
     \centering
     \caption{Diagrama de sequência para remoção de usuário.}
-    \includegraphics[width=0.45\textwidth]{figs/Usuario_Remover.png}
+    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Remover.png}
     \label{fig:seq_remover_usuario}
     \fonte{Elaborada pelos autores.}
 \end{figure}
+\clearpage
 
 Em conjunto, os diagramas de sequência permitem observar o fluxo completo das principais operações de manutenção dos usuários no Civitas. As representações evidenciam a ordem das mensagens e a colaboração entre interface, controller, serviço, repositório e persistência, além de demonstrarem aspectos específicos do sistema, como utilização de DTOs, validações de dados, proteção da senha e exclusão lógica. Essa perspectiva comportamental complementa as informações estruturais apresentadas pelo diagrama de classes e amplia a compreensão sobre a execução das funcionalidades do sistema.
 
