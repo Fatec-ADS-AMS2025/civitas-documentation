@@ -1,738 +1,965 @@
-\chapter{Modelagem UML do Sistema}
+% Capítulo 3: conteúdo fornecido pelo autor; formatação conforme o projeto.
+
+\newlength{\larguracolunascivitas}
+
+\chapter{MODELAGEM UML DO SISTEMA}
+
 \label{cap:modelagem-uml}
 
-A Linguagem de Modelagem Unificada (UML) permite representar perspectivas complementares de um sistema, como sua estrutura, seus atores e o comportamento observado durante a execução de processos. Segundo \textcite{Guedes2018}, os diagramas UML auxiliam a especificação e a comunicação dos elementos relevantes de uma solução sem pretender reproduzir cada detalhe da implementação.
+A Linguagem de Modelagem Unificada (UML) reúne notações destinadas à representação de diferentes perspectivas de um sistema, incluindo sua estrutura estática, os agentes externos que interagem com a solução e os comportamentos observados durante a realização de operações. A utilização de diagramas complementares favorece a comunicação do modelo conceitual do Civitas sem substituir a documentação de implementação ou o código-fonte \parencite{omg2017uml,larman2005}.
 
-Neste capítulo, os modelos foram revistos a partir do código-fonte das ramificações principais dos repositórios \textit{civitas-backend} e \textit{civitas-frontend} \parencite{CivitasBackend2026,CivitasFrontend2026}, consultados em setembro de 2026. O backend foi considerado a fonte de verdade para entidades, relacionamentos, contratos HTTP, autenticação e regras de negócio; o frontend foi utilizado para confirmar páginas, operações de interface, consultas, filtros, paginação, exportação e painel gerencial. Essa decisão evita que telas ainda não sustentadas pela API sejam apresentadas como funcionalidades concluídas.
+No Civitas, sistema web voltado ao apoio à gestão pública municipal, a modelagem apresentada neste capítulo organiza o domínio administrativo e financeiro, os perfis de acesso e as funcionalidades associadas a cada perfil. Também são apresentados diagramas comportamentais do módulo de usuários, cuja finalidade é explicitar tanto a colaboração entre as camadas da aplicação quanto o fluxo de atividade relacionado ao cadastro.
 
 \section{Diagrama de Classes}
+
 \label{sec:diagrama-classes}
 
-O Diagrama de Classes apresenta a visão estática consolidada do domínio do Civitas. A Figura~\ref{fig:diagrama-classes-civitas-atualizado}, fornecida pela equipe do projeto, registra entidades administrativas, financeiras e de auditoria, seus atributos, enumerações e multiplicidades. Controllers, Services, DTOs e Repositories não aparecem nessa figura porque representam componentes arquiteturais, e não entidades do domínio persistido.
+O diagrama de classes é empregado para representar a visão estática de um sistema, evidenciando classes, atributos, relacionamentos e multiplicidades. Na Figura~\ref{fig:diagrama-classes-civitas-atualizado}, o modelo do Civitas está organizado em torno de entidades persistentes relacionadas à estrutura administrativa, ao planejamento orçamentário, ao registro de despesas, à classificação de dados e à auditoria.
 
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama de Classes do sistema Civitas}
-	\label{fig:diagrama-classes-civitas-atualizado}
-	\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/Diagrama_Classes_Civitas.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
+\clearpage
+\begin{figure}[H]
+\centering
+\caption{Diagrama de classes}
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/Diagrama_Classes_Civitas.png}
+\label{fig:diagrama-classes-civitas-atualizado}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
+\clearpage
 
-A estrutura administrativa inicia-se em \textit{Secretaria}: cada secretaria pode manter nenhuma ou várias instituições, enquanto cada \textit{Instituicao} referencia exatamente uma secretaria e um \textit{TipoInstituicao}. A instituição, por sua vez, pode possuir orçamentos e despesas. Cada \textit{Orcamento} pertence a uma instituição e a um \textit{TipoDespesa}; cada \textit{Despesa} referencia obrigatoriamente uma instituição, um orçamento, um tipo de despesa, um fornecedor e o usuário responsável.
+A estrutura administrativa é composta pelas classes \textit{Secretaria}, \textit{Instituicao}, \textit{TipoInstituicao}, \textit{Fornecedor}, \textit{UnidadeConsumidora}, \textit{TipoDespesa}, \textit{UnidadeMedida} e \textit{TipoCodigo}. A classe \textit{Secretaria} relaciona-se com \textit{Instituicao}, expressando que uma secretaria pode estar associada a diversas instituições, enquanto cada instituição está vinculada a uma secretaria. A classificação institucional é representada por \textit{TipoInstituicao}, que se associa às instituições conforme a categoria adotada no cadastro.
 
-\textit{TipoDespesa} utiliza uma \textit{UnidadeMedida} e define, por meio de \textit{SolicitaUc}, se o preenchimento da unidade consumidora é necessário. O modelo fornecido também representa \textit{TipoCodigo} e \textit{UnidadeConsumidora}, conceitos utilizados no frontend para organizar códigos de consumo e seus vínculos com instituições, secretarias, fornecedores e orçamentos.
+A classe \textit{UnidadeConsumidora} estabelece a articulação entre informações administrativas e financeiras. Conforme a Figura~\ref{fig:diagrama-classes-civitas-atualizado}, ela se relaciona com \textit{Instituicao}, \textit{Secretaria}, \textit{Fornecedor}, \textit{TipoDespesa} e \textit{Orcamento}, concentrando referências necessárias para o contexto de consumo. As associações indicam que uma mesma secretaria, instituição, fornecedor, categoria de despesa ou orçamento pode estar relacionado a várias unidades consumidoras, enquanto cada unidade consumidora referencia os elementos correspondentes do seu contexto cadastral.
 
-\textit{Fluxo} registra valor pago, consumo e estado financeiro. Um fluxo pode possuir documentos, e cada \textit{Documento} referencia um fluxo e um fornecedor. O código atual não declara associação entre \textit{Fluxo} e \textit{Despesa}; por isso, essa ligação não foi inferida no diagrama. \textit{Auditoria} referencia o \textit{Usuario} responsável e armazena a operação, a entidade afetada e os valores anteriores e posteriores. As enumerações \textit{Situacao}, \textit{SolicitaUc}, \textit{Status} e \textit{TipoUsuario} restringem os estados aceitos pelas entidades.
+O planejamento financeiro é representado pela classe \textit{Orcamento}, que contém o exercício, o valor orçado e os valores de consumo mensal. A classe se associa a \textit{Instituicao} e \textit{TipoDespesa}, permitindo contextualizar a previsão orçamentária pela instituição e pela categoria da despesa.
+
+A classe \textit{Despesa} concentra informações documentais e financeiras, incluindo número e nome do documento, código, datas, valores previstos e pagos, juros, multa, desconto, consumo previsto, consumo realizado, condição financeira e valores opcionais.
+
+A Figura~\ref{fig:diagrama-classes-civitas-atualizado} representa associação direta de \textit{Despesa} com \textit{Usuario} e \textit{UnidadeConsumidora}. Assim, as referências a fornecedor, instituição, orçamento e tipo de despesa são alcançadas por meio da \textit{UnidadeConsumidora}, não sendo representadas como associações diretas de \textit{Despesa} com essas classes.
+
+A classe \textit{Usuario} reúne dados de identificação, endereço, credenciais, matrícula, perfil, situação e informações de exclusão lógica. Sua associação com \textit{Auditoria} representa que um usuário pode estar relacionado a diversos registros de auditoria, enquanto cada ocorrência de auditoria referencia um usuário. A classe \textit{Auditoria} registra dados como data, hora, operação, entidade afetada, valores atingidos e novos valores, contribuindo para a rastreabilidade das operações relevantes.
+
+O modelo também apresenta as enumerações \textit{Situacao}, \textit{SolicitaUc}, \textit{Status} e \textit{TipoUsuario}. \textit{Situacao} distingue os estados Ativo e Inativo; \textit{SolicitaUc} indica se a unidade consumidora deve ser informada; \textit{Status} classifica a condição financeira associada à despesa como A\_Pagar, Paga ou Atrasado; e \textit{TipoUsuario} identifica os perfis Visitante, Administrador e Funcionario.
+
+A exclusão lógica é representada pelos atributos \textit{Excluido} e \textit{DataExclusao} nas classes que adotam esse mecanismo. Esses atributos não se confundem com \textit{Situacao}: um registro pode estar Inativo sem ter sido logicamente excluído, pois as duas informações possuem finalidades distintas no modelo.
 
 \section{Dicionário de Classes}
+
 \label{sec:dicionario-classes}
 
-O dicionário a seguir reproduz os nomes e tipos declarados nas classes C\# do backend. Chaves estrangeiras são identificadas explicitamente, e propriedades de navegação e coleções são descritas porque materializam os relacionamentos apresentados na Figura~\ref{fig:diagrama-classes-civitas-atualizado}.
+O dicionário de classes complementa a Figura~\ref{fig:diagrama-classes-civitas-atualizado} ao detalhar os atributos, tipos e finalidades das entidades e enumerações presentes no modelo. Os identificadores seguem o padrão Id seguido do nome da entidade. São apresentados os atributos exibidos no diagrama, incluindo os identificadores de referência e os campos utilizados na exclusão lógica. As relações entre entidades são representadas pelas associações do diagrama. Os quadros apresentam as entidades persistentes do domínio, seguidas pelas enumerações utilizadas para representar estados, perfis e regras de classificação.
 
-\newcommand{\dicionariocivitas}[3]{%
-{\small
-\begin{longquadro}{|P{0.25\textwidth}|P{0.20\textwidth}|P{0.45\textwidth}|}
-	\caption{Dicionário de dados de #1}
-	\label{#2}\\
-	\hline
-	\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
-	\endfirsthead
-	\multicolumn{3}{c}{Quadro~\thequadro{} -- continuação} \\
-	\hline
-	\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
-	\endhead
-	\multicolumn{3}{r}{\textit{Continua na próxima página}}\\
-	\endfoot
-	\hline
-	\multicolumn{3}{l}{\textit{Fonte: elaborado pelos autores com base no código-fonte do Civitas (2026).}}\\
-	\endlastfoot
-	#3
-\end{longquadro}
-}}
+A entidade \textit{TipoDespesa} define as categorias utilizadas na classificação dos gastos. Além de sua descrição e situação, o registro mantém a unidade de medida correspondente, o tipo de código, a indicação relacionada à unidade consumidora e as associações mantidas com fornecedores, orçamentos e unidades consumidoras.
 
-\dicionariocivitas{Secretaria}{quad:dict-secretaria}{
-IdSecretaria & int & Chave primária da secretaria. \\ \hline
-Situacao & Situacao & Indica se o cadastro está ativo ou inativo. \\ \hline
-Descricao & string & Descrição institucional da secretaria. \\ \hline
-Cnpj & string & CNPJ da secretaria. \\ \hline
-Nome & string & Nome de exibição da secretaria. \\ \hline
-Logradouro & string & Logradouro da sede. \\ \hline
-Numero & string & Número do endereço. \\ \hline
-Bairro & string & Bairro da sede. \\ \hline
-Cep & string & Código de Endereçamento Postal. \\ \hline
-NomeRazaoSocial & string & Razão social. \\ \hline
-Email & string & E-mail institucional. \\ \hline
-Telefone & string & Telefone de contato. \\ \hline
-Cidade & string & Cidade da sede. \\ \hline
-Estado & string & Unidade federativa. \\ \hline
-Instituicoes & ICollection$<$Instituicao$>$ & Instituições subordinadas à secretaria. \\
-}
-
-\dicionariocivitas{TipoInstituicao}{quad:dict-tipo-instituicao}{
-Id & int & Chave primária do tipo de instituição. \\ \hline
-Descricao & string & Nome ou descrição da categoria. \\ \hline
-Situacao & Situacao & Indica se a categoria está ativa ou inativa. \\ \hline
-Instituicoes & ICollection$<$Instituicao$>$ & Instituições classificadas por este tipo. \\
-}
-
-\dicionariocivitas{Instituicao}{quad:dict-instituicao}{
-Id & int & Chave primária da instituição. \\ \hline
-CNPJ & string & CNPJ da instituição. \\ \hline
-Nome & string & Nome de exibição. \\ \hline
-Logradouro & string & Logradouro do endereço. \\ \hline
-Numero & string & Número do endereço. \\ \hline
-Bairro & string & Bairro. \\ \hline
-CEP & string & Código de Endereçamento Postal. \\ \hline
-NomeRazaoSocial & string & Razão social. \\ \hline
-Telefone & string & Telefone de contato. \\ \hline
-Email & string & E-mail institucional. \\ \hline
-Cidade & string & Cidade. \\ \hline
-Estado & string & Unidade federativa. \\ \hline
-Situacao & Situacao & Indica se o cadastro está ativo ou inativo. \\ \hline
-IdTipoInstituicao & int & Chave estrangeira obrigatória de TipoInstituicao. \\ \hline
-TipoInstituicao & TipoInstituicao & Navegação para a categoria da instituição. \\ \hline
-IdSecretaria & int & Chave estrangeira obrigatória de Secretaria. \\ \hline
-Secretaria & Secretaria & Navegação para a secretaria responsável. \\ \hline
-Orcamento & ICollection$<$Orcamento$>$ & Orçamentos associados à instituição. \\ \hline
-Despesas & ICollection$<$Despesa$>$ & Despesas associadas à instituição. \\
-}
-
-\dicionariocivitas{UnidadeMedida}{quad:dict-unidade-medida}{
-Id & int & Chave primária da unidade de medida. \\ \hline
-Descricao & string & Nome completo da unidade. \\ \hline
-Abreviatura & string & Símbolo ou abreviatura. \\ \hline
-Situacao & Situacao & Indica se a unidade está ativa ou inativa. \\ \hline
-TiposDespesas & ICollection$<$TipoDespesa$>$ & Tipos de despesa que utilizam a unidade. \\
-}
-
-\dicionariocivitas{TipoDespesa}{quad:dict-tipo-despesa}{
-Id & int & Chave primária do tipo de despesa. \\ \hline
-Descricao & string & Descrição da categoria de gasto. \\ \hline
-IdUnidadeMedida & int & Chave estrangeira obrigatória de UnidadeMedida. \\ \hline
-UnidadeMedida & UnidadeMedida & Navegação para a unidade utilizada. \\ \hline
-SolicitaUc & SolicitaUc & Define se a UC deve ser informada na despesa. \\ \hline
-Situacao & Situacao & Indica se o tipo está ativo ou inativo. \\ \hline
-Despesas & ICollection$<$Despesa$>$ & Despesas classificadas por este tipo. \\
-}
-
-\dicionariocivitas{Fornecedor}{quad:dict-fornecedor}{
-IdFornecedor & int & Chave primária do fornecedor. \\ \hline
-NomeFantasia & string & Nome fantasia. \\ \hline
-Situacao & Situacao & Indica se o cadastro está ativo ou inativo. \\ \hline
-Cnpj & string & CNPJ único do fornecedor. \\ \hline
-Nome & string & Razão social ou nome cadastral. \\ \hline
-Logradouro & string & Logradouro do endereço. \\ \hline
-Numero & string & Número do endereço. \\ \hline
-Bairro & string & Bairro. \\ \hline
-Cep & string & Código de Endereçamento Postal. \\ \hline
-Telefone & string & Telefone de contato. \\ \hline
-Email & string & E-mail de contato. \\ \hline
-Cidade & string & Cidade. \\ \hline
-Estado & string & Unidade federativa. \\ \hline
-Documentos & ICollection$<$Documento$>$ & Documentos emitidos pelo fornecedor. \\ \hline
-Despesas & ICollection$<$Despesa$>$ & Despesas vinculadas ao fornecedor. \\
-}
-
-\dicionariocivitas{Orcamento}{quad:dict-orcamento}{
-IdOrcamento & int & Chave primária do orçamento. \\ \hline
-AnoOrcamento & int & Exercício do orçamento. \\ \hline
-ValorOrcamento & double & Valor planejado. \\ \hline
-IdInstituicao & int & Chave estrangeira obrigatória de Instituicao. \\ \hline
-Instituicao & Instituicao? & Navegação para a instituição responsável. \\ \hline
-IdTipoDespesa & int & Chave estrangeira obrigatória de TipoDespesa. \\ \hline
-TipoDespesa & TipoDespesa? & Navegação para a categoria orçamentária. \\ \hline
-Despesas & ICollection$<$Despesa$>$ & Despesas que consomem o orçamento. \\
-}
-
-\dicionariocivitas{Despesa}{quad:dict-despesa}{
-Id & int & Chave primária da despesa. \\ \hline
-NumeroDocumento & string & Número obrigatório do documento; deve conter somente dígitos. \\ \hline
-UC & string & Código textual da unidade consumidora, obrigatório conforme TipoDespesa. \\ \hline
-DataEmissao & string & Data de emissão normalizada pelo serviço para dia-mês-ano. \\ \hline
-ConsumoPrevisto & double & Quantidade de consumo prevista, não negativa. \\ \hline
-DataVencimento & DateOnly & Data de vencimento, igual ou posterior à emissão. \\ \hline
-Situacao & Situacao & Indica se o registro está ativo ou inativo. \\ \hline
-IdTipoDespesa & int & Chave estrangeira obrigatória de TipoDespesa. \\ \hline
-TipoDespesa & TipoDespesa & Navegação para a categoria da despesa. \\ \hline
-IdOrcamento & int & Chave estrangeira obrigatória de Orcamento. \\ \hline
-Orcamento & Orcamento & Navegação para o orçamento utilizado. \\ \hline
-IdInstituicao & int & Chave estrangeira obrigatória de Instituicao. \\ \hline
-Instituicao & Instituicao & Navegação para a instituição responsável. \\ \hline
-IdFornecedor & int & Chave estrangeira obrigatória de Fornecedor. \\ \hline
-Fornecedor & Fornecedor & Navegação para o fornecedor. \\ \hline
-IdUsuario & int & Chave estrangeira obrigatória de Usuario. \\ \hline
-Usuario & Usuario & Navegação para o autor do lançamento. \\
-}
-
-\dicionariocivitas{Fluxo}{quad:dict-fluxo}{
-IdFluxo & int & Chave primária do fluxo financeiro. \\ \hline
-ValorPago & float & Valor efetivamente pago. \\ \hline
-Consumo & int & Consumo realizado. \\ \hline
-Status & Status & Estado financeiro do fluxo. \\ \hline
-Documentos & ICollection$<$Documento$>$ & Documentos vinculados ao fluxo. \\
-}
-
-\dicionariocivitas{Documento}{quad:dict-documento}{
-IdDocumento & int & Chave primária do documento. \\ \hline
-Digitalizacao & byte[] & Conteúdo binário digitalizado. \\ \hline
-NumeroDocumento & int & Número de identificação do documento. \\ \hline
-IdFornecedor & int & Chave estrangeira obrigatória de Fornecedor. \\ \hline
-Fornecedor & Fornecedor & Navegação para o emissor. \\ \hline
-IdFluxo & int & Chave estrangeira obrigatória de Fluxo. \\ \hline
-Fluxo & Fluxo & Navegação para o fluxo comprovado. \\
-}
-
-\dicionariocivitas{Usuario}{quad:dict-usuario}{
-Id & int & Chave primária do usuário. \\ \hline
-Cpf & string & CPF único do usuário. \\ \hline
-Nome & string & Nome completo. \\ \hline
-Rg & string & Registro Geral. \\ \hline
-Logradouro & string & Logradouro residencial. \\ \hline
-Numero & string & Número do endereço. \\ \hline
-Cidade & string & Cidade. \\ \hline
-Estado & string & Unidade federativa. \\ \hline
-Cep & string & Código de Endereçamento Postal. \\ \hline
-Bairro & string & Bairro. \\ \hline
-Email & string & E-mail único utilizado no login. \\ \hline
-Senha & string & Hash da senha gerado com BCrypt. \\ \hline
-Matricula & string & Matrícula única do usuário. \\ \hline
-TipoUsuario & TipoUsuario & Perfil nominal do cadastro. \\ \hline
-Situacao & Situacao & Determina se o acesso está liberado. \\ \hline
-Despesas & ICollection$<$Despesa$>$ & Despesas lançadas pelo usuário. \\
-}
-
-\dicionariocivitas{Auditoria}{quad:dict-auditoria}{
-Id & int & Chave primária do registro de auditoria. \\ \hline
-Data & string & Data informada para a ocorrência. \\ \hline
-Hora & string & Horário informado para a ocorrência. \\ \hline
-Operacao & string & Operação executada. \\ \hline
-NomeEntidade & string & Entidade afetada. \\ \hline
-ValoresAtingidos & string & Valores anteriores ou atingidos. \\ \hline
-NovosValores & string & Valores resultantes da operação. \\ \hline
-Situacao & Situacao & Indica se o registro está ativo ou inativo. \\ \hline
-UsuarioId & int & Chave estrangeira obrigatória de Usuario. \\ \hline
-Usuario & Usuario? & Navegação para o responsável pela ocorrência. \\
-}
-
-\dicionariocivitas{enumeração Situacao}{quad:dict-enum-situacao}{
-ATIVO & int (1) & Cadastro disponível para uso. \\ \hline
-INATIVO & int (2) & Cadastro indisponível para novas operações. \\
-}
-
-\dicionariocivitas{enumeração SolicitaUc}{quad:dict-enum-solicita-uc}{
-Sim & int (1) & Exige o preenchimento de UC na despesa. \\ \hline
-Não & int (2) & Não exige o preenchimento de UC. \\
-}
-
-\dicionariocivitas{enumeração Status}{quad:dict-enum-status}{
-a\_pagar & int (1) & Fluxo ainda pendente de pagamento. \\ \hline
-paga & int (2) & Fluxo pago. \\ \hline
-atrasado & int (3) & Fluxo em atraso. \\
-}
-
-\dicionariocivitas{enumeração TipoUsuario}{quad:dict-enum-tipo-usuario}{
-VISITANTE & int (1) & Perfil nominal visitante. \\ \hline
-ADMINISTRADOR & int (2) & Perfil nominal administrador. \\ \hline
-FUNCIONARIO & int (3) & Perfil nominal funcionário. \\
-}
-
-\iffalse
-\section{Definição de Atores}
-\label{sec:definicao-atores}
-
-Os atores representam papéis externos que interagem com o sistema, e não componentes internos da aplicação. O código define os valores Visitante, Administrador e Funcionário na enumeração \textit{TipoUsuario}. Entretanto, na versão examinada, todas as rotas de negócio utilizam apenas o atributo \texttt{[Authorize]}, sem políticas ou restrições por papel, e o frontend também não oculta páginas conforme o tipo do usuário. Assim, os três perfis especializam o ator \textit{Usuário autenticado} e possuem tecnicamente o mesmo alcance depois do login. Essa constatação é importante para que o modelo descreva o software atual, sem atribuir controles ainda não implementados.
-
-\begin{quadro}[H]
-	\centering
-	\caption{Definição dos atores do Civitas}
-	\label{quad:atores-civitas}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.20\textwidth}|X|X|}
-		\hline
-		\textbf{Ator} & \textbf{Responsabilidade no domínio} & \textbf{Permissões e limitações implementadas} \\ \hline
-		Administrador & Perfil destinado à administração dos cadastros, usuários, configurações e rotinas financeiras. & Precisa possuir cadastro ativo e autenticar-se. O tipo é transportado no JWT, mas ainda não restringe endpoints ou páginas. \\ \hline
-		Funcionário & Perfil operacional destinado à manutenção cotidiana de instituições, fornecedores, orçamentos, despesas, fluxos e documentos. & Submete-se às mesmas exigências de autenticação do administrador; não há autorização técnica que limite seu acesso a um subconjunto. \\ \hline
-		Visitante & Perfil nominal de acesso limitado previsto pela enumeração do domínio. & Quando possui conta ativa e se autentica, recebe o mesmo acesso técnico aos recursos protegidos. Não existe área pública de consulta nem regra RBAC específica no código atual. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{quadro}
-
-\begin{figure}[H]
-	\centering
-	\caption{Diagrama de Atores do sistema Civitas}
-	\label{fig:atores-civitas-atualizado}
-	\includegraphics[width=0.92\textwidth]{figs/Atores_Civitas_Atualizado.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-\section{Casos de Uso}
-\label{sec:casos-uso}
-
-Os casos de uso foram derivados dos controllers da API e das páginas e operações efetivamente disponíveis no frontend. O termo \textit{gerenciar} reúne as operações implementadas para cada recurso, que podem variar entre cadastrar, listar, consultar, atualizar e alterar situação. A exclusão física não é atribuída quando o controller oferece apenas alternância entre \textit{ATIVO} e \textit{INATIVO}.
-
+\begingroup
 \small
-\begin{longquadro}{|p{0.07\textwidth}|p{0.20\textwidth}|p{0.25\textwidth}|p{0.38\textwidth}|}
-	\caption{Casos de uso comuns aos usuários autenticados}
-	\label{quad:casos-uso-autenticados}\\
-	\hline
-	\textbf{ID} & \textbf{Caso de uso} & \textbf{Entrada principal} & \textbf{Resposta esperada} \\ \hline
-	\endfirsthead
-	\multicolumn{4}{c}{Quadro~\thequadro{} -- continuação} \\
-	\hline
-	\textbf{ID} & \textbf{Caso de uso} & \textbf{Entrada principal} & \textbf{Resposta esperada} \\ \hline
-	\endhead
-	UC01 & Realizar login & E-mail e senha & Token JWT, expiração e identificação do usuário ativo. \\ \hline
-	UC02 & Encerrar sessão & Ação de saída & Dados locais da sessão removidos e retorno ao login. \\ \hline
-	UC03 & Consultar painel gerencial & Sessão autenticada & Indicadores, despesas recentes e vencimentos apresentados pela interface. \\ \hline
-	UC04 & Consultar perfil & Identificador do usuário da sessão & Dados cadastrais e tipo de usuário. \\ \hline
-	UC05 & Gerenciar usuários & Dados pessoais, endereço, matrícula, perfil e situação & Cadastro, consulta, atualização ou alteração de situação. \\ \hline
-	UC06 & Gerenciar secretarias & Dados institucionais, endereço e situação & Cadastro, listagem paginada, consulta, atualização ou alteração de situação. \\ \hline
-	UC07 & Gerenciar instituições & Dados institucionais, secretaria e tipo de instituição & Cadastro, consulta por ID ou nome, atualização ou alteração de situação. \\ \hline
-	UC08 & Gerenciar fornecedores & Dados fiscais, endereço, contato e situação & Cadastro validado, consulta, atualização ou alteração de situação. \\ \hline
-	UC09 & Gerenciar configurações & Tipo de instituição, tipo de despesa ou unidade de medida & Manutenção dos cadastros auxiliares e de suas situações. \\ \hline
-	UC10 & Gerenciar orçamentos & Ano, valor, instituição e tipo de despesa & Cadastro, consulta e atualização do orçamento. \\ \hline
-	UC11 & Gerenciar despesas & Documento, datas, consumo, UC e referências & Cadastro validado, consulta, atualização ou alteração de situação. \\ \hline
-	UC12 & Gerenciar fluxos financeiros & Valor pago, consumo e status & Cadastro, consulta, atualização ou alteração do status. \\ \hline
-	UC13 & Gerenciar documentos & Digitalização, número, fornecedor e fluxo & Cadastro, consulta ou atualização do documento. \\ \hline
-	UC14 & Consultar auditorias & Paginação ou filtros de usuário, entidade e operação & Registros de auditoria correspondentes. \\ \hline
-	UC15 & Consultar listagens & Busca, filtros, ordenação, colunas e página & Recorte solicitado apresentado na tabela ou em cartões. \\ \hline
-	UC16 & Exportar listagem & Formato PDF ou XLSX e visualização atual & Arquivo gerado no navegador com dados e colunas selecionados. \\
-	\hline
-	\multicolumn{4}{l}{\textit{Fonte: elaborado pelos autores com base no código-fonte do Civitas (2026).}}\\
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade TipoDespesa}\label{qua:cap3-1}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade TipoDespesa (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Despesa} & \texttt{int} & Identificador único do tipo de despesa. \\ \hline
+\texttt{Descricao} & \texttt{string} & Descrição da categoria de despesa. \\ \hline
+\texttt{Id\allowbreak{}Unidade\allowbreak{}Medida} & \texttt{int} & Identificador da unidade de medida associada. \\ \hline
+\texttt{Solicita\allowbreak{}Uc} & \texttt{Solicita\allowbreak{}Uc} & Indica se a unidade consumidora deve ser informada. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Codigo} & \texttt{int} & Identificador do tipo de código associado. \\ \hline
+\texttt{Campos\allowbreak{}Opcionais} & \texttt{string?} & Informações opcionais previstas para o tipo de despesa. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
 \end{longquadro}
-\normalsize
+\endgroup
 
-O Quadro~\ref{quad:casos-uso-por-ator} relaciona os casos aos três perfis. A igualdade técnica entre as linhas não é uma regra de negócio proposta: ela documenta a ausência atual de RBAC. Uma evolução futura deverá adicionar políticas no backend e proteção equivalente no frontend antes que permissões distintas possam ser afirmadas.
+A entidade \textit{UnidadeMedida} padroniza a forma de mensuração empregada pelos tipos de despesa. A descrição e a abreviatura permitem identificar a unidade utilizada nos registros de consumo, enquanto sua associação com tipos de despesa representa a reutilização dessa classificação.
 
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade UnidadeMedida}\label{qua:cap3-2}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade UnidadeMedida (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Unidade\allowbreak{}Medida} & \texttt{int} & Identificador único da unidade de medida. \\ \hline
+\texttt{Descricao} & \texttt{string} & Nome da unidade de medida. \\ \hline
+\texttt{Abreviatura} & \texttt{string} & Abreviatura da unidade. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Fornecedor} representa empresas ou prestadores relacionados às atividades administrativas e financeiras do Civitas. O cadastro reúne identificação comercial, informações fiscais, endereço, contato, tipo de despesa e unidades consumidoras vinculadas.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Fornecedor}\label{qua:cap3-3}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Fornecedor (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Fornecedor} & \texttt{int} & Identificador único do fornecedor. \\ \hline
+\texttt{Nome\allowbreak{}Fantasia} & \texttt{string} & Nome fantasia do fornecedor. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Cnpj} & \texttt{string} & Cadastro Nacional da Pessoa Jurídica. \\ \hline
+\texttt{Nome} & \texttt{string} & Nome ou razão social. \\ \hline
+\texttt{Logradouro} & \texttt{string} & Logradouro do endereço. \\ \hline
+\texttt{Numero} & \texttt{string} & Número do endereço. \\ \hline
+\texttt{Bairro} & \texttt{string} & Bairro do endereço. \\ \hline
+\texttt{Cep} & \texttt{string} & Código de Endereçamento Postal. \\ \hline
+\texttt{Telefone} & \texttt{string} & Telefone para contato. \\ \hline
+\texttt{Email} & \texttt{string} & Endereço eletrônico. \\ \hline
+\texttt{Cidade} & \texttt{string} & Cidade do fornecedor. \\ \hline
+\texttt{Estado} & \texttt{string} & Unidade federativa. \\ \hline
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Despesa} & \texttt{int} & Identificador do tipo de despesa. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Secretaria} representa um órgão administrativo municipal. O registro concentra dados de identificação, endereço e contato e mantém associação com as instituições vinculadas à secretaria.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Secretaria}\label{qua:cap3-4}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Secretaria (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Secretaria} & \texttt{int} & Identificador único da secretaria. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Descricao} & \texttt{string} & Descrição da secretaria. \\ \hline
+\texttt{Cnpj} & \texttt{string} & Cadastro Nacional da Pessoa Jurídica. \\ \hline
+\texttt{Nome} & \texttt{string} & Nome da secretaria. \\ \hline
+\texttt{Logradouro} & \texttt{string} & Logradouro do endereço. \\ \hline
+\texttt{Numero} & \texttt{string} & Número do endereço. \\ \hline
+\texttt{Bairro} & \texttt{string} & Bairro do endereço. \\ \hline
+\texttt{Cep} & \texttt{string} & Código de Endereçamento Postal. \\ \hline
+\texttt{Nome\allowbreak{}Razao\allowbreak{}Social} & \texttt{string} & Nome ou razão social. \\ \hline
+\texttt{Email} & \texttt{string} & Endereço eletrônico institucional. \\ \hline
+\texttt{Telefone} & \texttt{string} & Telefone de contato. \\ \hline
+\texttt{Cidade} & \texttt{string} & Cidade da secretaria. \\ \hline
+\texttt{Estado} & \texttt{string} & Unidade federativa. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{TipoInstituicao} classifica as instituições cadastradas segundo sua natureza ou finalidade. Uma mesma classificação pode ser reutilizada por diversas instituições.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade TipoInstituicao}\label{qua:cap3-5}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade TipoInstituicao (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Instituicao} & \texttt{int} & Identificador único do tipo de instituição. \\ \hline
+\texttt{Descricao} & \texttt{string} & Descrição da classificação. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Instituicao} representa uma unidade administrativa vinculada a uma secretaria e classificada por um tipo de instituição. Seus dados abrangem identificação, endereço, contato, situação e as relações mantidas com orçamentos e unidades consumidoras.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Instituicao}\label{qua:cap3-6}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Instituicao (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Instituicao} & \texttt{int} & Identificador único da instituição. \\ \hline
+\texttt{Cnpj} & \texttt{string} & Cadastro Nacional da Pessoa Jurídica. \\ \hline
+\texttt{Nome} & \texttt{string} & Nome da instituição. \\ \hline
+\texttt{Logradouro} & \texttt{string} & Logradouro do endereço. \\ \hline
+\texttt{Numero} & \texttt{string} & Número do endereço. \\ \hline
+\texttt{Bairro} & \texttt{string} & Bairro da instituição. \\ \hline
+\texttt{Cep} & \texttt{string} & Código de Endereçamento Postal. \\ \hline
+\texttt{Nome\allowbreak{}Razao\allowbreak{}Social} & \texttt{string} & Nome ou razão social. \\ \hline
+\texttt{Telefone} & \texttt{string} & Telefone de contato. \\ \hline
+\texttt{Email} & \texttt{string} & Endereço eletrônico. \\ \hline
+\texttt{Cidade} & \texttt{string} & Cidade da instituição. \\ \hline
+\texttt{Estado} & \texttt{string} & Unidade federativa. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Instituicao} & \texttt{int} & Identificador do tipo de instituição. \\ \hline
+\texttt{Id\allowbreak{}Secretaria} & \texttt{int} & Identificador da secretaria responsável. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{UnidadeConsumidora} conecta informações administrativas, orçamentárias e financeiras. Ela mantém referências à instituição, ao tipo de despesa, à secretaria, ao orçamento e ao fornecedor. Sua associação com despesas estabelece o caminho pelo qual os registros financeiros alcançam essas informações.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade UnidadeConsumidora}\label{qua:cap3-7}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade UnidadeConsumidora (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Unidade\allowbreak{}Consumidora} & \texttt{int} & Identificador único da unidade consumidora. \\ \hline
+\texttt{Identificador} & \texttt{string} & Código ou identificação da unidade consumidora. \\ \hline
+\texttt{Id\allowbreak{}Instituicao} & \texttt{int} & Identificador da instituição. \\ \hline
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Despesa} & \texttt{int} & Identificador do tipo de despesa. \\ \hline
+\texttt{Id\allowbreak{}Secretaria} & \texttt{int} & Identificador da secretaria. \\ \hline
+\texttt{Id\allowbreak{}Orcamento} & \texttt{int} & Identificador do orçamento. \\ \hline
+\texttt{Id\allowbreak{}Fornecedor} & \texttt{int} & Identificador do fornecedor. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Orcamento} representa o planejamento dos recursos destinados a uma instituição e a um tipo de despesa em determinado exercício. O modelo registra o valor orçamentário e, separadamente, as quantidades e os valores de consumo previstos para cada mês do ano.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Orcamento}\label{qua:cap3-8}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Orcamento (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Orcamento} & \texttt{int} & Identificador único do orçamento. \\ \hline
+\texttt{Ano\allowbreak{}Orcamento} & \texttt{int} & Ano de referência do orçamento. \\ \hline
+\texttt{Valor\allowbreak{}Orcamento} & \texttt{decimal?} & Valor total previsto para o orçamento. \\ \hline
+\texttt{Janeiro\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para janeiro. \\ \hline
+\texttt{Janeiro\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para janeiro. \\ \hline
+\texttt{Fevereiro\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para fevereiro. \\ \hline
+\texttt{Fevereiro\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para fevereiro. \\ \hline
+\texttt{Marco\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para março. \\ \hline
+\texttt{Marco\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para março. \\ \hline
+\texttt{Abril\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para abril. \\ \hline
+\texttt{Abril\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para abril. \\ \hline
+\texttt{Maio\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para maio. \\ \hline
+\texttt{Maio\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para maio. \\ \hline
+\texttt{Junho\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para junho. \\ \hline
+\texttt{Junho\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para junho. \\ \hline
+\texttt{Julho\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para julho. \\ \hline
+\texttt{Julho\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para julho. \\ \hline
+\texttt{Agosto\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para agosto. \\ \hline
+\texttt{Agosto\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para agosto. \\ \hline
+\texttt{Setembro\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para setembro. \\ \hline
+\texttt{Setembro\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para setembro. \\ \hline
+\texttt{Outubro\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para outubro. \\ \hline
+\texttt{Outubro\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para outubro. \\ \hline
+\texttt{Novembro\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para novembro. \\ \hline
+\texttt{Novembro\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para novembro. \\ \hline
+\texttt{Dezembro\allowbreak{}Quantidade\allowbreak{}Consumo} & \texttt{decimal?} & Quantidade de consumo prevista para dezembro. \\ \hline
+\texttt{Dezembro\allowbreak{}Valor\allowbreak{}Consumo} & \texttt{decimal?} & Valor de consumo previsto para dezembro. \\ \hline
+\texttt{Id\allowbreak{}Instituicao} & \texttt{int} & Identificador da instituição. \\ \hline
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Despesa} & \texttt{int} & Identificador do tipo de despesa. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Despesa} representa a execução financeira registrada no Civitas. Além dos valores e das datas relacionados à obrigação, a classe incorpora os metadados documentais e mantém associações diretas somente com o usuário responsável e com a unidade consumidora.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Despesa}\label{qua:cap3-9}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Despesa (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Despesa} & \texttt{int} & Identificador único da despesa. \\ \hline
+\texttt{Numero\allowbreak{}Documento} & \texttt{string} & Número do documento associado. \\ \hline
+\texttt{Nome\allowbreak{}Documento} & \texttt{string?} & Nome do documento, quando informado. \\ \hline
+\texttt{Hash\allowbreak{}Documento} & \texttt{string?} & Hash associado ao documento, quando existente. \\ \hline
+\texttt{Codigo} & \texttt{string} & Código relacionado à despesa. \\ \hline
+\texttt{Data\allowbreak{}Emissao} & \texttt{Date\allowbreak{}Only} & Data de emissão. \\ \hline
+\texttt{Valor\allowbreak{}Previsto} & \texttt{decimal} & Valor previsto. \\ \hline
+\texttt{Valor\allowbreak{}Pago} & \texttt{decimal} & Valor efetivamente pago. \\ \hline
+\texttt{Juros} & \texttt{decimal} & Valor de juros. \\ \hline
+\texttt{Multa} & \texttt{decimal} & Valor de multa. \\ \hline
+\texttt{Desconto} & \texttt{decimal} & Valor de desconto. \\ \hline
+\texttt{Consumo\allowbreak{}Previsto} & \texttt{decimal} & Consumo previsto. \\ \hline
+\texttt{Consumo\allowbreak{}Real} & \texttt{decimal} & Consumo realizado. \\ \hline
+\texttt{Data\allowbreak{}Vencimento} & \texttt{Date\allowbreak{}Only} & Data de vencimento. \\ \hline
+\texttt{Data\allowbreak{}Pagamento} & \texttt{Date\allowbreak{}Only?} & Data do pagamento, quando existente. \\ \hline
+\texttt{Status} & \texttt{Status} & Condição financeira associada à despesa. \\ \hline
+\texttt{Id\allowbreak{}Usuario} & \texttt{int} & Identificador do usuário responsável. \\ \hline
+\texttt{Id\allowbreak{}Unidade\allowbreak{}Consumidora} & \texttt{int} & Identificador da unidade consumidora. \\ \hline
+\texttt{Valores\allowbreak{}Opcionais} & \texttt{string?} & Informações opcionais relacionadas à despesa. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Usuario} representa as pessoas cadastradas para utilização do Civitas. O registro reúne dados pessoais, endereço, credenciais, matrícula, perfil funcional, situação, despesas relacionadas e informações de exclusão lógica.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Usuario}\label{qua:cap3-10}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Usuario (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Usuario} & \texttt{int} & Identificador único do usuário. \\ \hline
+\texttt{Cpf} & \texttt{string} & Cadastro de Pessoa Física. \\ \hline
+\texttt{Nome} & \texttt{string} & Nome completo. \\ \hline
+\texttt{Rg} & \texttt{string} & Registro Geral. \\ \hline
+\texttt{Logradouro} & \texttt{string} & Logradouro do endereço. \\ \hline
+\texttt{Numero} & \texttt{string} & Número do endereço. \\ \hline
+\texttt{Cidade} & \texttt{string} & Cidade do usuário. \\ \hline
+\texttt{Estado} & \texttt{string} & Unidade federativa. \\ \hline
+\texttt{Cep} & \texttt{string} & Código de Endereçamento Postal. \\ \hline
+\texttt{Bairro} & \texttt{string} & Bairro do usuário. \\ \hline
+\texttt{Email} & \texttt{string} & Endereço eletrônico utilizado no acesso. \\ \hline
+\texttt{Senha} & \texttt{string} & Valor armazenado em formato protegido para autenticação. \\ \hline
+\texttt{Matricula} & \texttt{string} & Matrícula funcional. \\ \hline
+\texttt{Tipo\allowbreak{}Usuario} & \texttt{Tipo\allowbreak{}Usuario} & Perfil funcional do usuário. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação funcional do cadastro. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{Auditoria} registra operações relevantes realizadas no sistema. Seus atributos identificam quando a ação ocorreu, qual operação foi executada, qual entidade foi afetada, quais valores foram atingidos, quais novos valores foram registrados e qual usuário está associado ao evento.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade Auditoria}\label{qua:cap3-11}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade Auditoria (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Auditoria} & \texttt{int} & Identificador único do registro de auditoria. \\ \hline
+\texttt{Data} & \texttt{string} & Data da operação. \\ \hline
+\texttt{Hora} & \texttt{string} & Hora da operação. \\ \hline
+\texttt{Operacao} & \texttt{string} & Operação executada. \\ \hline
+\texttt{Nome\allowbreak{}Entidade} & \texttt{string} & Nome da entidade afetada. \\ \hline
+\texttt{Valores\allowbreak{}Atingidos} & \texttt{string} & Valores atingidos pela operação. \\ \hline
+\texttt{Novos\allowbreak{}Valores} & \texttt{string} & Novos valores registrados. \\ \hline
+\texttt{Situacao} & \texttt{Situacao} & Situação do registro. \\ \hline
+\texttt{Id\allowbreak{}Usuario} & \texttt{int} & Identificador do usuário associado. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A entidade \textit{TipoCodigo} classifica códigos utilizados pelos tipos de despesa. O cadastro mantém nome e descrição e pode ser associado a diversos registros de \textit{TipoDespesa}.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.31\larguracolunascivitas}|P{0.3\larguracolunascivitas}|P{0.39\larguracolunascivitas}|}
+\caption{Dicionário de dados da entidade TipoCodigo}\label{qua:cap3-12}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+\caption[]{Dicionário de dados da entidade TipoCodigo (continuação)}\\
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+\texttt{Id\allowbreak{}Tipo\allowbreak{}Codigo} & \texttt{int} & Identificador único do tipo de código. \\ \hline
+\texttt{Nome} & \texttt{string} & Nome do tipo de código. \\ \hline
+\texttt{Descricao} & \texttt{string} & Descrição da classificação. \\ \hline
+\texttt{Excluido} & \texttt{bool} & Indica se o registro está excluído logicamente. \\ \hline
+\texttt{Data\allowbreak{}Exclusao} & \texttt{Date\allowbreak{}Time?} & Data da exclusão lógica, quando existente. \\ \hline
+\end{longquadro}
+\endgroup
+
+A enumeração \textit{Situacao} representa a condição funcional dos cadastros. Seus valores não substituem os atributos utilizados na exclusão lógica.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
 \begin{quadro}[H]
-	\centering
-	\caption{Casos de uso disponíveis por ator na implementação atual}
-	\label{quad:casos-uso-por-ator}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.20\textwidth}|X|}
-		\hline
-		\textbf{Ator} & \textbf{Casos de uso disponíveis} \\ \hline
-		Administrador & UC01 a UC16, desde que o cadastro esteja ativo e a requisição autenticada. \\ \hline
-		Funcionário & UC01 a UC16, nas mesmas condições técnicas do administrador. \\ \hline
-		Visitante & UC01 a UC16 quando possui conta ativa; o código não implementa restrição adicional para este valor de perfil. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
+\centering
+\caption{Dicionário de dados do enum Situacao}\label{qua:cap3-13}
+\begin{tabular}{|P{0.31\larguracolunascivitas}|P{0.15\larguracolunascivitas}|P{0.54\larguracolunascivitas}|}
+\hline
+\textbf{Valor} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+Ativo & int & Registro em situação ativa. \\ \hline
+Inativo & int & Registro em situação inativa. \\ \hline
+\end{tabular}
+\fonte{Elaborado pelos autores (2026).}
 \end{quadro}
+\endgroup
 
-\section{Diagrama de Casos de Uso}
-\label{sec:diagrama-casos-uso}
+A enumeração \textit{SolicitaUc} indica se o tipo de despesa solicita a informação de unidade consumidora.
 
-O diagrama geral da Figura~\ref{fig:casos-uso-geral-civitas} utiliza generalização para evitar repetir associações idênticas dos três perfis. As relações \textit{include} aparecem somente quando o comportamento é obrigatório, como validar o JWT antes de acessar recursos protegidos e validar dados ao manter despesas. A exportação é modelada como extensão da consulta de listagens, pois ocorre opcionalmente a partir de uma visualização já preparada.
-
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama Geral de Casos de Uso do sistema Civitas}
-	\label{fig:casos-uso-geral-civitas}
-	\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/Casos_Uso_Geral_Civitas.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-O login é a única operação pública da API. Depois de autenticado, o ator pode acessar os módulos administrativos e financeiros, as listagens e o perfil. O encerramento de sessão é executado no cliente pela remoção dos dados persistidos no navegador. O painel, os filtros e a exportação são comportamentos da aplicação web; já os cadastros e consultas são suportados pelos endpoints REST correspondentes.
-
-\section{Diagrama de Casos de Uso -- Individuais}
-\label{sec:casos-uso-individuais}
-
-Foram selecionados autenticação e cadastro de despesa porque concentram regras que justificam detalhamento individual. Operações puramente repetitivas de listagem e atualização permanecem no diagrama geral.
-
-\subsection{Caso de Uso Individual -- Autenticar Usuário}
-
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
 \begin{quadro}[H]
-	\centering
-	\caption{Especificação do caso de uso UC01 -- Realizar login}
-	\label{quad:uc-login}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|X|}
-		\hline
-		\textbf{Elemento} & \textbf{Especificação} \\ \hline
-		Ator & Usuário (Administrador, Funcionário ou Visitante). \\ \hline
-		Objetivo & Obter uma sessão autenticada para acessar o ambiente interno. \\ \hline
-		Pré-condições & O usuário deve estar cadastrado, ativo e possuir senha armazenada em formato de hash BCrypt. \\ \hline
-		Fluxo principal & 1. O usuário informa e-mail e senha; 2. a interface envia os dados; 3. o serviço valida e normaliza os campos; 4. o repositório localiza o usuário; 5. o serviço confirma situação ativa e senha; 6. o sistema emite o JWT; 7. a interface armazena a sessão e abre o painel. \\ \hline
-		Fluxos alternativos & A1: campo ausente gera erro de validação. A2: usuário inexistente, inativo ou senha incorreta gera resposta 401 sem informar qual condição falhou. \\ \hline
-		Pós-condições & Token válido emitido com identificador, nome e tipo do usuário, acompanhado do horário de expiração. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
+\centering
+\caption{Dicionário de dados do enum SolicitaUc}\label{qua:cap3-14}
+\begin{tabular}{|P{0.31\larguracolunascivitas}|P{0.15\larguracolunascivitas}|P{0.54\larguracolunascivitas}|}
+\hline
+\textbf{Valor} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+Sim & int & A unidade consumidora deve ser informada. \\ \hline
+Nao & int & A unidade consumidora não é obrigatória. \\ \hline
+\end{tabular}
+\fonte{Elaborado pelos autores (2026).}
 \end{quadro}
+\endgroup
 
-\begin{figure}[H]
-	\centering
-	\caption{Diagrama individual do caso de uso Autenticar Usuário}
-	\label{fig:uc-individual-login}
-	\includegraphics[width=0.96\textwidth]{figs/UC_Autenticar_Usuario.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
+A enumeração \textit{TipoUsuario} diferencia os perfis funcionais utilizados pelo Civitas.
 
-\subsection{Caso de Uso Individual -- Cadastrar Despesa}
-
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
 \begin{quadro}[H]
-	\centering
-	\caption{Especificação do caso de uso UC11 -- Cadastrar despesa}
-	\label{quad:uc-cadastrar-despesa}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|X|}
-		\hline
-		\textbf{Elemento} & \textbf{Especificação} \\ \hline
-		Ator & Usuário autenticado. \\ \hline
-		Objetivo & Registrar uma obrigação financeira com suas referências administrativas e orçamentárias. \\ \hline
-		Pré-condições & Token válido; tipo de despesa, orçamento, instituição, fornecedor e usuário previamente cadastrados; fornecedor ativo. \\ \hline
-		Fluxo principal & 1. O ator preenche documento, datas, consumo, situação e referências; 2. o serviço normaliza os textos e valida os campos; 3. consulta as entidades relacionadas; 4. verifica a coerência entre orçamento, instituição e tipo de despesa; 5. verifica duplicidade; 6. persiste a despesa; 7. retorna confirmação. \\ \hline
-		Fluxos alternativos & A1: UC ausente quando o tipo exige UC. A2: data de emissão futura ou vencimento anterior à emissão. A3: referência inexistente ou fornecedor inativo. A4: orçamento incompatível com instituição ou tipo. A5: mesmo número de documento já cadastrado para o fornecedor. Em qualquer caso, a API retorna erro 400 e não grava o registro. \\ \hline
-		Pós-condições & Despesa persistida e relacionada às cinco entidades informadas; nenhuma alteração ocorre quando uma validação falha. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
+\centering
+\caption{Dicionário de dados do enum TipoUsuario}\label{qua:cap3-15}
+\begin{tabular}{|P{0.31\larguracolunascivitas}|P{0.15\larguracolunascivitas}|P{0.54\larguracolunascivitas}|}
+\hline
+\textbf{Valor} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+Visitante & int & Perfil destinado às consultas públicas previstas. \\ \hline
+Administrador & int & Perfil com maior abrangência administrativa. \\ \hline
+Funcionario & int & Perfil destinado às rotinas operacionais permitidas. \\ \hline
+\end{tabular}
+\fonte{Elaborado pelos autores (2026).}
 \end{quadro}
+\endgroup
 
-\begin{figure}[H]
-	\centering
-	\caption{Diagrama individual do caso de uso Cadastrar Despesa}
-	\label{fig:uc-individual-despesa}
-	\includegraphics[width=\textwidth]{figs/UC_Cadastrar_Despesa.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
+A enumeração \textit{Status} representa a condição financeira associada à despesa, utilizando os valores A\_Pagar, Paga e Atrasado.
 
-\section{Diagrama de Sequência}
-\label{sec:diagramas-sequencia}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-6\tabcolsep-4\arrayrulewidth\relax}
+\begin{quadro}[H]
+\centering
+\caption{Dicionário de dados do enum Status}\label{qua:cap3-16}
+\begin{tabular}{|P{0.31\larguracolunascivitas}|P{0.15\larguracolunascivitas}|P{0.54\larguracolunascivitas}|}
+\hline
+\textbf{Valor} & \textbf{Tipo} & \textbf{Descrição} \\ \hline
+A\_Pagar & int & Despesa que ainda aguarda pagamento. \\ \hline
+Paga & int & Despesa cujo pagamento foi realizado. \\ \hline
+Atrasado & int & Despesa vencida sem registro de pagamento. \\ \hline
+\end{tabular}
+\fonte{Elaborado pelos autores (2026).}
+\end{quadro}
+\endgroup
 
-Os diagramas de sequência evidenciam a ordem das mensagens entre ator, interface, controller, service, repository e banco de dados. As alternativas de sucesso e falha foram preservadas para refletir as respostas observáveis da API.
-
-\subsection{Autenticar Usuário}
-
-\begin{figure}[H]
-	\centering
-	\caption{Diagrama de Sequência -- Autenticar Usuário}
-	\label{fig:seq-login-civitas}
-	\includegraphics[width=\textwidth]{figs/Sequencia_Autenticar_Usuario.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-O \textit{AuthController} encaminha as credenciais ao \textit{AuthService}, que consulta o usuário por e-mail, verifica a situação e compara a senha com o hash BCrypt. Somente no fluxo válido o \textit{JwtTokenService} emite o token e a interface abre o painel.
-
-\subsection{Cadastrar Despesa}
-
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama de Sequência -- Cadastrar Despesa}
-	\label{fig:seq-despesa-civitas}
-	\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{figs/Sequencia_Cadastrar_Despesa.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-O \textit{DespesaService} concentra as regras do cadastro. Antes da inserção, ele consulta os repositórios relacionados, verifica a compatibilidade do orçamento e a unicidade do número do documento por fornecedor. Uma violação encerra o fluxo com erro 400; caso contrário, o repositório persiste a entidade.
-
-\subsection{Alterar Status de Fluxo}
-
-\begin{figure}[H]
-	\centering
-	\caption{Diagrama de Sequência -- Alterar Status de Fluxo}
-	\label{fig:seq-fluxo-civitas}
-	\includegraphics[width=\textwidth]{figs/Sequencia_Alterar_Status_Fluxo.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-O controller recebe o identificador e o novo valor de \textit{Status}. Depois de confirmar a existência do fluxo, encaminha a atualização pelas camadas de serviço e repositório. A ausência do registro produz resposta 404; a atualização confirmada retorna o novo estado.
-
-\section{Diagrama de Atividade}
-\label{sec:diagramas-atividade}
-
-Os diagramas de atividade representam decisões e retornos que não ficam evidentes em uma lista de operações. Foram escolhidos os mesmos processos críticos detalhados nas seções anteriores, mantendo rastreabilidade entre requisitos, casos de uso e comportamento.
-
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama de Atividade -- Cadastrar Despesa}
-	\label{fig:atividade-cadastrar-despesa}
-	\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{figs/Atividade_Cadastrar_Despesa.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-A atividade de cadastro percorre validações de campos, datas, referências, obrigatoriedade de UC, compatibilidade orçamentária, situação do fornecedor e duplicidade documental. Cada decisão inválida conduz a uma resposta sem persistência; somente a passagem por todas as verificações permite gravar a despesa.
-
-\begin{figure}[H]
-	\centering
-	\caption{Diagrama de Atividade -- Autenticação}
-	\label{fig:atividade-login-civitas}
-	\includegraphics[width=0.78\textwidth]{figs/Atividade_Autenticacao.png}
-	\fonte{Elaborado pelos autores com base no código-fonte do Civitas (2026).}
-\end{figure}
-
-Na autenticação, campos ausentes encerram o processo com erro de validação. Credenciais inválidas ou usuário inativo resultam em resposta não autorizada; credenciais válidas produzem o JWT e o redirecionamento ao painel. O fluxo não diferencia as causas da falha de credenciais, evitando revelar se determinado e-mail está cadastrado.
-
-\fi
+A leitura conjunta dos quadros reforça a distinção entre situação funcional e exclusão lógica. \textit{Situacao} controla os estados Ativo e Inativo, enquanto \textit{Excluido} e \textit{DataExclusao} registram a remoção lógica e sua possível reversão.
 
 \section{Definição de Atores}
+
 \label{sec:definicao-atores-civitas-final}
 
-Os atores do Civitas são Administrador, Funcionário e Visitante. Os três especializam o ator genérico Usuário, conforme a Figura~\ref{fig:atores-civitas-final}, mas possuem responsabilidades diferentes nos diagramas funcionais fornecidos pela equipe.
+Em diagramas de casos de uso, um ator representa o papel externo que interage com as funcionalidades de um sistema, não devendo ser confundido necessariamente com uma pessoa específica. No Civitas, a Figura~\ref{fig:atores-civitas-final} representa o ator mais geral \textit{Usuário} e suas especializações \textit{Administrador}, \textit{Funcionário} e \textit{Visitante} \parencite{omg2017uml,larman2005}.
 
 \begin{figure}[H]
-	\centering
-	\caption{Definição dos atores do sistema Civitas}
-	\label{fig:atores-civitas-final}
-	\includegraphics[width=0.92\textwidth]{figs/atores_civitas.png}
-	\fonte{Elaborado pelos autores (2026).}
+\centering
+\caption{Diagrama de atores}
+\includegraphics[width=0.92\textwidth]{figs/atores_civitas.png}
+\label{fig:atores-civitas-final}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-\begin{quadro}[H]
-	\centering
-	\caption{Responsabilidades dos atores do Civitas}
-	\label{quad:atores-civitas-final}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.20\textwidth}|X|X|}
-		\hline
-		\textbf{Ator} & \textbf{Responsabilidade} & \textbf{Limitações representadas} \\ \hline
-		Administrador & Mantém usuários, secretarias, fornecedores, instituições, orçamentos, despesas e configurações; consulta e registra auditorias. & Suas operações internas dependem de autenticação e validação dos dados. \\ \hline
-		Funcionário & Executa rotinas operacionais de instituições, fornecedores, despesas e unidades consumidoras, além de consultar cadastros auxiliares. & Não recebe, no diagrama fornecido, todas as operações administrativas de usuários e secretarias. \\ \hline
-		Visitante & Consulta dados disponibilizados de secretarias, instituições, fornecedores, orçamentos, despesas e configurações. & Possui acesso somente às operações de listagem, consulta e carregamento representadas em seu diagrama. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base nos diagramas do Civitas (2026).}
-\end{quadro}
+
+A generalização indica que os três perfis compartilham a condição conceitual de usuários do sistema, embora cada especialização esteja associada a um conjunto próprio de permissões e responsabilidades funcionais. O Administrador representa o perfil com maior abrangência funcional; o Funcionário corresponde ao perfil operacional; e o Visitante possui caráter exclusivamente consultivo sobre as informações públicas disponibilizadas pelo Civitas.
+
+A distinção entre os atores sustenta a organização das funcionalidades por perfil e permite representar, nos diagramas subsequentes, quais casos de uso estão associados a cada especialização.
 
 \section{Casos de Uso}
+
 \label{sec:casos-uso-civitas-final}
 
-Os casos de uso foram organizados por ator, preservando as funcionalidades dos diagramas fornecidos. Operações internas como carregar e validar representam comportamentos reutilizados durante consultas, cadastros e atualizações; elas não substituem o objetivo principal percebido pelo usuário.
+Os casos de uso descrevem serviços percebidos externamente e disponibilizados pelo sistema aos atores identificados. No Civitas, os quadros desta seção organizam as funcionalidades por perfil, indicando a entrada associada ao ator, o caso de uso correspondente e a resposta esperada, preservando a visão funcional da modelagem \parencite{omg2017uml,larman2005}.
 
-\small
-\begin{longquadro}{|p{0.08\textwidth}|p{0.18\textwidth}|p{0.28\textwidth}|p{0.36\textwidth}|}
-	\caption{Casos de uso do Visitante}
-	\label{quad:casos-uso-visitante}\\
-	\hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de uso} & \textbf{Resultado} \\ \hline
-	\endfirsthead
-	\multicolumn{4}{c}{Quadro~\thequadro{} -- continuação}\\ \hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de uso} & \textbf{Resultado} \\ \hline
-	\endhead
-	VIS01 & Secretaria & Listar e consultar secretaria & Exibe os dados da secretaria selecionada. \\ \hline
-	VIS02 & Instituição & Listar e consultar instituição & Exibe os dados da instituição selecionada. \\ \hline
-	VIS03 & Fornecedor & Listar e consultar fornecedor & Exibe os dados do fornecedor selecionado. \\ \hline
-	VIS04 & Orçamento & Listar e consultar orçamento & Exibe os dados do orçamento selecionado. \\ \hline
-	VIS05 & Despesa & Listar e consultar despesa & Exibe os dados da despesa selecionada. \\ \hline
-	VIS06 & Configuração & Listar e consultar tipo de despesa & Exibe o tipo de despesa selecionado. \\ \hline
-	VIS07 & Configuração & Listar e consultar tipo de instituição & Exibe o tipo de instituição selecionado. \\ \hline
-	VIS08 & Configuração & Listar e consultar unidade de medida & Exibe a unidade de medida selecionada. \\
-	\hline
-	\multicolumn{4}{l}{\textit{Fonte: elaborado pelos autores com base no diagrama do Visitante (2026).}}\\
-\end{longquadro}
+\subsection{Casos de Uso do Administrador}
 
-\begin{longquadro}{|p{0.08\textwidth}|p{0.18\textwidth}|p{0.28\textwidth}|p{0.36\textwidth}|}
-	\caption{Casos de uso do Funcionário}
-	\label{quad:casos-uso-funcionario-civitas}\\
-	\hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de uso} & \textbf{Resultado} \\ \hline
-	\endfirsthead
-	\multicolumn{4}{c}{Quadro~\thequadro{} -- continuação}\\ \hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de uso} & \textbf{Resultado} \\ \hline
-	\endhead
-	FUN01 & Autenticação & Realizar login e logout & Inicia ou encerra a sessão do funcionário. \\ \hline
-	FUN02 & Secretaria & Listar e consultar secretaria & Apresenta a secretaria solicitada. \\ \hline
-	FUN03 & Fornecedor & Cadastrar, atualizar, listar e consultar fornecedor & Mantém os dados cadastrais do fornecedor. \\ \hline
-	FUN04 & Instituição & Cadastrar, atualizar, listar e consultar instituição & Mantém instituições e seus vínculos. \\ \hline
-	FUN05 & Orçamento & Listar e consultar orçamento & Apresenta o orçamento solicitado. \\ \hline
-	FUN06 & Despesa & Cadastrar, atualizar, listar, consultar e alterar status & Mantém a despesa e permite visualizar seu documento. \\ \hline
-	FUN07 & Configuração & Listar e consultar tipos de despesa e instituição & Apresenta os cadastros auxiliares solicitados. \\ \hline
-	FUN08 & Configuração & Listar e consultar unidade de medida & Apresenta a unidade de medida solicitada. \\ \hline
-	FUN09 & Tipo de código & Listar e consultar tipo de código & Apresenta a classificação solicitada. \\ \hline
-	FUN10 & Unidade consumidora & Cadastrar, atualizar, listar e consultar unidade consumidora & Mantém o cadastro e seus relacionamentos. \\ \hline
-	FUN11 & Endereço & Consultar endereço por CEP & Valida o CEP e retorna o endereço localizado. \\ \hline
-	FUN12 & Auditoria & Registrar auditoria & Registra a operação executada pelo usuário. \\
-	\hline
-	\multicolumn{4}{l}{\textit{Fonte: elaborado pelos autores com base no diagrama do Funcionário (2026).}}\\
-\end{longquadro}
+O Administrador reúne as funcionalidades de maior abrangência do Civitas. Além da manutenção dos cadastros administrativos e financeiros, esse ator controla usuários, configurações auxiliares, unidades consumidoras e auditorias. Nos registros que utilizam \textit{Situacao}, pode alterar a condição funcional entre ativo e inativo; nos registros submetidos à exclusão lógica, pode executar a remoção e a restauração sem apagar fisicamente os dados.
 
-\begin{longquadro}{|p{0.08\textwidth}|p{0.18\textwidth}|p{0.28\textwidth}|p{0.36\textwidth}|}
-	\caption{Casos de uso do Administrador}
-	\label{quad:casos-uso-administrador-civitas}\\
-	\hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de uso} & \textbf{Resultado} \\ \hline
-	\endfirsthead
-	\multicolumn{4}{c}{Quadro~\thequadro{} -- continuação}\\ \hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de uso} & \textbf{Resultado} \\ \hline
-	\endhead
-	ADM01 & Autenticação & Realizar login & Autentica o administrador e gera o token de acesso. \\ \hline
-	ADM02 & Usuário & Cadastrar, atualizar, listar, consultar e ativar/inativar usuário & Mantém usuários após validação. \\ \hline
-	ADM03 & Secretaria & Cadastrar, atualizar, listar, consultar e ativar/inativar secretaria & Mantém secretarias após validação. \\ \hline
-	ADM04 & Fornecedor & Cadastrar, atualizar, listar, consultar e ativar/inativar fornecedor & Mantém fornecedores após validação. \\ \hline
-	ADM05 & Instituição & Cadastrar, atualizar, listar, consultar e ativar/inativar instituição & Mantém instituições e vínculos. \\ \hline
-	ADM06 & Orçamento & Cadastrar, atualizar, listar, consultar e excluir/restaurar orçamento & Mantém o planejamento orçamentário. \\ \hline
-	ADM07 & Despesa & Cadastrar, atualizar, listar, consultar, alterar status e excluir/restaurar & Mantém despesas e documentos associados. \\ \hline
-	ADM08 & Configuração & Gerenciar tipos de despesa e instituição & Mantém e valida os cadastros auxiliares. \\ \hline
-	ADM09 & Configuração & Gerenciar unidades de medida e tipos de código & Mantém classificações e respectivas situações. \\ \hline
-	ADM10 & Unidade consumidora & Cadastrar, atualizar, listar, consultar e excluir/restaurar & Mantém unidades consumidoras após validação. \\ \hline
-	ADM11 & Endereço & Consultar endereço por CEP & Valida o CEP e retorna o endereço. \\ \hline
-	ADM12 & Auditoria & Consultar e registrar auditorias & Mantém a rastreabilidade das operações. \\
-	\hline
-	\multicolumn{4}{l}{\textit{Fonte: elaborado pelos autores com base no diagrama do Administrador (2026).}}\\
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-10\tabcolsep-6\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.055\larguracolunascivitas}|P{0.245\larguracolunascivitas}|P{0.19\larguracolunascivitas}|P{0.235\larguracolunascivitas}|P{0.275\larguracolunascivitas}|}
+\caption{Casos de uso – Administrador}\label{qua:cap3-17}\\
+\hline
+\textbf{Nº} & \textbf{Descrição do caso de uso} & \textbf{Entrada} & \textbf{Caso de uso} & \textbf{Resposta} \\ \hline
+\endfirsthead
+\caption[]{Casos de uso – Administrador (continuação)}\\
+\hline
+\textbf{Nº} & \textbf{Descrição do caso de uso} & \textbf{Entrada} & \textbf{Caso de uso} & \textbf{Resposta} \\ \hline
+\endhead
+\multicolumn{5}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{5}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+01 & Administrador cadastra usuário & Dados de usuário & Cadastrar Usuário & Usuário cadastrado com sucesso. \\ \hline
+02 & Administrador lista usuários & Filtros e parâmetros de consulta & Listar Usuário & Retorna a lista de usuários. \\ \hline
+03 & Administrador consulta usuário & Identificador do registro & Consultar Usuário & Retorna os dados do usuário. \\ \hline
+04 & Administrador edita usuário & Identificador e dados alterados & Atualizar Usuário & Usuário atualizado com sucesso. \\ \hline
+05 & Administrador altera a situação de usuário & Identificador e situação & Ativar/Inativar Usuário & Situação funcional atualizada. \\ \hline
+06 & Administrador cadastra secretaria & Dados de secretaria & Cadastrar Secretaria & Secretaria cadastrada com sucesso. \\ \hline
+07 & Administrador lista secretarias & Filtros e parâmetros de consulta & Listar Secretaria & Retorna a lista de secretarias. \\ \hline
+08 & Administrador consulta secretaria & Identificador do registro & Consultar Secretaria & Retorna os dados da secretaria. \\ \hline
+09 & Administrador edita secretaria & Identificador e dados alterados & Atualizar Secretaria & Secretaria atualizada com sucesso. \\ \hline
+10 & Administrador altera a situação de secretaria & Identificador e situação & Ativar/Inativar Secretaria & Situação funcional atualizada. \\ \hline
+11 & Administrador cadastra fornecedor & Dados de fornecedor & Cadastrar Fornecedor & Fornecedor cadastrado com sucesso. \\ \hline
+12 & Administrador lista fornecedores & Filtros e parâmetros de consulta & Listar Fornecedor & Retorna a lista de fornecedores. \\ \hline
+13 & Administrador consulta fornecedor & Identificador do registro & Consultar Fornecedor & Retorna os dados do fornecedor. \\ \hline
+14 & Administrador edita fornecedor & Identificador e dados alterados & Atualizar Fornecedor & Fornecedor atualizado com sucesso. \\ \hline
+15 & Administrador altera a situação de fornecedor & Identificador e situação & Ativar/Inativar Fornecedor & Situação funcional atualizada. \\ \hline
+16 & Administrador cadastra instituição & Dados de instituição & Cadastrar Instituição & Instituição cadastrada com sucesso. \\ \hline
+17 & Administrador lista instituições & Filtros e parâmetros de consulta & Listar Instituição & Retorna a lista de instituições. \\ \hline
+18 & Administrador consulta instituição & Identificador do registro & Consultar Instituição & Retorna os dados da instituição. \\ \hline
+19 & Administrador edita instituição & Identificador e dados alterados & Atualizar Instituição & Instituição atualizada com sucesso. \\ \hline
+20 & Administrador altera a situação de instituição & Identificador e situação & Ativar/Inativar Instituição & Situação funcional atualizada. \\ \hline
+21 & Administrador cadastra orçamento & Dados de orçamento & Cadastrar Orçamento & Orçamento cadastrado com sucesso. \\ \hline
+22 & Administrador lista orçamentos & Filtros e parâmetros de consulta & Listar Orçamento & Retorna a lista de orçamentos. \\ \hline
+23 & Administrador consulta orçamento & Identificador do registro & Consultar Orçamento & Retorna os dados do orçamento. \\ \hline
+24 & Administrador edita orçamento & Identificador e dados alterados & Atualizar Orçamento & Orçamento atualizado com sucesso. \\ \hline
+25 & Administrador exclui ou restaura orçamento & Identificador do registro & Excluir/Restaurar Orçamento & Registro excluído logicamente ou restaurado. \\ \hline
+26 & Administrador cadastra despesa & Dados da despesa & Cadastrar Despesa & Despesa cadastrada com sucesso. \\ \hline
+27 & Administrador lista despesas & Filtros e paginação & Listar Despesa & Retorna a lista de despesas. \\ \hline
+28 & Administrador consulta despesa & Identificador da despesa & Consultar Despesa & Retorna os dados da despesa. \\ \hline
+29 & Administrador edita despesa & Identificador e dados alterados & Atualizar Despesa & Despesa atualizada com sucesso. \\ \hline
+30 & Administrador altera o status da despesa & Identificador e novo status & Alterar Status da Despesa & Status financeiro atualizado. \\ \hline
+31 & Administrador exclui ou restaura despesa & Identificador da despesa & Excluir/Restaurar Despesa & Despesa excluída logicamente ou restaurada. \\ \hline
+32 & Administrador visualiza documento da despesa & Identificador da despesa & Visualizar Documento da Despesa & Documento associado disponibilizado. \\ \hline
+33 & Administrador cadastra tipo de despesa & Dados de tipo de despesa & Cadastrar Tipo de Despesa & Tipo de despesa cadastrado com sucesso. \\ \hline
+34 & Administrador lista tipos de despesa & Filtros e parâmetros de consulta & Listar Tipo de Despesa & Retorna a lista de tipos de despesa. \\ \hline
+35 & Administrador consulta tipo de despesa & Identificador do registro & Consultar Tipo de Despesa & Retorna os dados de tipo de despesa. \\ \hline
+36 & Administrador edita tipo de despesa & Identificador e dados alterados & Atualizar Tipo de Despesa & Tipo de despesa atualizado com sucesso. \\ \hline
+37 & Administrador altera a situação de tipo de despesa & Identificador e situação & Ativar/Inativar Tipo de Despesa & Situação funcional atualizada. \\ \hline
+38 & Administrador cadastra tipo de instituição & Dados de tipo de instituição & Cadastrar Tipo de Instituição & Tipo de instituição cadastrado com sucesso. \\ \hline
+39 & Administrador lista tipos de instituição & Filtros e parâmetros de consulta & Listar Tipo de Instituição & Retorna a lista de tipos de instituição. \\ \hline
+40 & Administrador consulta tipo de instituição & Identificador do registro & Consultar Tipo de Instituição & Retorna os dados de tipo de instituição. \\ \hline
+41 & Administrador edita tipo de instituição & Identificador e dados alterados & Atualizar Tipo de Instituição & Tipo de instituição atualizado com sucesso. \\ \hline
+42 & Administrador altera a situação de tipo de instituição & Identificador e situação & Ativar/Inativar Tipo de Instituição & Situação funcional atualizada. \\ \hline
+43 & Administrador cadastra unidade de medida & Dados de unidade de medida & Cadastrar Unidade de Medida & Unidade de medida cadastrada com sucesso. \\ \hline
+44 & Administrador lista unidades de medida & Filtros e parâmetros de consulta & Listar Unidade de Medida & Retorna a lista de unidades de medida. \\ \hline
+45 & Administrador consulta unidade de medida & Identificador do registro & Consultar Unidade de Medida & Retorna os dados da unidade de medida. \\ \hline
+46 & Administrador edita unidade de medida & Identificador e dados alterados & Atualizar Unidade de Medida & Unidade de medida atualizada com sucesso. \\ \hline
+47 & Administrador altera a situação de unidade de medida & Identificador e situação & Ativar/Inativar Unidade de Medida & Situação funcional atualizada. \\ \hline
+48 & Administrador cadastra tipo de código & Dados de tipo de código & Cadastrar Tipo de Código & Tipo de código cadastrado com sucesso. \\ \hline
+49 & Administrador lista tipos de código & Filtros e parâmetros de consulta & Listar Tipo de Código & Retorna a lista de tipos de código. \\ \hline
+50 & Administrador consulta tipo de código & Identificador do registro & Consultar Tipo de Código & Retorna os dados de tipo de código. \\ \hline
+51 & Administrador edita tipo de código & Identificador e dados alterados & Atualizar Tipo de Código & Tipo de código atualizado com sucesso. \\ \hline
+52 & Administrador exclui ou restaura tipo de código & Identificador do registro & Excluir/Restaurar Tipo de Código & Registro excluído logicamente ou restaurado. \\ \hline
+53 & Administrador cadastra unidade consumidora & Dados de unidade consumidora & Cadastrar Unidade Consumidora & Unidade consumidora cadastrada com sucesso. \\ \hline
+54 & Administrador lista unidades consumidoras & Filtros e parâmetros de consulta & Listar Unidade Consumidora & Retorna a lista de unidades consumidoras. \\ \hline
+55 & Administrador consulta unidade consumidora & Identificador do registro & Consultar Unidade Consumidora & Retorna os dados da unidade consumidora. \\ \hline
+56 & Administrador edita unidade consumidora & Identificador e dados alterados & Atualizar Unidade Consumidora & Unidade consumidora atualizada com sucesso. \\ \hline
+57 & Administrador exclui ou restaura unidade consumidora & Identificador do registro & Excluir/Restaurar Unidade Consumidora & Registro excluído logicamente ou restaurado. \\ \hline
+58 & Administrador consulta auditoria & Filtros de auditoria & Consultar Auditoria & Registros de auditoria retornados. \\ \hline
+59 & Administrador consulta endereço por CEP & CEP informado & Consultar Endereço por CEP & Dados de endereço correspondentes ao CEP retornados. \\ \hline
+60 & Administrador realiza login & E-mail e senha & Realizar Login & Acesso concedido quando as credenciais são válidas. \\ \hline
 \end{longquadro}
-\normalsize
+\endgroup
+
+O Quadro~\ref{qua:cap3-17} apresenta os casos de uso associados ao Administrador, abrangendo autenticação, manutenção de usuários, secretarias, fornecedores, instituições, orçamentos, despesas, classificações, unidades consumidoras, auditorias e consulta de endereço por CEP.
+
+\subsection{Casos de Uso do Funcionário}
+
+O Funcionário executa as rotinas operacionais permitidas pelo Civitas. Seu acesso privilegia a consulta e a manutenção dos dados necessários à execução administrativa e financeira, sem incluir a administração de usuários, a consulta aos registros de auditoria ou as configurações estruturais reservadas ao Administrador. A participação do Sistema em \textit{Registrar Auditoria}, representada no diagrama geral, não atribui ao Funcionário a permissão de consulta de auditorias.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-10\tabcolsep-6\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.055\larguracolunascivitas}|P{0.245\larguracolunascivitas}|P{0.19\larguracolunascivitas}|P{0.235\larguracolunascivitas}|P{0.275\larguracolunascivitas}|}
+\caption{Casos de uso – Funcionário}\label{qua:cap3-18}\\
+\hline
+\textbf{Nº} & \textbf{Descrição do caso de uso} & \textbf{Entrada} & \textbf{Caso de uso} & \textbf{Resposta} \\ \hline
+\endfirsthead
+\caption[]{Casos de uso – Funcionário (continuação)}\\
+\hline
+\textbf{Nº} & \textbf{Descrição do caso de uso} & \textbf{Entrada} & \textbf{Caso de uso} & \textbf{Resposta} \\ \hline
+\endhead
+\multicolumn{5}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{5}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+01 & Funcionário lista secretarias & Filtros de consulta & Listar Secretaria & Retorna a lista de secretarias. \\ \hline
+02 & Funcionário consulta secretaria & Identificador da secretaria & Consultar Secretaria & Retorna os dados da secretaria. \\ \hline
+03 & Funcionário cadastra fornecedor & Dados do registro & Cadastrar Fornecedor & Fornecedor cadastrado com sucesso. \\ \hline
+04 & Funcionário lista fornecedores & Filtros e paginação & Listar Fornecedor & Retorna a lista de fornecedores. \\ \hline
+05 & Funcionário consulta fornecedor & Identificador do registro & Consultar Fornecedor & Retorna os dados do fornecedor. \\ \hline
+06 & Funcionário edita fornecedor & Identificador e dados alterados & Atualizar Fornecedor & Fornecedor atualizado com sucesso. \\ \hline
+07 & Funcionário cadastra instituição & Dados do registro & Cadastrar Instituição & Instituição cadastrada com sucesso. \\ \hline
+08 & Funcionário lista instituições & Filtros e paginação & Listar Instituição & Retorna a lista de instituições. \\ \hline
+09 & Funcionário consulta instituição & Identificador do registro & Consultar Instituição & Retorna os dados da instituição. \\ \hline
+10 & Funcionário edita instituição & Identificador e dados alterados & Atualizar Instituição & Instituição atualizada com sucesso. \\ \hline
+11 & Funcionário lista orçamentos & Filtros de consulta & Listar Orçamento & Retorna a lista de orçamentos. \\ \hline
+12 & Funcionário consulta orçamento & Identificador do orçamento & Consultar Orçamento & Retorna os dados do orçamento. \\ \hline
+13 & Funcionário cadastra despesa & Dados da despesa & Cadastrar Despesa & Despesa cadastrada com sucesso. \\ \hline
+14 & Funcionário lista despesas & Filtros e paginação & Listar Despesa & Retorna a lista de despesas. \\ \hline
+15 & Funcionário consulta despesa & Identificador da despesa & Consultar Despesa & Retorna os dados da despesa. \\ \hline
+16 & Funcionário edita despesa & Identificador e dados alterados & Atualizar Despesa & Despesa atualizada com sucesso. \\ \hline
+17 & Funcionário altera o status da despesa & Identificador e novo status & Alterar Status da Despesa & Status financeiro atualizado. \\ \hline
+18 & Funcionário visualiza documento da despesa & Identificador da despesa & Visualizar Documento da Despesa & Documento associado disponibilizado. \\ \hline
+19 & Funcionário lista tipos de despesa & Filtros de consulta & Listar Tipo de Despesa & Retorna a lista de tipos de despesa. \\ \hline
+20 & Funcionário consulta tipo de despesa & Identificador do registro & Consultar Tipo de Despesa & Retorna os dados do tipo de despesa. \\ \hline
+21 & Funcionário lista tipos de instituição & Filtros de consulta & Listar Tipo de Instituição & Retorna a lista de tipos de instituição. \\ \hline
+22 & Funcionário consulta tipo de instituição & Identificador do registro & Consultar Tipo de Instituição & Retorna os dados do tipo de instituição. \\ \hline
+23 & Funcionário lista unidades de medida & Filtros de consulta & Listar Unidade de Medida & Retorna a lista de unidades de medida. \\ \hline
+24 & Funcionário consulta unidade de medida & Identificador do registro & Consultar Unidade de Medida & Retorna os dados da unidade de medida. \\ \hline
+25 & Funcionário lista tipos de código & Filtros de consulta & Listar Tipo de Código & Retorna a lista de tipos de código. \\ \hline
+26 & Funcionário consulta tipo de código & Identificador do registro & Consultar Tipo de Código & Retorna os dados do tipo de código. \\ \hline
+27 & Funcionário cadastra unidade consumidora & Dados da unidade consumidora & Cadastrar Unidade Consumidora & Unidade consumidora cadastrada com sucesso. \\ \hline
+28 & Funcionário lista unidades consumidoras & Filtros de consulta & Listar Unidade Consumidora & Retorna a lista de unidades consumidoras. \\ \hline
+29 & Funcionário consulta unidade consumidora & Identificador da unidade & Consultar Unidade Consumidora & Retorna os dados da unidade consumidora. \\ \hline
+30 & Funcionário edita unidade consumidora & Identificador e dados alterados & Atualizar Unidade Consumidora & Unidade consumidora atualizada com sucesso. \\ \hline
+31 & Funcionário consulta endereço por CEP & CEP informado & Consultar Endereço por CEP & Dados de endereço correspondentes ao CEP retornados. \\ \hline
+32 & Funcionário realiza login & E-mail e senha & Realizar Login & Acesso concedido quando as credenciais são válidas. \\ \hline
+33 & Funcionário encerra a sessão & Solicitação de saída & Realizar Logout & Sessão finalizada. \\ \hline
+\end{longquadro}
+\endgroup
+
+O Quadro~\ref{qua:cap3-18} apresenta os casos de uso atribuídos ao Funcionário, delimitando as operações de consulta e manutenção compatíveis com o perfil operacional.
+
+\subsection{Casos de Uso do Visitante}
+
+O Visitante possui acesso às consultas públicas definidas para o Civitas. Sua participação é exclusivamente consultiva: o perfil não realiza cadastro, edição, alteração de situação, exclusão, restauração ou qualquer outra forma de manutenção dos registros.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\larguracolunascivitas}{\dimexpr\textwidth-10\tabcolsep-6\arrayrulewidth\relax}
+\begin{longquadro}{|P{0.055\larguracolunascivitas}|P{0.245\larguracolunascivitas}|P{0.19\larguracolunascivitas}|P{0.235\larguracolunascivitas}|P{0.275\larguracolunascivitas}|}
+\caption{Casos de uso – Visitante}\label{qua:cap3-19}\\
+\hline
+\textbf{Nº} & \textbf{Descrição do caso de uso} & \textbf{Entrada} & \textbf{Caso de uso} & \textbf{Resposta} \\ \hline
+\endfirsthead
+\caption[]{Casos de uso – Visitante (continuação)}\\
+\hline
+\textbf{Nº} & \textbf{Descrição do caso de uso} & \textbf{Entrada} & \textbf{Caso de uso} & \textbf{Resposta} \\ \hline
+\endhead
+\multicolumn{5}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{5}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+01 & Visitante lista secretarias & Critérios de consulta & Listar Secretaria & Retorna a lista pública de secretarias. \\ \hline
+02 & Visitante consulta secretaria & Identificador do registro & Consultar Secretaria & Retorna os dados públicos da secretaria. \\ \hline
+03 & Visitante lista instituições & Critérios de consulta & Listar Instituição & Retorna a lista pública de instituições. \\ \hline
+04 & Visitante consulta instituição & Identificador do registro & Consultar Instituição & Retorna os dados públicos da instituição. \\ \hline
+05 & Visitante lista fornecedores & Critérios de consulta & Listar Fornecedor & Retorna a lista pública de fornecedores. \\ \hline
+06 & Visitante consulta fornecedor & Identificador do registro & Consultar Fornecedor & Retorna os dados públicos do fornecedor. \\ \hline
+07 & Visitante lista orçamentos & Critérios de consulta & Listar Orçamento & Retorna a lista pública de orçamentos. \\ \hline
+08 & Visitante consulta orçamento & Identificador do registro & Consultar Orçamento & Retorna os dados públicos do orçamento. \\ \hline
+09 & Visitante lista despesas & Critérios de consulta & Listar Despesa & Retorna a lista pública de despesas. \\ \hline
+10 & Visitante consulta despesa & Identificador do registro & Consultar Despesa & Retorna os dados públicos da despesa. \\ \hline
+11 & Visitante lista tipos de despesa & Critérios de consulta & Listar Tipo Despesa & Retorna a lista pública de tipos de despesa. \\ \hline
+12 & Visitante consulta tipo de despesa & Identificador do registro & Consultar Tipo Despesa & Retorna os dados públicos do tipo de despesa. \\ \hline
+13 & Visitante lista tipos de instituição & Critérios de consulta & Listar Tipo Instituição & Retorna a lista pública de tipos de instituição. \\ \hline
+14 & Visitante consulta tipo de instituição & Identificador do registro & Consultar Tipo Instituição & Retorna os dados públicos do tipo de instituição. \\ \hline
+15 & Visitante lista unidades de medida & Critérios de consulta & Listar Unidade de Medida & Retorna a lista pública de unidades de medida. \\ \hline
+16 & Visitante consulta unidade de medida & Identificador do registro & Consultar Unidade de Medida & Retorna os dados públicos da unidade de medida. \\ \hline
+\end{longquadro}
+\endgroup
+
+O Quadro~\ref{qua:cap3-19} apresenta os casos de uso destinados ao Visitante, restritos às operações de listagem e consulta das informações públicas representadas na modelagem.
 
 \section{Diagrama de Casos de Uso}
+
 \label{sec:diagramas-casos-uso-civitas-final}
 
-Os diagramas fornecidos distribuem as funcionalidades conforme o alcance de cada ator. Para preservar a legibilidade, cada perfil é apresentado separadamente.
+Os diagramas gerais de casos de uso organizam as funcionalidades conforme o papel dos atores e explicitam associações, relações de inclusão e relações de extensão. Conforme a UML, \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} representa a incorporação de determinado comportamento por outro caso de uso, enquanto \textit{\textless{}\textless{}extend\textgreater{}\textgreater{}} representa uma extensão entre comportamentos conforme a modelagem estabelecida \parencite{omg2017uml}.
 
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama Geral de Casos de Uso -- Visitante}
-	\label{fig:uc-geral-visitante-civitas}
-	\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{figs/UCGeral_Visitante_Civitas.png}
-	\fonte{Elaborado pelos autores (2026).}
+\begin{figure}[H]
+\centering
+\caption{Diagrama geral de casos de uso – Administrador}
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/UCGeral_Administrador_Civitas.png}
+\label{fig:uc-geral-administrador-civitas}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-A Figura~\ref{fig:uc-geral-visitante-civitas} concentra operações de leitura. O Visitante lista um conjunto de registros, seleciona o elemento desejado e consulta os dados carregados pelo sistema.
 
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama Geral de Casos de Uso -- Funcionário}
-	\label{fig:uc-geral-funcionario-civitas}
-	\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{figs/UCGeral_Funcionario_Civitas.png}
-	\fonte{Elaborado pelos autores (2026).}
+\textbf{Administrador.} A Figura~\ref{fig:uc-geral-administrador-civitas} associa o ator Administrador a um conjunto abrangente de funcionalidades. No domínio de usuários, são representados casos relacionados à autenticação e à manutenção dos registros, incluindo \textit{Realizar Login}, \textit{Validar Login}, \textit{Autenticar Usuário}, \textit{Gerar Token de Acesso}, \textit{Cadastrar Usuário}, \textit{Ativar/Inativar Usuário}, \textit{Consultar Usuário}, \textit{Atualizar Usuário}, \textit{Listar Usuário}, \textit{Validar Usuário} e \textit{Carregar Usuário}.
+
+No domínio da estrutura administrativa, o Administrador está associado a funcionalidades de cadastro, ativação ou inativação, consulta, atualização e listagem de secretarias, fornecedores e instituições. Casos de validação e carregamento aparecem como comportamentos auxiliares relacionados aos respectivos casos principais. A gestão orçamentária reúne cadastro, consulta, atualização, listagem, validação, carregamento e exclusão ou restauração de orçamentos. Para despesas, a figura representa cadastro, visualização de documento, consulta, atualização, alteração de status, exclusão ou restauração, listagem, validação e carregamento.
+
+As classificações e os cadastros auxiliares compreendem tipo de despesa, tipo de instituição, unidade de medida, tipo de código e unidade consumidora. A figura também contempla consulta de auditoria e funcionalidades relacionadas à consulta de endereço por CEP. O ator \textit{Sistema} aparece associado aos comportamentos auxiliares indicados no diagrama, participando da estrutura funcional representada sem substituir o Administrador como ator responsável por iniciar as funcionalidades administrativas.
+
+\begin{figure}[H]
+\centering
+\caption{Diagrama geral de casos de uso – Funcionário}
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/UCGeral_Funcionario_Civitas.png}
+\label{fig:uc-geral-funcionario-civitas}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-A Figura~\ref{fig:uc-geral-funcionario-civitas} apresenta o perfil operacional. Além da autenticação, o Funcionário mantém fornecedores, instituições, despesas e unidades consumidoras, consulta cadastros de apoio e registra auditoria.
 
-\begin{figure}[p]
-	\centering
-	\caption{Diagrama Geral de Casos de Uso -- Administrador}
-	\label{fig:uc-geral-administrador-civitas}
-	\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{figs/UCGeral_Administrador_Civitas.png}
-	\fonte{Elaborado pelos autores (2026).}
+\textbf{Funcionário.} A Figura~\ref{fig:uc-geral-funcionario-civitas} representa as funcionalidades relacionadas ao perfil Funcionário. Esse ator está associado às rotinas operacionais permitidas pelo Civitas, concentrando-se na consulta e manutenção das informações necessárias ao funcionamento administrativo e financeiro.
+
+No agrupamento administrativo, o Funcionário possui acesso às consultas de secretaria e orçamento e à manutenção permitida de fornecedores e instituições. No domínio das despesas, o perfil possui funcionalidades de cadastro, listagem, consulta, atualização, alteração de status e visualização do documento associado. As classificações de tipo de despesa, tipo de instituição, unidade de medida e tipo de código permanecem disponíveis para consulta, enquanto as unidades consumidoras possuem as operações de manutenção permitidas ao perfil.
+
+Os casos auxiliares \textit{Carregar...} e \textit{Validar...} representam comportamentos de apoio aos casos principais na forma apresentada pela figura. O ator \textit{Sistema} participa desses comportamentos auxiliares e também aparece associado a \textit{Registrar Auditoria}. O diagrama não atribui ao Funcionário a administração de usuários, a consulta aos registros de auditoria nem as operações administrativas de exclusão e restauração reservadas ao Administrador.
+
+\begin{figure}[H]
+\centering
+\caption{Diagrama geral de casos de uso – Visitante}
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/UCGeral_Visitante_Civitas.png}
+\label{fig:uc-geral-visitante-civitas}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-A Figura~\ref{fig:uc-geral-administrador-civitas} reúne o maior conjunto de operações. O Administrador gerencia os cadastros centrais, controla ativações, inativações, exclusões e restaurações, consulta endereços e acompanha auditorias.
 
-\section{Diagrama de Casos de Uso -- Individuais}
+\textbf{Visitante.} A Figura~\ref{fig:uc-geral-visitante-civitas} associa o ator Visitante exclusivamente às funcionalidades de consulta. Estão representados os pares \textit{Listar Secretaria} e \textit{Consultar Secretaria}, \textit{Listar Instituição} e \textit{Consultar Instituição}, \textit{Listar Fornecedor} e \textit{Consultar Fornecedor}, \textit{Listar Orçamento} e \textit{Consultar Orçamento}, \textit{Listar Despesa} e \textit{Consultar Despesa}, \textit{Listar Tipo Despesa} e \textit{Consultar Tipo Despesa}, \textit{Listar Tipo Instituição} e \textit{Consultar Tipo Instituição}, bem como \textit{Listar Unidade de Medida} e \textit{Consultar Unidade de Medida}.
+
+Cada agrupamento possui um caso auxiliar de carregamento correspondente. As relações \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} associam os casos de consulta aos respectivos comportamentos de carregamento, enquanto as relações \textit{\textless{}\textless{}extend\textgreater{}\textgreater{}} estabelecem os vínculos entre os casos de consulta e listagem conforme a direção representada na figura. O ator Sistema aparece associado aos casos auxiliares de carregamento, enquanto o Visitante permanece como o ator externo responsável pelas consultas públicas.
+
+\section{Diagrama de Casos de Uso – Individuais}
+
 \label{sec:casos-uso-individuais-civitas-final}
 
-O cadastro de usuário foi selecionado para detalhamento por envolver autenticação prévia, validação, verificação de duplicidade, persistência e auditoria.
+O detalhamento individual permite concentrar a análise em um recorte funcional específico, mantendo a natureza declarativa dos diagramas de casos de uso. A Figura~\ref{fig:uc-individual-cadastrar-usuario} apresenta o caso de uso \textit{Cadastrar Usuário} e os elementos funcionais relacionados, evidenciando os atores, as associações e as relações \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} e \textit{\textless{}\textless{}extend\textgreater{}\textgreater{}} representadas.
 
-\begin{quadro}[H]
-	\centering
-	\caption{Especificação do caso de uso individual Cadastrar Usuário}
-	\label{quad:uc-cadastrar-usuario}
-	\small
-	\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|X|}
-		\hline
-		\textbf{Elemento} & \textbf{Especificação} \\ \hline
-		Ator & Administrador. \\ \hline
-		Objetivo & Registrar um novo usuário e seu perfil de acesso no Civitas. \\ \hline
-		Pré-condições & O administrador deve ter realizado login e possuir os dados obrigatórios do novo usuário. \\ \hline
-		Fluxo principal & 1. O administrador inicia o cadastro; 2. informa os dados pessoais, endereço, e-mail, matrícula, senha, situação e tipo de usuário; 3. o sistema valida os campos; 4. verifica duplicidades; 5. salva o usuário; 6. registra a auditoria; 7. informa o sucesso. \\ \hline
-		Fluxos alternativos & A1: dados inválidos impedem o salvamento. A2: CPF, e-mail ou matrícula já utilizados produzem mensagem de conflito. A3: falha de persistência cancela a operação e informa o erro. \\ \hline
-		Pós-condições & Usuário persistido e ocorrência de auditoria registrada quando o fluxo é concluído. \\ \hline
-	\end{tabularx}
-	\fonte{Elaborado pelos autores com base no código-fonte e no diagrama fornecido (2026).}
-\end{quadro}
+\subsection{Caso de Uso Individual – Cadastrar Usuário}
 
 \begin{figure}[H]
-	\centering
-	\caption{Diagrama individual do caso de uso Cadastrar Usuário}
-	\label{fig:uc-individual-cadastrar-usuario}
-	\includegraphics[width=\textwidth]{figs/UCIndividual_Cadastrar_Usuario_Civitas.png}
-	\fonte{Elaborado pelos autores (2026).}
+\centering
+\caption{Diagrama individual do caso de uso Cadastrar Usuário}
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{figs/UCIndividual_Cadastrar_Usuario_Civitas.png}
+\label{fig:uc-individual-cadastrar-usuario}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
+
+
+A Figura~\ref{fig:uc-individual-cadastrar-usuario} apresenta o ator Administrador associado ao caso de uso \textit{Realizar Login}. O ator Sistema está associado aos casos \textit{Verificar Duplicidade}, \textit{Salvar Usuário} e \textit{Registrar Auditoria}, conforme as associações visualmente representadas.
+
+O caso de uso \textit{Cadastrar Usuário} ocupa posição central na figura. Sua relação de inclusão com \textit{Validar Usuário} indica que a validação constitui um comportamento necessário associado ao cadastro. A relação \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} com \textit{Salvar Usuário} indica que o salvamento constitui um comportamento incluído no caso de uso principal.
+
+O caso \textit{Validar Usuário} apresenta relação \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} com \textit{Verificar Duplicidade}. Essa relação caracteriza a verificação de duplicidade como comportamento incluído na validação dos dados de usuário.
+
+O caso \textit{Salvar Usuário} possui relação \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} com \textit{Registrar Auditoria}. Assim, o diagrama representa o registro de auditoria como comportamento incluído na funcionalidade de salvamento.
+
+A Figura~\ref{fig:uc-individual-cadastrar-usuario} também apresenta uma relação \textit{\textless{}\textless{}extend\textgreater{}\textgreater{}} direcionada a \textit{Realizar Login}, proveniente de \textit{Cadastrar Usuário}. Conforme a notação adotada no diagrama, essa extensão relaciona conceitualmente o cadastro ao caso de uso de login no contexto delimitado pela modelagem.
+
+A leitura da Figura~\ref{fig:uc-individual-cadastrar-usuario} deve preservar as distinções entre associação de ator, inclusão e extensão. As associações identificam a participação dos atores nas funcionalidades, enquanto as relações \textit{\textless{}\textless{}include\textgreater{}\textgreater{}} e \textit{\textless{}\textless{}extend\textgreater{}\textgreater{}} explicitam dependências e extensões conceituais entre os casos de uso. O diagrama apresenta os serviços e as dependências funcionais relacionadas ao cadastro de usuários, sem constituir uma descrição temporal ou um cenário operacional.
 
 \section{Diagrama de Sequência}
+
 \label{sec:diagrama-sequencia-civitas-final}
 
-Os diagramas de sequência são diagramas comportamentais utilizados para representar a interação entre os participantes de um sistema ao longo do tempo. Por meio das linhas de vida e das mensagens trocadas durante uma interação, torna-se possível identificar a ordem em que as operações são executadas e compreender como diferentes componentes colaboram para realizar determinada funcionalidade \cite{omg2017uml}.
+Diagramas de sequência representam a interação temporal entre participantes de uma operação por meio de linhas de vida, mensagens, ativações e retornos. Diferentemente dos diagramas de casos de uso, sua finalidade é evidenciar a ordem das comunicações estabelecidas para a realização de determinado comportamento \parencite{omg2017uml,larman2005}.
 
-\textcite{larman2005} destaca a importância dos diagramas de interação na atribuição e compreensão das responsabilidades existentes entre os objetos de um sistema. No Civitas, esse tipo de representação permite acompanhar a comunicação entre a aplicação Web e as diferentes camadas do backend, evidenciando a divisão de responsabilidades entre controle da requisição, aplicação das regras de negócio e acesso aos dados. Essa organização está relacionada ao princípio de separação de responsabilidades existente nas arquiteturas em camadas \cite{buschmann1996}.
+Nas Figuras~\ref{fig:seq_listar_usuario} a~\ref{fig:seq_remover_usuario}, a colaboração principal envolve Administrador, WebApp, \textit{UsuarioController}, \textit{UsuarioService}, \textit{UsuarioRepository} e \textit{AppDbContext}. Nos casos em que é necessário representar a entidade de domínio ou a transferência dos dados, também aparecem \textit{Usuario} e \textit{UsuarioDTO}. Essa organização evidencia a separação de responsabilidades entre interface, controle da requisição, aplicação das regras, acesso aos dados e persistência.
 
-No contexto do Civitas, os diagramas de sequência foram elaborados para representar operações relacionadas ao gerenciamento de usuários. Foram consideradas as funcionalidades de listar, cadastrar, editar e remover usuários, permitindo demonstrar o percurso das requisições entre a WebApp, o UsuarioController, o UsuarioService, o UsuarioRepository e a camada de persistência. Durante essas interações também ocorre a utilização de DTOs (Data Transfer Objects), empregados para transportar informações entre diferentes partes da aplicação sem expor diretamente as entidades persistidas \cite{Fowler2012PEAA}.
-
-A seguir, são apresentados os quatro diagramas de sequência desenvolvidos para o módulo de usuários, acompanhados da descrição do comportamento representado em cada operação.
-
+\clearpage
 \subsection{Diagrama de Sequência: Listar Usuários}
 
-O diagrama de sequência de listagem, apresentado na Figura~\ref{fig:seq_listar_usuario}, demonstra o processo executado quando o administrador acessa a página de usuários. A WebApp encaminha a solicitação ao UsuarioController, que transfere o processamento para o UsuarioService. O serviço solicita ao UsuarioRepository os registros correspondentes aos usuários ativos, utilizando parâmetros de paginação para controlar a quantidade de elementos retornados. O repositório realiza as consultas por intermédio do AppDbContext, aplicando os filtros, a ordenação e a paginação antes de recuperar os dados. Após o retorno dos registros, o serviço realiza o mapeamento para objetos UsuarioDTO e constrói o resultado paginado, que retorna ao controller e posteriormente à interface. A utilização de paginação em consultas de coleções permite limitar o volume de informações enviado em cada resposta e organizar a navegação pelos resultados \cite{microsoft2025api}.
-
-\clearpage
 \begin{figure}[H]
-    \centering
-    \caption{Diagrama de sequência para listagem de usuários.}
-    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Listar.png}
-    \label{fig:seq_listar_usuario}
-    \fonte{Elaborada pelos autores.}
+\centering
+\caption{Diagrama de sequência – Listar Usuários}
+\includegraphics[angle=90,width=\textwidth,totalheight=0.84\textheight,keepaspectratio]{figs/Usuario_Listar.png}
+\label{fig:seq_listar_usuario}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 \clearpage
 
+A Figura~\ref{fig:seq_listar_usuario} inicia com o acesso do Administrador à página de usuários. A WebApp encaminha a solicitação de listagem ao \textit{UsuarioController}, incluindo os parâmetros de paginação. O controller direciona a requisição ao \textit{UsuarioService}, que solicita ao \textit{UsuarioRepository} a página correspondente de usuários.
+
+O repositório interage com o \textit{AppDbContext} para aplicar os critérios representados no diagrama, filtrar e ordenar os registros, obter a contagem total e recuperar a página de dados correspondente. Os retornos percorrem as camadas em sentido inverso até o serviço, que mapeia a coleção de usuários para objetos \textit{UsuarioDTO} e monta o resultado paginado. Em seguida, o resultado é devolvido ao controller e encaminhado à WebApp, que apresenta a listagem correspondente ao Administrador.
+
+\clearpage
 \subsection{Diagrama de Sequência: Cadastrar Usuário}
 
-O cadastro de um novo usuário é representado na Figura~\ref{fig:seq_cadastrar_usuario}. O processo inicia-se quando o administrador acessa o formulário, informa os dados necessários e confirma a operação. A WebApp envia o UsuarioDTO ao UsuarioController, que aciona o método de criação existente no UsuarioService. Antes de persistir o registro, o serviço normaliza e valida os dados recebidos e verifica a existência de outro usuário com o mesmo CPF, e-mail ou matrícula. A validação realizada no servidor contribui para impedir o processamento de informações que não estejam de acordo com as regras da aplicação \cite{owasp2026input}. Quando as informações são válidas, o DTO é mapeado para a entidade Usuario, a senha é processada por meio de BCrypt e a entidade é encaminhada ao UsuarioRepository. O repositório utiliza o AppDbContext para registrar o novo usuário e efetivar a operação no banco de dados. Após a persistência, o identificador gerado é atribuído ao DTO e a senha é retirada da resposta, permitindo que o controller retorne a confirmação do cadastro sem expor a credencial. O uso de funções apropriadas para armazenamento de senhas é recomendado para impedir que credenciais sejam mantidas em texto puro \cite{owasp2026password}.
-
-\clearpage
 \begin{figure}[H]
-    \centering
-    \caption{Diagrama de sequência para cadastro de usuário.}
-    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Cadastrar.png}
-    \label{fig:seq_cadastrar_usuario}
-    \fonte{Elaborada pelos autores.}
+\centering
+\caption{Diagrama de sequência – Cadastrar Usuário}
+\includegraphics[angle=90,width=\textwidth,totalheight=0.84\textheight,keepaspectratio]{figs/Usuario_Cadastrar.png}
+\label{fig:seq_cadastrar_usuario}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 \clearpage
 
+Na Figura~\ref{fig:seq_cadastrar_usuario}, o Administrador interage com a WebApp para acessar a funcionalidade de cadastro, informar os dados do novo usuário e confirmar a operação. A WebApp encaminha o \textit{UsuarioDTO} ao \textit{UsuarioController}, que aciona o processo de criação no \textit{UsuarioService}.
+
+O serviço realiza as validações e normalizações representadas na sequência e consulta o \textit{UsuarioRepository} para verificar possíveis conflitos envolvendo CPF, e-mail e matrícula. O repositório utiliza o \textit{AppDbContext} para executar as consultas correspondentes e devolver os resultados ao serviço.
+
+Após as verificações previstas na sequência, o serviço cria a entidade \textit{Usuario} e a encaminha ao repositório. O \textit{UsuarioRepository} adiciona o registro ao contexto de persistência, e o \textit{AppDbContext} realiza a gravação das alterações. O resultado percorre as camadas de retorno até a WebApp, que apresenta ao Administrador a confirmação da operação.
+
+\clearpage
 \subsection{Diagrama de Sequência: Editar Usuário}
 
-A Figura~\ref{fig:seq_editar_usuario} apresenta o processo de edição de um usuário existente. A interação começa quando o administrador seleciona o registro desejado e acessa seu formulário de edição. Depois das alterações, a WebApp envia ao UsuarioController o identificador do usuário e os dados atualizados, que são encaminhados ao UsuarioService. O serviço verifica a existência do registro e executa novamente as regras de normalização e validação, incluindo a verificação de conflitos de CPF, e-mail e matrícula, desconsiderando o próprio usuário que está sendo alterado. Caso uma nova senha não seja informada, o hash anteriormente armazenado é preservado; da mesma forma, os atributos relacionados à exclusão lógica são mantidos durante uma atualização convencional. Finalizadas essas etapas, a entidade é encaminhada ao UsuarioRepository, que utiliza o AppDbContext para persistir as modificações. Ao término da operação, o DTO atualizado retorna ao controller, sem a senha, e a aplicação apresenta ao administrador a confirmação da alteração.
-
-\clearpage
 \begin{figure}[H]
-    \centering
-    \caption{Diagrama de sequência para edição de usuário.}
-    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Editar.png}
-    \label{fig:seq_editar_usuario}
-    \fonte{Elaborada pelos autores.}
+\centering
+\caption{Diagrama de sequência – Editar Usuário}
+\includegraphics[angle=90,width=\textwidth,totalheight=0.84\textheight,keepaspectratio]{figs/Usuario_Editar.png}
+\label{fig:seq_editar_usuario}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 \clearpage
 
+A Figura~\ref{fig:seq_editar_usuario} representa a edição de um usuário. O Administrador seleciona o registro a ser modificado na WebApp, realiza as alterações necessárias e confirma a atualização. A aplicação encaminha ao \textit{UsuarioController} o identificador do registro e os dados atualizados, posteriormente direcionados ao \textit{UsuarioService}.
+
+O serviço realiza a recuperação do usuário existente por intermédio do \textit{UsuarioRepository} e do \textit{AppDbContext}. Após a obtenção do registro, são executadas as operações de normalização e validação representadas na sequência, incluindo verificações relacionadas a CPF, e-mail e matrícula. Concluídas essas verificações, a entidade \textit{Usuario} é encaminhada ao repositório para atualização. O \textit{UsuarioRepository} solicita ao \textit{AppDbContext} a persistência das modificações e recebe o retorno de sucesso. Por fim, o \textit{UsuarioService} realiza o mapeamento do resultado para \textit{UsuarioDTO}, devolve a resposta ao \textit{UsuarioController} e a WebApp apresenta a confirmação da alteração ao Administrador.
+
+\clearpage
 \subsection{Diagrama de Sequência: Remover Usuário}
 
-A operação de remoção é demonstrada na Figura~\ref{fig:seq_remover_usuario} e utiliza o mecanismo de exclusão lógica adotado pelo Civitas. O processo inicia-se quando o administrador seleciona um usuário para remoção e confirma a ação na interface. A WebApp encaminha a solicitação ao UsuarioController, que transfere o processamento para o UsuarioService. O registro é localizado pelo repositório incluindo aqueles anteriormente excluídos, pois o mesmo mecanismo permite alterar o estado lógico do usuário. Quando o registro ainda não está excluído, o atributo Excluido é marcado e DataExclusao recebe a data da operação; quando o registro já se encontra excluído, o processo inverso possibilita sua restauração. A alteração é encaminhada ao repositório e persistida pelo AppDbContext. Dessa forma, a remoção lógica mantém o registro armazenado na base de dados, diferenciando-se da alteração de situação funcional entre ATIVO e INATIVO.
-
-\clearpage
 \begin{figure}[H]
-    \centering
-    \caption{Diagrama de sequência para remoção de usuário.}
-    \includegraphics[angle=90,width=\textwidth,totalheight=0.90\textheight,keepaspectratio]{figs/Usuario_Remover.png}
-    \label{fig:seq_remover_usuario}
-    \fonte{Elaborada pelos autores.}
+\centering
+\caption{Diagrama de sequência – Remover Usuário}
+\includegraphics[angle=90,width=\textwidth,totalheight=0.84\textheight,keepaspectratio]{figs/Usuario_Remover.png}
+\label{fig:seq_remover_usuario}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 \clearpage
 
-Em conjunto, os diagramas de sequência permitem observar o fluxo completo das principais operações de manutenção dos usuários no Civitas. As representações evidenciam a ordem das mensagens e a colaboração entre interface, controller, serviço, repositório e persistência, além de demonstrarem aspectos específicos do sistema, como utilização de DTOs, validações de dados, proteção da senha e exclusão lógica. Essa perspectiva comportamental complementa as informações estruturais apresentadas pelo diagrama de classes e amplia a compreensão sobre a execução das funcionalidades do sistema.
+A Figura~\ref{fig:seq_remover_usuario} representa a remoção de usuário por meio de exclusão lógica reversível. O Administrador acessa a listagem de usuários, seleciona um registro para remoção, visualiza a confirmação e confirma a operação. A WebApp envia \textit{ToggleStatusExclusao(id)} ao \textit{UsuarioController}, que encaminha a solicitação ao \textit{UsuarioService}.
+
+O serviço solicita ao \textit{UsuarioRepository} a recuperação do usuário, incluindo registros logicamente excluídos. O repositório consulta o \textit{AppDbContext} e retorna a entidade localizada. A sequência representa a alteração do estado lógico do registro: quando o usuário não se encontra excluído, \textit{Excluido} recebe \textit{true} e \textit{DataExclusao} recebe a data correspondente; na operação inversa, \textit{Excluido} retorna a \textit{false} e \textit{DataExclusao} a \textit{null}.
+
+Após a alteração, o registro é encaminhado ao repositório para atualização. A sequência representa o tratamento da instância rastreada, a marcação da entidade como modificada e a solicitação de gravação das mudanças ao \textit{AppDbContext}. O retorno da operação percorre as camadas até a WebApp.
+
+A exclusão lógica representada na figura não corresponde à alteração de \textit{Situacao}. Os atributos \textit{Excluido} e \textit{DataExclusao} controlam a remoção e a restauração lógica do registro, enquanto \textit{Situacao} mantém os valores Ativo e Inativo para representar uma condição funcional distinta.
 
 \section{Diagrama de Atividade}
+
 \label{sec:diagrama-atividade-civitas-final}
 
-O diagrama de atividade integra o conjunto de diagramas comportamentais da UML e é utilizado para representar o fluxo de execução de um comportamento. Sua composição permite modelar ações, fluxos de controle, decisões e diferentes caminhos possíveis durante a realização de um processo \cite{omg2017uml}.
+O diagrama de atividade representa ações, transições, decisões e caminhos alternativos de um comportamento. Essa perspectiva permite visualizar a dinâmica de um processo e os pontos em que sua continuidade depende de determinada condição \parencite{omg2017uml}.
 
-Entre os elementos disponíveis nesse tipo de diagrama encontram-se os nós inicial e final, responsáveis por delimitar o início e o término do fluxo, além dos nós de decisão, utilizados quando a continuidade da atividade depende da avaliação de determinada condição. As transições originadas desses pontos podem possuir condições de guarda (guards), indicando qual caminho deverá ser percorrido de acordo com o resultado obtido \cite{omg2017uml}.
-
-A Figura~\ref{fig:atividade_cadastrar_usuario} apresenta o diagrama de atividade desenvolvido para representar o processo de cadastro de usuário no Civitas, abrangendo as ações realizadas desde o acesso ao formulário até a conclusão ou interrupção do cadastro em razão das validações executadas pelo sistema.
 
 \begin{figure}[H]
-    \centering
-    \caption{Diagrama de atividade para o processo de cadastro de usuário.}
-    \includegraphics[width=0.95\textwidth]{figs/atividade_cadastrar_usuario.png}
-    \label{fig:atividade_cadastrar_usuario}
-    \fonte{Elaborada pelos autores.}
+\centering
+\caption{Diagrama de atividade – Cadastrar Usuário}
+\includegraphics[width=0.95\textwidth]{figs/atividade_cadastrar_usuario.png}
+\label{fig:atividade_cadastrar_usuario}
+\fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-O diagrama inicia-se pelo nó inicial, indicando o começo da atividade. Em seguida, o administrador acessa a área de usuários, seleciona a opção de cadastro e recebe da aplicação o formulário necessário para informar os dados do novo usuário. Após o preenchimento, o administrador confirma a operação e as informações são encaminhadas para validação.
 
-Durante essa etapa, o sistema verifica a conformidade dos dados recebidos e analisa se existem conflitos relacionados ao CPF, e-mail ou matrícula. A validação no lado do servidor é relevante porque os mecanismos presentes na interface não são suficientes para garantir, isoladamente, a validade das informações recebidas \cite{owasp2026input}.
+A Figura~\ref{fig:atividade_cadastrar_usuario} inicia no nó inicial com o acesso do Administrador à página de usuários. Em seguida, o Administrador seleciona a opção \textit{Cadastrar Usuário}, e o sistema apresenta o formulário de cadastro. O preenchimento dos dados e a confirmação conduzem à atividade em que o sistema recebe e valida as informações, incluindo a verificação de duplicidade de CPF, e-mail e matrícula.
 
-Após as verificações, o fluxo alcança um nó de decisão e pode seguir dois caminhos:
+O nó de decisão \textit{Cadastro válido?} divide o fluxo em dois caminhos. No ramo \textit{[Não]}, o sistema apresenta os erros de validação ou informa o conflito identificado, direcionando o fluxo para a correção dos dados pelo Administrador. Após a correção, a atividade retorna à confirmação do cadastro.
 
-\begin{itemize}
-    \item Dados inválidos ou conflitantes: o sistema impede a persistência do usuário e apresenta uma mensagem indicando a ocorrência encontrada. O administrador pode corrigir as informações no formulário e realizar uma nova tentativa de cadastro.
-
-\item Dados válidos e sem conflitos: o sistema continua o processamento, cria a entidade correspondente, gera o hash da senha e realiza sua persistência. Depois da conclusão, a aplicação apresenta uma mensagem confirmando que o usuário foi cadastrado com sucesso.
-\end{itemize}
-
-Por fim, o fluxo alcança o nó final, representando o encerramento da atividade. A utilização do diagrama permite visualizar de forma direta tanto o caminho principal do cadastro quanto o comportamento adotado diante de informações inválidas, evidenciando as decisões existentes no processo e complementando a visão apresentada pelo diagrama de sequência.
-
-\let\dicionariocivitas\relax
+No ramo \textit{[Sim]}, o sistema cadastra o usuário, apresenta a mensagem \textit{Usuário cadastrado com sucesso} e exibe a página ou listagem de usuários. O processo é encerrado no nó final. Dessa forma, a Figura~\ref{fig:atividade_cadastrar_usuario} evidencia o caminho principal de cadastro e o caminho alternativo de correção das informações quando as condições de validação não são atendidas.

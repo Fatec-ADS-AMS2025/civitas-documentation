@@ -12,7 +12,7 @@ Outro aspecto relevante do projeto está relacionado à contribuição que a inf
 
 A intenção do projeto é oferecer uma solução tecnológica capaz de auxiliar os órgãos públicos municipais no gerenciamento de informações administrativas e financeiras, contribuindo para maior agilidade nos processos internos, fortalecimento da transparência pública e melhoria do controle interno. Dessa forma, o \textit{Civitas} busca unir tecnologia, organização e controle administrativo em uma única plataforma, atendendo às necessidades da gestão pública municipal de maneira eficiente, segura e estruturada, além de contribuir para a modernização dos processos administrativos e fortalecimento da gestão dos recursos públicos.
 
-\chapter{Levantamento de Requisitos de Software}
+\chapter{LEVANTAMENTO DE REQUISITOS DE SOFTWARE}
 
 O levantamento de requisitos é uma etapa fundamental no desenvolvimento de software, pois tem como objetivo identificar as necessidades dos usuários e definir as funcionalidades que o sistema deverá oferecer. Essa atividade permite compreender os problemas existentes, os objetivos do projeto e as expectativas dos stakeholders, fornecendo uma base sólida para as demais etapas do desenvolvimento.
 
@@ -34,56 +34,49 @@ A implementação do sistema proporciona benefícios significativos à gestão m
 
 A análise das implicações decorrentes do aprimoramento promovido pelo sistema evidencia impactos positivos nos âmbitos organizacional, social e administrativo. Ao modernizar processos antes fragmentados ou dependentes de controles manuais, o Civitas fortalece a capacidade de planejamento e gestão dos órgãos públicos municipais. Como diferencial, destaca-se a integração entre o controle de despesas, orçamentos, instituições e fornecedores em uma única solução, promovendo maior confiabilidade, transparência e eficiência na administração pública.
 
-
-
 \section{Análise dos Sistemas Existentes}
 
-O cenário contemplado pelo \textit{Civitas} envolve atividades administrativas e financeiras que, em muitos municípios, ainda são conduzidas com apoio de planilhas, documentos avulsos, arquivos impressos e trocas de informação entre setores por canais pouco padronizados. Esses recursos podem resolver demandas imediatas, mas tendem a limitar a visão integrada dos dados, principalmente quando diferentes equipes precisam consultar cadastros, despesas, documentos e registros orçamentários relacionados a um mesmo processo.
+O cenário contemplado pelo Civitas envolve atividades administrativas e financeiras que, em muitos municípios, ainda são conduzidas com apoio de planilhas, documentos avulsos, arquivos impressos e trocas de informação entre setores por canais pouco padronizados. Esses recursos podem resolver demandas imediatas, mas tendem a limitar a visão integrada dos dados, principalmente quando diferentes equipes precisam consultar cadastros, despesas, informações documentais associadas e registros orçamentários relacionados a um mesmo processo.
 
-Quando essas rotinas permanecem fragmentadas, surgem dificuldades como retrabalho, divergência entre versões de documentos, demora para localizar registros e baixa clareza sobre o histórico das decisões administrativas. Também se torna mais difícil verificar quem realizou determinada alteração, em que momento ela ocorreu e qual justificativa foi registrada. Por isso, a necessidade de informatização não se restringe à substituição do papel por telas digitais; ela envolve a criação de um fluxo mais controlado, rastreável e confiável para apoiar a prestação de contas e a tomada de decisão.
+Quando essas rotinas permanecem fragmentadas, surgem dificuldades como retrabalho, divergência entre versões de documentos, demora para localizar registros e baixa clareza sobre o histórico das decisões administrativas. Também se torna mais difícil verificar quem realizou determinada alteração, em que momento ela ocorreu e qual justificativa foi registrada. Por isso, a necessidade de informatização não se restringe à substituição do papel por telas digitais; ela envolve a criação de processos mais controlados, rastreáveis e confiáveis para apoiar a prestação de contas e a tomada de decisão.
 
-Nesse contexto, a análise de sistemas existentes contribui para delimitar melhor o escopo do projeto. Ao observar soluções já utilizadas no setor público, é possível identificar padrões de funcionalidades, formas de organização das informações e limitações que não devem ser reproduzidas. Essa comparação também ajuda a posicionar o \textit{Civitas} como uma solução de menor complexidade, voltada às rotinas essenciais de controle administrativo, despesas, documentos e auditoria, sem pretender substituir plataformas completas de gestão municipal.
+Nesse contexto, a análise de sistemas existentes contribui para delimitar melhor o escopo do projeto. Ao observar soluções já utilizadas no setor público, é possível identificar padrões de funcionalidades, formas de organização das informações e limitações que não devem ser reproduzidas. Essa comparação também ajuda a posicionar o Civitas como uma solução de menor complexidade, voltada às rotinas essenciais de controle administrativo, acompanhamento de despesas, informações documentais associadas e auditoria, sem pretender substituir plataformas completas de gestão municipal.
 
 \subsection{Levantamento de Sistemas no Mercado}
 
-Para o levantamento, foram consideradas quatro soluções relacionadas à gestão pública ou à digitalização de processos administrativos: e-Cidade, Betha Cloud Contábil, GOVBR Cidade 360 e 1Doc. A seleção foi feita pela proximidade dessas ferramentas com temas relevantes ao projeto, como integração de informações, controle financeiro, gestão documental, tramitação de processos e apoio às rotinas de órgãos municipais.
+Para o levantamento, foram consideradas quatro soluções relacionadas à gestão pública ou à digitalização de processos administrativos: e-Cidade, Betha Cloud Contábil, GOVBR Cidade 360 e 1Doc. A seleção foi realizada pela proximidade dessas ferramentas com temas relevantes ao projeto, como integração de informações, controle financeiro, gestão documental, tramitação de processos e apoio às rotinas de órgãos municipais.
 
-O \textbf{e-Cidade} apresenta uma proposta ampla de informatização da gestão municipal e reúne módulos associados a diferentes áreas da administração pública, como finanças, patrimônio, saúde, educação, recursos humanos e apoio gerencial \parencite{eCidadeSoftwarePublico2026}. Por ser um software público, sua adoção pode reduzir dependência de soluções proprietárias e ampliar a liberdade na escolha de apoio técnico. Em contrapartida, a abrangência da ferramenta pode exigir equipe capacitada, planejamento de implantação e adaptação às normas e processos locais.
+O e-Cidade apresenta uma proposta ampla de informatização da gestão municipal e reúne módulos associados a diferentes áreas da administração pública, como finanças, patrimônio, saúde, educação, recursos humanos e apoio gerencial \parencite{eCidadeSoftwarePublico2026}. Por ser um software público, sua adoção pode reduzir a dependência de soluções proprietárias e ampliar a liberdade na escolha de apoio técnico. Em contrapartida, a abrangência da ferramenta pode exigir equipe capacitada, planejamento de implantação e adaptação às normas e aos processos locais.
 
-O \textbf{Betha Cloud Contábil} concentra-se nas rotinas orçamentárias e contábeis de municípios, com recursos voltados ao acompanhamento de receitas, despesas, alterações orçamentárias e escrituração \parencite{BethaContabilCloud2026}. Essa característica torna a solução mais especializada no controle contábil do que na organização administrativa geral. Para o \textit{Civitas}, a principal referência está na importância de manter dados financeiros consistentes e consultáveis; a diferença é que o projeto busca um escopo acadêmico mais enxuto, sem a profundidade de um sistema contábil completo.
+O Betha Cloud Contábil concentra-se nas rotinas orçamentárias e contábeis de municípios, com recursos voltados ao acompanhamento de receitas, despesas, alterações orçamentárias e escrituração \parencite{BethaContabilCloud2026}. Essa característica torna a solução mais especializada no controle contábil do que na organização administrativa geral. Para o Civitas, a principal referência está na importância de manter dados financeiros consistentes e consultáveis; a diferença é que o projeto busca um escopo acadêmico mais enxuto, sem a profundidade de um sistema contábil completo.
 
-O \textbf{GOVBR Cidade 360} posiciona-se como uma plataforma de gestão municipal com módulos para áreas financeiras, planejamento, receitas, suprimentos, serviços digitais e governança \parencite{GovbrCidade3602026}. A solução evidencia a relevância da integração entre setores, mas também demonstra que plataformas corporativas podem ultrapassar as necessidades iniciais de um projeto voltado a controles administrativos essenciais. Assim, sua análise contribui principalmente para compreender como a centralização de informações pode apoiar a gestão, sem que o \textit{Civitas} precise reproduzir toda a abrangência de uma solução comercial.
+O GOVBR Cidade 360 posiciona-se como uma plataforma de gestão municipal com módulos para áreas financeiras, planejamento, receitas, suprimentos, serviços digitais e governança \parencite{GovbrCidade3602026}. A solução evidencia a relevância da integração entre setores, mas também demonstra que plataformas corporativas podem ultrapassar as necessidades iniciais de um projeto voltado a controles administrativos essenciais. Assim, sua análise contribui principalmente para compreender como a centralização de informações pode apoiar a gestão, sem que o Civitas precise reproduzir toda a abrangência de uma solução comercial.
 
-O \textbf{1Doc} tem foco na digitalização de processos, documentos e comunicações formais, com recursos voltados à tramitação eletrônica e à assinatura digital \parencite{OneDoc2026}. Essa proposta se aproxima da necessidade de organizar documentos e reduzir fluxos informais, mas não cobre de forma central a execução orçamentária ou o acompanhamento de despesas. Para o \textit{Civitas}, a ferramenta serve como referência para a gestão documental, enquanto o projeto combina esse aspecto com cadastros, controle financeiro e registro de auditoria.
+O 1Doc tem foco na digitalização de processos, documentos e comunicações formais, com recursos voltados à tramitação eletrônica e à assinatura digital \parencite{OneDoc2026}. Essa proposta se aproxima da necessidade de organizar informações documentais e reduzir fluxos informais, mas não cobre de forma central a execução orçamentária ou o acompanhamento de despesas. Para o Civitas, a ferramenta serve como referência para a organização de informações documentais associadas às despesas, enquanto o projeto combina esse aspecto com cadastros, controle financeiro e registro de auditoria.
 
 \begin{quadro}[H]
-	\centering
-	\caption{Comparação entre sistemas existentes e o Civitas}
-	\label{quad:comparacao_sistemas_mercado}
-	\small
-	\begin{tabularx}{\textwidth}{|P{0.16\textwidth}|X|X|X|}
-		\hline
-		\textbf{Sistema} & \textbf{Principais funcionalidades} & \textbf{Pontos fortes e diferenciais} & \textbf{Limitações e comparação com o Civitas} \\ \hline
-
-		e-Cidade & Gestão municipal integrada, com módulos para áreas administrativas e serviços públicos. & Software público e possibilidade de adaptação por diferentes fornecedores. & Apresenta escopo amplo e implantação mais exigente; o \textit{Civitas} prioriza controles administrativos essenciais. \\ \hline
-
-		Betha Cloud Contábil & Rotinas contábeis e orçamentárias relacionadas a receitas, despesas e escrituração. & Especialização no acompanhamento financeiro municipal. & É mais profundo na área contábil; o \textit{Civitas} utiliza esse tema em um escopo menor e administrativo. \\ \hline
-
-		GOVBR Cidade 360 & Plataforma modular para gestão municipal e serviços digitais. & Integração entre setores e visão ampla da administração pública. & A abrangência pode superar a necessidade do projeto; o \textit{Civitas} foca centralização, despesas, documentos e auditoria. \\ \hline
-
-		1Doc & Tramitação digital de processos, documentos e comunicações oficiais. & Organização documental e formalização eletrônica dos fluxos administrativos. & Tem menor foco em orçamento e despesas; o \textit{Civitas} une gestão documental a controles financeiros básicos. \\ \hline
-	\end{tabularx}
-
-	\fonte{Elaborado pelos autores com base em \textcite{eCidadeSoftwarePublico2026}, \textcite{BethaContabilCloud2026}, \textcite{GovbrCidade3602026} e \textcite{OneDoc2026}.}
+\centering
+\caption{Comparação entre sistemas existentes e o Civitas}
+\label{quad:comparacao_sistemas_mercado}
+\small
+\begin{tabularx}{\textwidth}{|P{0.16\textwidth}|X|X|X|}
+\hline
+\textbf{Sistema} & \textbf{Principais funcionalidades} & \textbf{Pontos fortes e diferenciais} & \textbf{Limitações e comparação com o Civitas} \\ \hline
+e-Cidade & Gestão municipal integrada, com módulos para áreas administrativas e serviços públicos & Software público e possibilidade de adaptação por diferentes fornecedores & Apresenta escopo amplo e implantação mais exigente; o Civitas prioriza controles administrativos essenciais \\ \hline
+Betha Cloud Contábil & Rotinas contábeis e orçamentárias relacionadas a receitas, despesas e escrituração & Especialização no acompanhamento financeiro municipal & É mais profundo na área contábil; o Civitas utiliza esse tema em um escopo menor e administrativo \\ \hline
+GOVBR Cidade 360 & Plataforma modular para gestão municipal e serviços digitais & Integração entre setores e visão ampla da administração pública & A abrangência pode superar a necessidade do projeto; o Civitas foca centralização, despesas, informações documentais associadas e auditoria \\ \hline
+1Doc & Tramitação digital de processos, documentos e comunicações oficiais & Organização documental e formalização eletrônica dos processos administrativos & Tem menor foco em orçamento e despesas; o Civitas associa informações documentais às despesas e as integra aos cadastros, ao controle financeiro e à auditoria \\ \hline
+\end{tabularx}
+\fonte{Elaborado pelos autores (2026).}
 \end{quadro}
 
-A comparação demonstra que as soluções analisadas atendem a demandas importantes, porém partem de propostas distintas. e-Cidade e GOVBR Cidade 360 procuram cobrir a gestão municipal de forma ampla; Betha Cloud Contábil aprofunda o controle orçamentário e contábil; e 1Doc concentra-se na formalização de documentos e processos. O \textit{Civitas}, por sua vez, combina elementos dessas referências em uma proposta mais delimitada, adequada ao objetivo do projeto: centralizar cadastros, acompanhar despesas, organizar documentos, controlar acessos e registrar ações relevantes em trilhas de auditoria.
+A comparação demonstra que as soluções analisadas atendem a demandas importantes, porém partem de propostas distintas. e-Cidade e GOVBR Cidade 360 procuram cobrir a gestão municipal de forma ampla; Betha Cloud Contábil aprofunda o controle orçamentário e contábil; e 1Doc concentra-se na formalização de documentos e processos. O Civitas, por sua vez, combina elementos dessas referências em uma proposta mais delimitada, adequada ao objetivo do projeto: centralizar cadastros, acompanhar despesas, manter informações documentais associadas aos registros financeiros, controlar acessos e registrar ações relevantes em trilhas de auditoria.
 
-Dessa forma, o diferencial do projeto não está em competir diretamente com plataformas completas, mas em oferecer uma alternativa acadêmica, objetiva e adaptável às necessidades imediatas de gestão administrativa municipal. A análise dos sistemas existentes reforça que a simplicidade de uso, a rastreabilidade das informações e a integração mínima entre documentos, despesas e cadastros são pontos essenciais para reduzir dependência de controles dispersos e melhorar a confiabilidade das informações usadas pelos gestores.
+Dessa forma, o diferencial do projeto não está em competir diretamente com plataformas completas, mas em oferecer uma alternativa acadêmica, objetiva e adaptável às necessidades imediatas de gestão administrativa municipal. A análise dos sistemas existentes reforça que a simplicidade de uso, a rastreabilidade das informações e a integração entre cadastros, despesas e informações documentais associadas são pontos essenciais para reduzir a dependência de controles dispersos e melhorar a confiabilidade das informações utilizadas pelos gestores.
 
 \section{Descrição dos Principais Problemas}
 
-Durante o levantamento de requisitos do projeto Civitas, foram identificadas dificuldades relacionadas ao gerenciamento das informações administrativas e financeiras da gestão pública municipal. A situação atual demonstra que processos como controle de usuários, secretarias, instituições, orçamentos, despesas, fornecedores, documentos, fluxos administrativos e auditorias podem ser realizados de forma descentralizada, por meio de registros separados, planilhas ou controles internos sem integração. Esse cenário dificulta a organização dos dados, o acompanhamento das informações e a agilidade na tomada de decisões.
+Durante o levantamento de requisitos do projeto Civitas, foram identificadas dificuldades relacionadas ao gerenciamento das informações administrativas e financeiras da gestão pública municipal. A situação atual demonstra que processos como controle de usuários, secretarias, instituições, orçamentos, despesas, fornecedores, classificações, unidades consumidoras e auditorias podem ser realizados de forma descentralizada, por meio de registros separados, planilhas ou controles internos sem integração. Esse cenário dificulta a organização dos dados, o acompanhamento das informações e a agilidade na tomada de decisões.
 
 Um dos principais problemas observados é a falta de centralização das informações. Quando os dados estão distribuídos em diferentes locais, aumentam os riscos de inconsistências, duplicidade de registros, perda de informações e retrabalho. Além disso, a ausência de integração limita a visão geral da administração pública, dificultando o acompanhamento entre orçamento disponível, despesas realizadas, instituições atendidas, secretarias responsáveis e fornecedores cadastrados.
 
@@ -93,19 +86,19 @@ Diante dessas dificuldades, justifica-se o desenvolvimento do sistema Civitas, c
 
 \subsection{Descrição dos Requisitos Não Funcionais}
 
-Os requisitos não funcionais determinam as condições de qualidade sob as quais as funcionalidades do sistema devem ser entregues. Diferentemente dos requisitos funcionais, eles não descrevem uma operação isolada, mas estabelecem limites mensuráveis para o comportamento da solução, para a proteção das informações e para a experiência de uso. A ISO/IEC 25010 organiza essas propriedades em um modelo destinado à especificação e à avaliação da qualidade de produtos de software \parencite{ISOIEC25010_2023}. No contexto do \textit{Civitas}, tais propriedades são particularmente relevantes porque decisões administrativas e financeiras dependem de dados disponíveis, íntegros e rastreáveis.
+Os requisitos não funcionais determinam as condições de qualidade sob as quais as funcionalidades do sistema devem ser entregues. Diferentemente dos requisitos funcionais, eles não descrevem uma operação isolada, mas estabelecem limites mensuráveis para o comportamento da solução, para a proteção das informações e para a experiência de uso. A ISO/IEC 25010 organiza essas propriedades em um modelo destinado à especificação e à avaliação da qualidade de produtos de software \parencite{ISOIEC25010_2023}. No contexto do Civitas, tais propriedades são particularmente relevantes porque decisões administrativas e financeiras dependem de dados disponíveis, íntegros e rastreáveis.
 
-Para reduzir ambiguidades, cada requisito foi associado a um critério de verificação. Os valores apresentados constituem metas iniciais de aceitação e deverão ser aferidos em ambiente de homologação representativo do ambiente de produção. Essa abordagem permite transformar expressões subjetivas, como ``sistema rápido'' ou ``interface simples'', em condições que possam ser verificadas por testes, monitoramento e inspeções técnicas, conforme recomendado para a especificação de requisitos de software \parencite{Sommerville2018ES10}.
+Para reduzir ambiguidades, cada requisito foi associado a um critério de verificação. Os valores apresentados constituem metas iniciais de aceitação e deverão ser aferidos em ambiente de homologação representativo do ambiente de produção. Essa abordagem permite transformar expressões subjetivas, como “sistema rápido” ou “interface simples”, em condições que possam ser verificadas por testes, monitoramento e inspeções técnicas, conforme recomendado para a especificação de requisitos de software \parencite{Sommerville2018ES10}.
 
-\textbf{Desempenho.} Nas operações interativas mais frequentes --- autenticação, consulta, inclusão e atualização de cadastros, despesas e documentos ---, pelo menos 95\% das requisições deverão ser concluídas em até dois segundos. Relatórios e consolidações financeiras poderão demandar até cinco segundos, considerando uma carga de 50 usuários autenticados simultaneamente. A medição deverá ocorrer no servidor, desconsiderando oscilações da conexão do usuário. Paginação, índices nas colunas de busca e consultas que recuperem apenas os dados necessários são decisões técnicas que reduzem consumo de memória e processamento e tornam essa meta sustentável à medida que a base cresce.
+\textbf{Desempenho.} Nas operações interativas mais frequentes — autenticação, consulta, inclusão e atualização de cadastros e despesas —, pelo menos 95\% das requisições deverão ser concluídas em até dois segundos. Relatórios e consolidações financeiras poderão demandar até cinco segundos, considerando uma carga de 50 usuários autenticados simultaneamente. A medição deverá ocorrer no servidor, desconsiderando oscilações da conexão do usuário. Paginação, índices nas colunas de busca e consultas que recuperem apenas os dados necessários são decisões técnicas que reduzem consumo de memória e processamento e tornam essa meta sustentável à medida que a base cresce.
 
-\textbf{Segurança.} Todo acesso autenticado deverá empregar contas individuais, autorização por perfil e o princípio do menor privilégio. As comunicações entre navegador e servidor deverão utilizar HTTPS; senhas deverão ser armazenadas somente por meio de função de derivação criptográfica com sal; e os \textit{tokens} de autenticação deverão possuir validade limitada. Eventos de autenticação e alterações em registros administrativos ou financeiros deverão compor uma trilha de auditoria que identifique usuário, data, horário e operação, sem registrar senhas ou segredos. Essas medidas apoiam os princípios de segurança e prevenção e a obrigação de proteção dos dados pessoais estabelecidos pela Lei Geral de Proteção de Dados Pessoais \parencite{brasil2018lgpd}.
+\textbf{Segurança.} Todo acesso autenticado deverá empregar contas individuais, autorização por perfil e o princípio do menor privilégio. As comunicações entre navegador e servidor deverão utilizar HTTPS; senhas deverão ser armazenadas somente por meio de função de derivação criptográfica com sal; e os tokens de autenticação deverão possuir validade limitada. Eventos de autenticação e alterações em registros administrativos ou financeiros deverão compor uma trilha de auditoria que identifique usuário, data, horário e operação, sem registrar senhas ou segredos. Essas medidas apoiam os princípios de segurança e prevenção e a obrigação de proteção dos dados pessoais estabelecidos pela Lei Geral de Proteção de Dados Pessoais \parencite{brasil2018lgpd}.
 
-\textbf{Disponibilidade.} O \textit{Civitas} deverá permanecer disponível em, no mínimo, 99,5\% do tempo mensal, excetuadas as janelas de manutenção comunicadas previamente. Em um mês de 30 dias, esse índice admite, no máximo, aproximadamente três horas e trinta e seis minutos de indisponibilidade não planejada. A aplicação deverá contar com monitoramento de saúde da API e do banco de dados, além de registro de falhas, para que interrupções sejam detectadas e diagnosticadas. A meta equilibra a continuidade das rotinas municipais com os custos de infraestrutura compatíveis com o escopo do projeto.
+\textbf{Disponibilidade.} O Civitas deverá permanecer disponível em, no mínimo, 99,5\% do tempo mensal, excetuadas as janelas de manutenção comunicadas previamente. Em um mês de 30 dias, esse índice admite, no máximo, aproximadamente três horas e trinta e seis minutos de indisponibilidade não planejada. A aplicação deverá contar com monitoramento de saúde da API e do banco de dados, além de registro de falhas, para que interrupções sejam detectadas e diagnosticadas. A meta equilibra a continuidade das rotinas municipais com os custos de infraestrutura compatíveis com o escopo do projeto.
 
-\textbf{Escalabilidade.} A solução deverá suportar o dobro da carga inicial --- 100 usuários simultâneos e duas vezes o volume de dados utilizado no ensaio-base --- sem ultrapassar em mais de 20\% os limites de tempo definidos para desempenho. Para viabilizar o crescimento, a API deverá evitar estado de sessão armazenado localmente, as consultas deverão ser paginadas e o banco de dados deverá utilizar índices definidos a partir dos padrões reais de acesso. Desse modo, será possível ampliar os recursos da aplicação ou distribuir instâncias sem reescrever as regras de negócio.
+\textbf{Escalabilidade.} A solução deverá suportar o dobro da carga inicial — 100 usuários simultâneos e duas vezes o volume de dados utilizado no ensaio-base — sem ultrapassar em mais de 20\% os limites de tempo definidos para desempenho. Para viabilizar o crescimento, a API deverá evitar estado de sessão armazenado localmente, as consultas deverão ser paginadas e o banco de dados deverá utilizar índices definidos a partir dos padrões reais de acesso. Desse modo, será possível ampliar os recursos da aplicação ou distribuir instâncias sem reescrever as regras de negócio.
 
-\textbf{Usabilidade.} Os fluxos essenciais deverão apresentar terminologia compatível com a administração municipal, navegação consistente, confirmação para ações destrutivas e mensagens de erro que expliquem como corrigir a entrada. Em testes com representantes dos perfis previstos, pelo menos 85\% dos participantes deverão concluir, sem auxílio do avaliador, as tarefas de consultar um orçamento, registrar uma despesa e localizar um documento. O critério permite avaliar a eficácia da interface com usuários reais, em vez de presumir facilidade de uso apenas a partir da aparência das telas.
+\textbf{Usabilidade.} Os fluxos essenciais deverão apresentar terminologia compatível com a administração municipal, navegação consistente, confirmação para ações destrutivas e mensagens de erro que expliquem como corrigir a entrada. Em testes com representantes dos perfis previstos, pelo menos 85\% dos participantes deverão concluir, sem auxílio do avaliador, as tarefas de consultar um orçamento, registrar uma despesa e localizar informações documentais associadas a uma despesa. O critério permite avaliar a eficácia da interface com usuários reais, em vez de presumir facilidade de uso apenas a partir da aparência das telas.
 
 \textbf{Acessibilidade.} As páginas e os componentes próprios deverão atender aos critérios de sucesso dos níveis A e AA das WCAG 2.2. Isso inclui operação completa por teclado, foco visível, rótulos programaticamente associados aos campos, alternativas textuais, contraste adequado e redimensionamento do conteúdo sem perda de informação a partir de 320 pixels de largura. As WCAG estruturam a acessibilidade pelos princípios de conteúdo perceptível, operável, compreensível e robusto, além de fornecerem critérios verificáveis por testes automatizados e avaliação humana \parencite{W3CWCAG22_2024}.
 
@@ -113,99 +106,99 @@ Para reduzir ambiguidades, cada requisito foi associado a um critério de verifi
 
 \textbf{Compatibilidade.} A interface web deverá funcionar nas versões estável corrente e imediatamente anterior dos navegadores Google Chrome, Microsoft Edge e Mozilla Firefox na data de cada entrega. O conteúdo deverá adaptar-se a telas com largura entre 360 e 1920 pixels, sem perda das operações essenciais. Antes de cada versão, os fluxos críticos deverão ser executados na matriz de navegadores e dimensões definida para o projeto, pois testes em um único ambiente não asseguram comportamento equivalente em diferentes mecanismos de renderização.
 
-\textbf{Backup e recuperação.} Deverá ser realizado \textit{backup} completo e automatizado do banco de dados a cada 24 horas, com arquivos criptografados, retenção mínima de 30 dias e armazenamento separado do ambiente principal. O objetivo de ponto de recuperação (RPO) será de, no máximo, 24 horas, e o objetivo de tempo de recuperação (RTO), de até quatro horas após a disponibilização da infraestrutura. A restauração deverá ser ensaiada e registrada ao menos uma vez por trimestre, visto que a existência do arquivo não comprova sua recuperabilidade. A documentação do PostgreSQL recomenda cópias periódicas para dados valiosos e apresenta mecanismos de cópia e restauração que fundamentam esse procedimento \parencite{PostgreSQL18Backup}.
+\textbf{Backup e recuperação.} Deverá ser realizado backup completo e automatizado do banco de dados a cada 24 horas, com arquivos criptografados, retenção mínima de 30 dias e armazenamento separado do ambiente principal. O objetivo de ponto de recuperação (RPO) será de, no máximo, 24 horas, e o objetivo de tempo de recuperação (RTO), de até quatro horas após a disponibilização da infraestrutura. A restauração deverá ser ensaiada e registrada ao menos uma vez por trimestre, visto que a existência do arquivo não comprova sua recuperabilidade. A documentação do PostgreSQL recomenda cópias periódicas para dados valiosos e apresenta mecanismos de cópia e restauração que fundamentam esse procedimento \parencite{PostgreSQL18Backup}.
 
-O Quadro~\ref{quad:requisitos_nao_funcionais} consolida os requisitos e os respectivos critérios de aceitação. Os identificadores permitem relacioná-los posteriormente aos casos de teste, aos registros de monitoramento e às decisões de arquitetura.
-
-{
+\begingroup
 \small
 \begin{longquadro}{|P{0.11\textwidth}|P{0.19\textwidth}|P{0.61\textwidth}|}
-	\caption{Requisitos não funcionais do Civitas}
-	\label{quad:requisitos_nao_funcionais}\\
-	\hline
-	\textbf{ID} & \textbf{Requisito} & \textbf{Descrição e critério de aceitação} \\ \hline
-	\endfirsthead
-
-	\hline
-	\textbf{ID} & \textbf{Requisito} & \textbf{Descrição e critério de aceitação} \\ \hline
-	\endhead
-
-	\hline
-	\multicolumn{3}{r}{\textit{Continua na próxima página}} \\
-	\endfoot
-
-	\hline
-	\multicolumn{3}{l}{\textit{Fonte: elaborado pelos autores (2026).}}
-	\endlastfoot
-
-	RNF-01 & Desempenho & Concluir 95\% das operações interativas em até dois segundos e relatórios em até cinco segundos, sob carga de 50 usuários simultâneos. \\ \hline
-	RNF-02 & Segurança & Aplicar HTTPS, autenticação com validade limitada, autorização por perfil, armazenamento seguro de senhas e auditoria das operações relevantes, em conformidade com a LGPD. \\ \hline
-	RNF-03 & Disponibilidade & Manter disponibilidade mensal mínima de 99,5\%, desconsideradas as manutenções previamente comunicadas, com monitoramento da API e do banco de dados. \\ \hline
-	RNF-04 & Escalabilidade & Suportar 100 usuários simultâneos e o dobro do volume do ensaio-base sem exceder em mais de 20\% as metas de tempo de resposta. \\ \hline
-	RNF-05 & Usabilidade & Possibilitar que ao menos 85\% dos usuários avaliados concluam, sem auxílio, os três fluxos essenciais definidos para o teste. \\ \hline
-	RNF-06 & Acessibilidade & Atender aos critérios A e AA das WCAG 2.2, incluindo teclado, foco, rótulos, contraste, alternativas textuais e adaptação a partir de 320 pixels. \\ \hline
-	RNF-07 & Integridade dos dados & Preservar validade, unicidade e relações entre os registros por validações, restrições relacionais, transações e trilha de auditoria. \\ \hline
-	RNF-08 & Compatibilidade & Operar nas versões corrente e anterior de Chrome, Edge e Firefox, com interface responsiva entre 360 e 1920 pixels. \\ \hline
-	RNF-09 & Backup e recuperação & Executar cópia completa diária, criptografada, separada do ambiente principal e retida por 30 dias, com RPO de 24 horas, RTO de quatro horas e teste trimestral de restauração. \\ \hline
+\caption{Requisitos não funcionais do Civitas}\label{quad:requisitos_nao_funcionais}\\
+\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição e critério de aceitação} \\ \hline
+\endfirsthead
+\multicolumn{3}{c}{Quadro~\thequadro{} -- continuação}\\
+\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Descrição e critério de aceitação} \\ \hline
+\endhead
+\multicolumn{3}{r}{\textit{Continua na próxima página}}\\
+\endfoot
+\multicolumn{3}{l}{\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+RNF-01 & Desempenho & Concluir 95\% das operações interativas em até dois segundos e relatórios em até cinco segundos, sob carga de 50 usuários simultâneos \\ \hline
+RNF-02 & Segurança & Aplicar HTTPS, autenticação com validade limitada, autorização por perfil, armazenamento seguro de senhas e auditoria das operações relevantes, em conformidade com a LGPD \\ \hline
+RNF-03 & Disponibilidade & Manter disponibilidade mensal mínima de 99,5\%, desconsideradas as manutenções previamente comunicadas, com monitoramento da API e do banco de dados \\ \hline
+RNF-04 & Escalabilidade & Suportar 100 usuários simultâneos e o dobro do volume do ensaio-base sem exceder em mais de 20\% as metas de tempo de resposta \\ \hline
+RNF-05 & Usabilidade & Possibilitar que ao menos 85\% dos usuários avaliados concluam, sem auxílio, as três tarefas essenciais definidas para o teste \\ \hline
+RNF-06 & Acessibilidade & Atender aos critérios A e AA das WCAG 2.2, incluindo teclado, foco, rótulos, contraste, alternativas textuais e adaptação a partir de 320 pixels \\ \hline
+RNF-07 & Integridade dos dados & Preservar validade, unicidade e relações entre os registros por validações, restrições relacionais, transações e trilha de auditoria \\ \hline
+RNF-08 & Compatibilidade & Operar nas versões corrente e anterior de Chrome, Edge e Firefox, com interface responsiva entre 360 e 1920 pixels \\ \hline
+RNF-09 & Backup e recuperação & Executar cópia completa diária, criptografada, separada do ambiente principal e retida por 30 dias, com RPO de 24 horas, RTO de quatro horas e teste trimestral de restauração \\ \hline
 \end{longquadro}
-}
-
+\endgroup
 
 \subsection{Descrição dos Requisitos Funcionais}
 
-Os requisitos funcionais descrevem os serviços, as operações e as respostas que devem ser oferecidos pelo sistema aos seus usuários. Conforme \textcite{Sommerville2018ES10}, esse tipo de requisito deve expressar o comportamento esperado da solução diante das entradas recebidas e das situações próprias do domínio. No \textit{Civitas}, sua definição foi realizada a partir das necessidades de organização administrativa, planejamento orçamentário, acompanhamento de despesas e rastreabilidade das ações relacionadas à gestão pública municipal.
+Os requisitos funcionais descrevem os serviços, as operações e as respostas que devem ser oferecidos pelo sistema aos seus usuários. Conforme \textcite{Sommerville2018ES10}, esse tipo de requisito deve expressar o comportamento esperado da solução diante das entradas recebidas e das situações próprias do domínio. No Civitas, sua definição foi realizada a partir das necessidades de organização administrativa, planejamento orçamentário, acompanhamento de despesas e rastreabilidade das ações relacionadas à gestão pública municipal.
 
 A plataforma deverá centralizar informações que, sem um sistema integrado, permaneceriam distribuídas entre planilhas, documentos e setores distintos. Para isso, as funcionalidades foram agrupadas em módulos coerentes com a estrutura do projeto. Os cadastros organizacionais fornecem a base para os lançamentos financeiros; os orçamentos estabelecem os limites e as classificações do planejamento; as despesas registram a execução dos recursos; e os recursos de consulta, exportação e auditoria apoiam o acompanhamento e a prestação de contas. Essa organização reduz a duplicidade de registros e permite que o usuário compreenda os vínculos entre secretarias, instituições, fornecedores, tipos de despesa e movimentações financeiras.
 
-O acesso ao ambiente interno deverá ocorrer mediante autenticação por e-mail e senha. Após a validação das credenciais de um usuário ativo, o sistema emitirá um \textit{token} JWT e manterá a sessão durante seu prazo de validade. As operações da API, exceto o próprio acesso, permanecerão protegidas por autenticação. O cadastro de usuários deverá registrar dados pessoais, endereço, matrícula, situação e tipo de usuário, distinguindo os perfis Visitante, Administrador e Funcionário. A inativação lógica permitirá suspender o acesso sem eliminar o histórico associado ao usuário.
+O acesso ao ambiente interno deverá ocorrer mediante autenticação por e-mail e senha. Após a validação das credenciais de um usuário ativo, o sistema emitirá um token JWT e manterá a sessão durante seu prazo de validade. As operações da API, exceto o próprio acesso, permanecerão protegidas por autenticação. O cadastro de usuários deverá registrar dados pessoais, endereço, e-mail, matrícula, senha, situação e tipo de usuário, distinguindo os perfis Visitante, Administrador e Funcionário. O sistema deverá validar os dados recebidos e verificar a existência de duplicidade de CPF, e-mail e matrícula.
 
-No núcleo administrativo, o sistema deverá manter secretarias municipais, instituições e fornecedores. As instituições serão vinculadas a uma secretaria e a um tipo de instituição, enquanto os fornecedores concentrarão dados de identificação, localização e contato necessários aos lançamentos de despesas e documentos. Cadastros auxiliares de tipos de instituição, tipos de despesa e unidades de medida permitirão configurar classificações reutilizadas nos demais módulos. Para os registros que admitem alteração de situação, a exclusão operacional ocorrerá por ativação ou inativação, preservando os relacionamentos já existentes.
+A alteração de situação deverá utilizar os valores ATIVO e INATIVO, preservando os relacionamentos já existentes. Esse mecanismo não deve ser confundido com a exclusão lógica. Nos registros que adotam exclusão lógica, a remoção será representada pelos atributos Excluido e DataExclusao, mantendo o registro armazenado na base de dados. Quando prevista, a restauração deverá reverter a marca lógica de exclusão sem realizar exclusão física.
 
-O módulo financeiro deverá possibilitar o registro de orçamentos por exercício, instituição e tipo de despesa. Cada despesa será associada ao orçamento correspondente, à instituição responsável, ao fornecedor, ao tipo de despesa e ao usuário que efetuou o cadastro. Também serão mantidos número do documento, data de emissão, data de vencimento, consumo previsto e, quando exigido pela categoria da despesa, o código da unidade consumidora. Essa vinculação permite confrontar valores orçados e realizados, identificar o saldo disponível e acompanhar a execução financeira por diferentes recortes.
+No núcleo administrativo, o sistema deverá manter secretarias municipais, instituições e fornecedores. As instituições serão vinculadas a uma secretaria e a um tipo de instituição, enquanto os fornecedores concentrarão dados de identificação, localização e contato necessários ao contexto administrativo e financeiro. Cadastros auxiliares de tipos de instituição, tipos de despesa, unidades de medida e tipos de código permitirão configurar classificações reutilizadas nos demais módulos.
 
-A baixa de uma obrigação deverá ser representada por um fluxo financeiro contendo valor pago, consumo realizado e situação do pagamento, com estados como a pagar, pago ou atrasado. O usuário poderá anexar o comprovante correspondente em formato digital, relacionando o documento ao fornecedor e ao fluxo. No painel inicial, os dados consolidados deverão apresentar total orçado, total gasto, saldo, quantitativos cadastrais, despesas recentes e vencimentos próximos. Os avisos de vencimento exibidos no painel não constituem um serviço externo de notificação; sua finalidade é destacar obrigações que exigem atenção durante o uso da plataforma.
+As unidades consumidoras deverão concentrar referências à instituição, à secretaria, ao fornecedor, ao tipo de despesa e ao orçamento. Essa organização permite estruturar o contexto administrativo, classificatório, orçamentário e de fornecedor associado ao consumo registrado no sistema.
 
-Para apoiar consultas e relatórios operacionais, o sistema deverá oferecer listagens de usuários, despesas, fornecedores, secretarias, instituições e orçamentos. Nessas visualizações, o usuário poderá pesquisar, aplicar filtros, ordenar registros, escolher colunas, paginar resultados e utilizar recortes previamente definidos. A visualização resultante poderá ser exportada nos formatos PDF e XLSX, inclusive com as colunas e os filtros selecionados, facilitando o compartilhamento, a conferência e a elaboração de prestações de contas. Além disso, registros de auditoria poderão ser consultados por usuário, entidade e operação, permitindo identificar a data, o horário e os valores relacionados a uma ocorrência cadastrada.
+O módulo financeiro deverá possibilitar o registro de orçamentos por exercício, instituição e tipo de despesa. Os orçamentos deverão manter valor orçado, quantidades de consumo previstas e valores de consumo previstos para cada mês do exercício.
 
-O Quadro~\ref{quad:requisitos_funcionais} consolida os requisitos funcionais do \textit{Civitas}. A identificação individual favorece a rastreabilidade entre a documentação, as interfaces e os serviços disponibilizados pelos repositórios do projeto.
+As despesas deverão registrar informações documentais e financeiras, incluindo número e nome do documento, código, data de emissão, data de vencimento, valor previsto, valor pago, juros, multa, desconto, consumo previsto, consumo realizado, data de pagamento, condição financeira e valores opcionais. Cada despesa deverá estar diretamente associada ao usuário responsável pelo lançamento e à unidade consumidora correspondente.
 
+As informações de fornecedor, instituição, orçamento e tipo de despesa deverão ser alcançadas por meio da unidade consumidora vinculada à despesa. Dessa forma, essas informações não devem ser apresentadas como associações diretas da entidade Despesa.
+
+A condição financeira da despesa deverá utilizar os valores A\_PAGAR, PAGA e ATRASADO. Essa classificação não se confunde com Situacao, que representa exclusivamente os estados ATIVO e INATIVO dos cadastros.
+
+No painel inicial, os dados consolidados deverão apresentar total orçado, total gasto, saldo, quantitativos cadastrais, despesas recentes e vencimentos próximos. Os avisos de vencimento exibidos no painel não constituem um serviço externo de notificação; sua finalidade é destacar obrigações que exigem atenção durante o uso da plataforma.
+
+Para apoiar consultas e relatórios operacionais, o sistema deverá oferecer listagens de usuários, despesas, fornecedores, secretarias, instituições e orçamentos. Nessas visualizações, o usuário poderá pesquisar, aplicar filtros, ordenar registros, escolher colunas, paginar resultados e utilizar recortes previamente definidos. A visualização resultante poderá ser exportada nos formatos PDF e XLSX, inclusive com as colunas e os filtros selecionados, facilitando o compartilhamento, a conferência e a elaboração de prestações de contas.
+
+Além disso, os registros de auditoria poderão ser consultados por usuário, entidade e operação, permitindo identificar a data, o horário e os valores relacionados a uma ocorrência cadastrada. O Quadro~\ref{quad:requisitos_funcionais} consolida os requisitos funcionais do Civitas. A identificação individual favorece a rastreabilidade entre a documentação, as interfaces e os serviços disponibilizados pelos repositórios do projeto.
+
+\begingroup
 \small
 \begin{longquadro}{|p{0.08\textwidth}|p{0.20\textwidth}|p{0.62\textwidth}|}
-	\caption{Requisitos funcionais do sistema Civitas}
-	\label{quad:requisitos_funcionais}\\
-	\hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Descrição do requisito funcional} \\ \hline
-	\endfirsthead
-
-	\multicolumn{3}{c}{Quadro~\thequadro{} -- continuação} \\
-	\hline
-	\textbf{ID} & \textbf{Módulo} & \textbf{Descrição do requisito funcional} \\ \hline
-	\endhead
-
-	RF01 & Autenticação & Autenticar o usuário por e-mail e senha, permitindo o ingresso apenas quando as credenciais forem válidas e o cadastro estiver ativo. \\ \hline
-	RF02 & Autenticação & Emitir e validar \textit{token} JWT, manter a sessão autenticada até sua expiração e permitir o encerramento da sessão pelo usuário. \\ \hline
-	RF03 & Usuários e permissões & Cadastrar, consultar e atualizar usuários, bem como ativar ou inativar seus registros e classificá-los como Visitante, Administrador ou Funcionário. \\ \hline
-	RF04 & Usuários e permissões & Consultar usuários ativos e inativos e localizar um cadastro por identificador ou CPF, preservando a relação entre o autor autenticado e as operações registradas. \\ \hline
-	RF05 & Estrutura administrativa & Cadastrar, consultar, atualizar e alterar a situação de secretarias, mantendo seus dados de identificação, endereço e contato. \\ \hline
-	RF06 & Estrutura administrativa & Cadastrar, consultar, atualizar e alterar a situação de instituições, vinculando cada registro à secretaria responsável e ao respectivo tipo de instituição. \\ \hline
-	RF07 & Fornecedores & Cadastrar, consultar, atualizar e alterar a situação de fornecedores e prestadores de serviço, mantendo informações fiscais, comerciais, de endereço e de contato. \\ \hline
-	RF08 & Configurações & Gerenciar tipos de instituição, tipos de despesa e unidades de medida, incluindo consulta de ativos e inativos e alteração da situação desses cadastros auxiliares. \\ \hline
-	RF09 & Orçamentos & Cadastrar, consultar e atualizar orçamentos, informando exercício, valor, instituição e tipo de despesa ao qual o recurso se destina. \\ \hline
-	RF10 & Despesas & Cadastrar, consultar, atualizar e inativar despesas, relacionando-as ao orçamento, à instituição, ao fornecedor, ao tipo de despesa e ao usuário responsável pelo lançamento. \\ \hline
-	RF11 & Despesas & Registrar número do documento, emissão, vencimento e consumo previsto e exigir a unidade consumidora quando essa regra estiver configurada para o tipo de despesa selecionado. \\ \hline
-	RF12 & Pagamentos & Registrar e atualizar o fluxo de pagamento de uma despesa, incluindo valor efetivamente pago, consumo realizado e estado da obrigação. \\ \hline
-	RF13 & Documentos & Cadastrar, consultar e atualizar documentos digitalizados, vinculando comprovantes, notas fiscais ou boletos ao fornecedor e ao fluxo financeiro correspondente. \\ \hline
-	RF14 & Painel gerencial & Apresentar total orçado, total gasto, saldo disponível, quantitativos da base, despesas recentes e obrigações vencidas ou com vencimento nos sete dias seguintes. \\ \hline
-	RF15 & Consultas & Disponibilizar listagens com pesquisa, filtros, ordenação, paginação, seleção de colunas e recortes predefinidos para os principais cadastros administrativos e financeiros. \\ \hline
-	RF16 & Relatórios & Exportar listagens e comparações nos formatos PDF e XLSX, considerando o conjunto de dados, os filtros e as colunas escolhidos pelo usuário. \\ \hline
-	RF17 & Auditoria & Cadastrar e consultar ocorrências de auditoria contendo usuário, data, horário, operação, entidade afetada, valores anteriores e novos valores. \\ \hline
-	RF18 & Auditoria & Filtrar os registros de auditoria por usuário, entidade ou operação e controlar sua situação para apoiar a rastreabilidade das atividades administrativas. \\ \hline
-	RF19 & Perfil & Permitir que o usuário autenticado consulte seus dados de conta, seu e-mail e o perfil associado ao acesso. \\
+\caption{Requisitos funcionais do sistema Civitas}\label{quad:requisitos_funcionais}\\
+\hline
+\textbf{ID} & \textbf{Módulo} & \textbf{Descrição do requisito funcional} \\ \hline
+\endfirsthead
+\multicolumn{3}{c}{Quadro~\thequadro{} -- continuação}\\
+\hline
+\textbf{ID} & \textbf{Módulo} & \textbf{Descrição do requisito funcional} \\ \hline
+\endhead
+\multicolumn{3}{r}{\textit{Continua na próxima página}}\\
+\endfoot
+\multicolumn{3}{l}{\textit{Fonte:} Elaborado pelos autores (2026).}\\
+\endlastfoot
+RF01 & Autenticação & Autenticar o usuário por e-mail e senha, permitindo o ingresso apenas quando as credenciais forem válidas e o cadastro estiver ativo \\ \hline
+RF02 & Autenticação & Emitir e validar token JWT, manter a sessão autenticada até sua expiração e permitir o encerramento da sessão pelo usuário \\ \hline
+RF03 & Usuários e permissões & Cadastrar, consultar e atualizar usuários, bem como ativar ou inativar seus registros e classificá-los como Visitante, Administrador ou Funcionário \\ \hline
+RF04 & Usuários e permissões & Consultar usuários ativos e inativos e localizar um cadastro por identificador ou CPF, preservando a relação entre o autor autenticado e as operações registradas \\ \hline
+RF05 & Estrutura administrativa & Cadastrar, consultar, atualizar e alterar a situação de secretarias, mantendo seus dados de identificação, endereço e contato \\ \hline
+RF06 & Estrutura administrativa & Cadastrar, consultar, atualizar e alterar a situação de instituições, vinculando cada registro à secretaria responsável e ao respectivo tipo de instituição \\ \hline
+RF07 & Fornecedores & Cadastrar, consultar, atualizar e alterar a situação de fornecedores e prestadores de serviço, mantendo informações fiscais, comerciais, de endereço e de contato \\ \hline
+RF08 & Configurações & Gerenciar tipos de instituição, tipos de despesa e unidades de medida, incluindo consulta de ativos e inativos e alteração da situação desses cadastros auxiliares \\ \hline
+RF09 & Orçamentos & Cadastrar, consultar e atualizar orçamentos, informando exercício, valor, instituição e tipo de despesa ao qual o recurso se destina \\ \hline
+RF10 & Despesas & Cadastrar, consultar, atualizar, listar, alterar o status e excluir ou restaurar logicamente despesas, relacionando cada registro ao usuário responsável pelo lançamento e à unidade consumidora correspondente \\ \hline
+RF11 & Despesas & Registrar informações documentais e financeiras associadas à despesa, incluindo número e nome do documento, código, data de emissão, data de vencimento, consumo previsto, valores e informações opcionais \\ \hline
+RF12 & Despesas & Registrar e atualizar o valor previsto, o valor pago, os juros, a multa, o desconto, o consumo realizado, a data de pagamento e a condição financeira da despesa \\ \hline
+RF13 & Despesas & Manter informações documentais associadas à despesa, incluindo número, nome, código e identificador de integridade do documento, quando aplicável \\ \hline
+RF14 & Painel gerencial & Apresentar total orçado, total gasto, saldo disponível, quantitativos da base, despesas recentes e obrigações vencidas ou com vencimento nos sete dias seguintes \\ \hline
+RF15 & Consultas & Disponibilizar listagens com pesquisa, filtros, ordenação, paginação, seleção de colunas e recortes predefinidos para os principais cadastros administrativos e financeiros \\ \hline
+RF16 & Relatórios & Exportar listagens e comparações nos formatos PDF e XLSX, considerando o conjunto de dados, os filtros e as colunas escolhidos pelo usuário \\ \hline
+RF17 & Auditoria & Cadastrar e consultar ocorrências de auditoria contendo usuário, data, horário, operação, entidade afetada, valores anteriores e novos valores \\ \hline
+RF18 & Auditoria & Filtrar os registros de auditoria por usuário, entidade ou operação e controlar sua situação para apoiar a rastreabilidade das atividades administrativas \\ \hline
+RF19 & Perfil & Permitir que o usuário autenticado consulte seus dados de conta, seu e-mail e o perfil associado ao acesso \\ \hline
 \end{longquadro}
-\normalsize
-
-\fonte{Elaborado pelos autores com base nos repositórios do projeto (2026).}
-
+\endgroup
 
 \input{capitulos/capitulo3}
 
