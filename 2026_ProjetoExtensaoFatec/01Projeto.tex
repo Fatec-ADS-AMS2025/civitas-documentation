@@ -1479,6 +1479,8 @@ Por fim, o diagrama é encerrado pelo nó final, representando o término do pro
 
 \chapter{Definição da Interface com o Usuário}
 
+\iffalse
+
 O design de UX vai muito além da estética: trata-se de compreender contextos,
 tarefas e objetivos dos usuários e conectá-los a metas do negócio para produzir
 experiências úteis, utilizáveis e desejáveis. Isso envolve investigar o problema,
@@ -1887,7 +1889,225 @@ manutenção contínua do catálogo, reduzindo retrabalho e erros operacionais.
 	\fonte{Elaborado pelos autores.}
 \end{figure}
 
+\fi
+
+O projeto da interface do \textit{Civitas} foi orientado pelas atividades de
+servidores que registram, consultam e acompanham informações administrativas e
+financeiras. Em vez de tratar a interface apenas como acabamento visual, foram
+considerados o contexto de trabalho, as tarefas recorrentes e a necessidade de
+localizar informações com segurança. Essa abordagem está alinhada ao design centrado
+no usuário, que busca compreender as pessoas, seus objetivos e as condições em que a
+interação ocorre \parencite{Rogers2019,Unger2012}.
+
+As decisões de navegação, organização dos dados e apresentação das ações foram
+estruturadas para que o usuário consiga reconhecer o contexto da tela, executar a
+tarefa principal e receber retorno sobre o resultado. A organização em painel,
+cadastros, filtros, tabelas e formulários também favorece a consistência entre os
+módulos de despesas, orçamentos, instituições, secretarias e fornecedores. Segundo
+\textcite{Garrett2011}, a experiência do usuário depende da articulação entre
+estratégia, estrutura e superfície da interface; por isso, os elementos visuais do
+\textit{Civitas} foram relacionados às tarefas administrativas que apoiam.
+
+\section{Descrição de Cenário}
+
+A descrição de cenário permite representar, em forma de narrativa, uma situação de
+uso e os objetivos de uma pessoa ao interagir com o sistema. Essa técnica ajuda a
+antecipar informações necessárias, decisões do usuário e possíveis pontos de atenção
+antes ou durante a implementação \parencite{Rogers2019}. Para o \textit{Civitas},
+foram elaborados dois cenários baseados nas rotinas de registro de despesas e de
+acompanhamento financeiro municipal.
+
+O primeiro cenário (Quadro~\ref{quadro:cenario-despesa}) descreve o registro de uma
+despesa pelo assistente administrativo. A situação evidencia a relação entre a
+unidade consumidora, os vínculos institucionais e os dados do documento, evitando que
+o lançamento seja realizado sem o contexto administrativo correspondente.
+
+\begin{quadro}[H]
+    \caption[Cenário --- Registro de despesa]{Cenário --- Registro de despesa por assistente administrativo}
+    \label{quadro:cenario-despesa}
+    \begin{tabularx}{\textwidth}{@{}X@{}}
+        \toprule
+        Rafael Almeida, assistente administrativo do setor de compras e controle de despesas, precisa registrar uma fatura de energia recebida pela instituição. Após autenticar-se no \textit{Civitas}, ele acessa o módulo \textbf{Despesas} e seleciona a ação \textbf{Cadastrar despesa}. No formulário, localiza a unidade consumidora correspondente. O sistema preenche os vínculos de instituição, secretaria, categoria, orçamento e fornecedor. Rafael confere essas informações, informa o número do documento, as datas de emissão e vencimento, o valor previsto e o consumo, anexa o arquivo da fatura e confirma o registro. Ao concluir, o lançamento passa a integrar a listagem de despesas e pode ser consultado posteriormente pelos setores responsáveis.\\
+        \bottomrule
+    \end{tabularx}
+    \fonte{Elaborado pelos autores.}
+\end{quadro}
+
+O segundo cenário (Quadro~\ref{quadro:cenario-acompanhamento}) apresenta o uso do
+painel pela gestora administrativa e financeira. Ele evidencia a necessidade de uma
+visão consolidada, bem como de alertas que direcionem a atenção para despesas com
+vencimento próximo ou já vencidas.
+
+\begin{quadro}[H]
+    \caption[Cenário --- Acompanhamento financeiro]{Cenário --- Acompanhamento financeiro por gestora administrativa}
+    \label{quadro:cenario-acompanhamento}
+    \begin{tabularx}{\textwidth}{@{}X@{}}
+        \toprule
+        Mariana Ferreira, diretora administrativa e financeira, inicia a rotina de acompanhamento consultando o \textit{dashboard} do \textit{Civitas}. Após o acesso, ela verifica o saldo atual, o total orçado, o total gasto e a relação de despesas recentes. Ao identificar um aviso de despesas vencidas, abre a listagem indicada pelo sistema e utiliza os filtros para localizar os lançamentos pendentes. Com as informações de documento, valor, instituição e vencimento disponíveis na tela, Mariana consegue priorizar a conferência e encaminhar as pendências ao setor responsável. Dessa forma, o painel apoia o planejamento e a tomada de decisão sem exigir a consulta manual a vários registros isolados.\\
+        \bottomrule
+    \end{tabularx}
+    \fonte{Elaborado pelos autores.}
+\end{quadro}
+
+\section{Descrição de Personas}
+
+\textit{Personas} são representações sintéticas de grupos de usuários, construídas
+para manter objetivos, responsabilidades e necessidades visíveis durante as decisões
+de projeto \parencite{Unger2012}. No \textit{Civitas}, elas orientam especialmente a
+clareza dos formulários, a disponibilidade de filtros e o acesso rápido a indicadores
+financeiros.
+
+\begin{figure}[H]
+    \centering
+    \caption{Persona 1 --- Rafael Almeida, assistente administrativo}
+    \includegraphics[width=.9\linewidth]{/tmp/codex-clipboard-12053747-b127-4054-8e66-7823c89e3f09.png}
+    \label{fig:persona-rafael}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+A Figura~\ref{fig:persona-rafael} apresenta Rafael Almeida, profissional que executa
+rotinas de registro e conferência. Para ele, a interface deve reduzir retrabalho,
+apresentar rótulos compreensíveis e preservar os vínculos necessários ao lançamento.
+Por isso, o formulário de despesas organiza a seleção da unidade consumidora antes dos
+dados da fatura e preenche informações relacionadas para conferência.
+
+\begin{figure}[H]
+    \centering
+    \caption{Persona 2 --- Mariana Ferreira, gestora administrativa e financeira}
+    \includegraphics[width=.9\linewidth]{../../Documentos/persona_mariana_cortada.png}
+    \label{fig:persona-mariana}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+A Figura~\ref{fig:persona-mariana} representa Mariana Ferreira, responsável pelo
+acompanhamento orçamentário e pela supervisão das informações administrativas e
+financeiras. Suas necessidades justificam a presença de indicadores consolidados,
+acessos diretos aos módulos centrais e avisos de vencimento, de modo que a análise
+inicial não dependa de consultas detalhadas em todas as tabelas.
+
+\section{Esboços de tela (wireframes)}
+
+Os \textit{wireframes} registram a estrutura e a hierarquia de uma interface antes do
+refinamento visual. Eles são úteis para discutir a ordem das informações, a posição das
+ações e a navegação entre telas \parencite{Unger2012,Garrett2011}. Os esboços do
+\textit{Civitas} definiram padrões que foram preservados na implementação: navegação
+lateral, cabeçalho de contexto, área principal de trabalho e ações destacadas.
+
+\begin{figure}[H]
+    \centering
+    \caption{Wireframe --- tela de acesso ao Civitas}
+    \includegraphics[width=.9\linewidth]{/tmp/codex-clipboard-4cd470b5-7c62-453d-8d07-74262683ee1f.png}
+    \label{fig:wireframe-civitas-login}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+Na Figura~\ref{fig:wireframe-civitas-login}, o acesso foi organizado em duas áreas:
+uma apresentação institucional e o formulário de autenticação. Os campos de e-mail e
+senha, a opção de lembrar a sessão, a recuperação de senha e a ação \textbf{Entrar}
+aparecem em uma sequência única, reduzindo ambiguidades no início do fluxo.
+
+\begin{figure}[H]
+    \centering
+    \caption{Wireframe --- listagem e filtros de despesas}
+    \includegraphics[width=.9\linewidth]{/tmp/codex-clipboard-c58e7bab-d051-4603-a609-5f035ae4c3ef.png}
+    \label{fig:wireframe-civitas-despesas}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+A Figura~\ref{fig:wireframe-civitas-despesas} apresenta a estrutura da consulta de
+despesas: filtros de busca geral e específicos, atalhos para situações de vencimento,
+listagem tabular e ações de manutenção. Essa organização permite ao usuário primeiro
+restringir o conjunto de dados e, em seguida, analisar ou alterar um lançamento.
+
+\begin{figure}[H]
+    \centering
+    \caption{Wireframe --- formulário de registro de despesa}
+    \includegraphics[width=.9\linewidth]{/tmp/codex-clipboard-8119a233-aeff-4ae7-a4eb-90ef60ab1b86.png}
+    \label{fig:wireframe-civitas-formulario-despesa}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+No formulário da Figura~\ref{fig:wireframe-civitas-formulario-despesa}, a seleção da
+unidade consumidora fica separada da entrada dos dados da despesa. Essa decisão torna
+explícito que os vínculos institucionais devem ser identificados antes do preenchimento
+do documento, das datas, do valor e do consumo previsto.
+
+\section{Protótipos de tela}
+
+Os protótipos de alta fidelidade transformam a estrutura dos \textit{wireframes} em
+telas próximas ao produto, permitindo verificar identidade visual, legibilidade,
+feedback e coerência entre componentes \parencite{Garrett2011}. As telas a seguir
+documentam a implementação do \textit{Civitas} e seus fluxos prioritários.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- tela de login}
+    \includegraphics[width=.9\linewidth]{../../Downloads/civitas-capturas/civitas-login.png}
+    \label{fig:proto-civitas-login}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+A Figura~\ref{fig:proto-civitas-login} mostra a tela de autenticação implementada.
+Além dos campos identificados por rótulos, o formulário oferece a recuperação de senha
+e mantém o botão principal em posição previsível. A ilustração na área de apresentação
+tem função contextual; os controles essenciais permanecem concentrados no formulário.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- painel administrativo}
+    \includegraphics[width=.9\linewidth]{../../Downloads/civitas-capturas/civitas-dashboard.png}
+    \label{fig:proto-civitas-dashboard}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+O \textit{dashboard} da Figura~\ref{fig:proto-civitas-dashboard} reúne indicadores
+financeiros, acessos aos módulos e blocos de despesas recentes e vencimentos próximos.
+O recurso \textbf{Exibir valores} permite controlar a exposição de valores na visão
+geral, enquanto os cartões de prioridade ajudam a direcionar a atenção da gestora.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- consulta de orçamentos}
+    \includegraphics[width=.9\linewidth]{../../Downloads/civitas-capturas/civitas-orcamentos.png}
+    \label{fig:proto-civitas-orcamentos}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+A Figura~\ref{fig:proto-civitas-orcamentos} apresenta o padrão de consulta adotado
+para os orçamentos: busca, filtros, cadastro e tabela de resultados. As ações por
+linha permitem visualizar, editar ou remover um item, sem misturar essas operações
+com o fluxo de inclusão.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- formulário de cadastro de despesa}
+    \includegraphics[width=.9\linewidth]{../../Downloads/civitas-capturas/civitas-despesa-formulario.png}
+    \label{fig:proto-civitas-formulario-despesa}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+Na Figura~\ref{fig:proto-civitas-formulario-despesa}, o formulário é exibido em uma
+janela modal que preserva a referência da listagem ao fundo. A UC selecionada e seus
+vínculos são apresentados antes dos campos obrigatórios, reduzindo a chance de associar
+o documento ao contexto incorreto. A ação de anexar o arquivo integra o documento ao
+lançamento desde o cadastro.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- aviso de despesas vencidas}
+    \includegraphics[width=.9\linewidth]{../../Downloads/civitas-capturas/civitas-despesas-listagem.png}
+    \label{fig:proto-civitas-alerta-vencidas}
+    \fonte{Elaborada pelos autores.}
+\end{figure}
+
+A Figura~\ref{fig:proto-civitas-alerta-vencidas} ilustra um mecanismo de feedback
+para situações que exigem atenção. O aviso informa a quantidade e o valor previsto das
+despesas vencidas, apresenta uma prévia dos itens afetados e oferece tanto a opção de
+fechar quanto a de acessar diretamente a listagem filtrada.
+
 \section{Acessibilidade e Inclusão de Pessoas com Deficiência}
+
+\iffalse
 
 A inclusão de pessoas com deficiência (PCD) constitui um tema de grande relevância para a sociedade contemporânea. De acordo com a \textcite{OMS2011}, aproximadamente 1 bilhão de pessoas em todo o mundo vive com algum tipo de deficiência, o que equivale a cerca de uma em cada sete pessoas. A Convenção Internacional sobre os Direitos das Pessoas com Deficiência, assinada em Nova Iorque em 2007 e ratificada no Brasil pelo Decreto nº 6.949, de 25 de agosto de 2009 \parencite{Brasil2009}, define como pessoas com deficiência aquelas que apresentam impedimentos de longa duração, sejam eles de ordem física, mental, intelectual ou sensorial, os quais, em interação com barreiras diversas, podem restringir sua plena participação na sociedade.
 
@@ -1903,7 +2123,7 @@ Além disso, um site acessível tende a apresentar maior compatibilidade com dif
 
 \subsection{Práticas de Acessibilidade Implementadas}
 
-Após um estudo detalhado das práticas de acessibilidade recomendadas para sistemas web, foram aplicadas diretrizes que asseguram uma experiência inclusiva para todos os usuários. Essas práticas estão fundamentadas nas recomendações internacionais das \textit{Web Content Accessibility Guidelines} (WCAG 2.1) \parencite{WCAG2018}, bem como nas normativas brasileiras, representadas pelo Decreto nº 5.296/2004 \parencite{Brasil2004} e pela Lei Brasileira de Inclusão da Pessoa com Deficiência (Lei nº 13.146/2015) \parencite{Brasil2015}. Tais medidas visam aprimorar a navegação, a usabilidade e a compreensão do conteúdo, garantindo equidade de acesso a pessoas com diferentes tipos de deficiência.
+Após um estudo detalhado das práticas de acessibilidade recomendadas para sistemas web, foram adotadas diretrizes que asseguram uma experiência inclusiva para todos os usuários. Essas práticas estão fundamentadas nas \textit{Web Content Accessibility Guidelines} (WCAG 2.2) \parencite{w3c2023wcag,w3c2023wcagptbr}, bem como na Lei Brasileira de Inclusão da Pessoa com Deficiência \parencite{brasil2015lbi}. Tais medidas visam aprimorar a navegação, a usabilidade e a compreensão do conteúdo, garantindo equidade de acesso a pessoas com diferentes tipos de deficiência.
 
 Entre as práticas adotadas, destaca-se a inclusão de textos alternativos em todas as imagens do sistema, permitindo que leitores de tela transmitam o conteúdo visual a usuários com deficiência visual. Esse recurso assegura que os elementos gráficos tenham significado mesmo quando não podem ser visualizados diretamente.
 
@@ -1942,7 +2162,7 @@ A acessibilidade também foi fortalecida por meio da organização semântica do
 	\legend{Elaborado pelo autor.}
 \end{table}
 
-A implementação de práticas de acessibilidade no sistema tem como objetivo assegurar que pessoas com diferentes tipos de deficiência possam utilizá-lo de forma plena e inclusiva. As diretrizes adotadas estão em conformidade com as recomendações das \textit{Web Content Accessibility Guidelines} (WCAG 2.1) \parencite{WCAG2018}, com o Decreto nº 5.296/2004 \parencite{Brasil2004} e com a Lei Brasileira de Inclusão da Pessoa com Deficiência (Lei nº 13.146/2015) \parencite{Brasil2015}. A seguir, são descritos os principais recursos desenvolvidos.
+A implementação de práticas de acessibilidade no sistema tem como objetivo assegurar que pessoas com diferentes tipos de deficiência possam utilizá-lo de forma plena e inclusiva. As diretrizes adotadas estão em conformidade com as recomendações das \textit{Web Content Accessibility Guidelines} (WCAG 2.2) \parencite{w3c2023wcag} e com a Lei Brasileira de Inclusão da Pessoa com Deficiência \parencite{brasil2015lbi}. A seguir, são descritos os principais recursos desenvolvidos.
 
 Outro aspecto fundamental implementado no sistema foi o contraste adequado entre texto e fundo, assegurando maior legibilidade, sobretudo para pessoas com baixa visão ou daltonismo. Para isso, foi disponibilizada uma opção de \textbf{alto contraste}, ativada por meio de um ícone localizado no canto superior direito de todas as telas, que aplica uma paleta neutra composta por preto, branco e cinza. Essa solução amplia a clareza e a simplicidade visual, reduz a sobrecarga cognitiva dos usuários e garante consistência da experiência tanto na versão para \textit{desktop} quanto para dispositivos móveis.
 
@@ -2046,6 +2266,105 @@ Por fim, assegurou-se o \textbf{desempenho em dispositivos móveis}, mantendo as
 
 Em síntese, a combinação de alto contraste, texto redimensionável, compatibilidade com leitores de tela, foco visível, suporte a múltiplos idiomas, navegação assistida e conteúdos multimídia acessíveis reflete o compromisso com a inclusão digital, assegurando que todos os usuários possam interagir com o sistema de maneira equitativa e eficaz.
 
+
+\fi
+
+A acessibilidade digital refere-se à possibilidade de diferentes pessoas
+perceberem, compreenderem, navegarem e utilizarem conteúdos e serviços digitais,
+independentemente de condições visuais, motoras, auditivas ou cognitivas e das
+tecnologias utilizadas durante a interação. Em aplicações web, ela envolve a
+apresentação das informações, a identificação dos componentes interativos, a
+navegação, o contraste, o redimensionamento de textos, a organização de formulários
+e a compatibilidade com tecnologias assistivas.
+
+As \textit{Web Content Accessibility Guidelines} (WCAG) organizam recomendações
+para interfaces acessíveis segundo os princípios de que o conteúdo seja perceptível,
+operável, compreensível e robusto \parencite{W3CWCAG22_2024}. A
+acessibilidade também possui importância específica no contexto da administração
+pública: a Lei Brasileira de Inclusão estabelece a obrigatoriedade de acessibilidade
+nos sítios de internet mantidos por órgãos governamentais \parencite{brasil2015lbi}.
+
+No \textit{Civitas}, a acessibilidade foi considerada na organização das telas de
+consulta, registro, acompanhamento e manutenção de informações administrativas e
+financeiras. Como o sistema reúne indicadores, tabelas, filtros, formulários e ações
+de confirmação, a interface deve permitir que os usuários localizem informações,
+compreendam os elementos disponíveis e executem suas tarefas de maneira clara.
+
+\subsection{Práticas de Acessibilidade Implementadas}
+
+A interface utiliza títulos de página, agrupamentos de conteúdo, rótulos visíveis nos
+campos, botões identificados por texto, filtros organizados e tabelas com cabeçalhos
+descritivos. Esses elementos contribuem para a compreensão da finalidade de cada tela
+e reduzem ambiguidades durante a utilização do sistema. Também foi disponibilizada
+uma barra lateral de acessibilidade com os controles \textbf{A+}, \textbf{Aa} e
+\textbf{A-}, destinados, respectivamente, a aumentar, restaurar e reduzir a escala
+dos textos, além de um controle para ativação e desativação do contraste.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- Painel Gerencial Antes e Após o Redimensionamento de Texto}
+    \label{fig:fonte-redimensionavel}
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=.92\textwidth]{../../Documentos/dashboard_1_bordas_cortadas.png}
+        \caption{Painel gerencial na escala tipográfica padrão.}
+        \label{fig:tela-principal-redim}
+    \end{subfigure}
+    \vspace{0.5cm}
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=.92\textwidth]{../../Documentos/dashboard_2_bordas_cortadas.png}
+        \caption{Painel gerencial após a ampliação do texto.}
+        \label{fig:tela-principal-menu-redim}
+    \end{subfigure}
+    \fonte{Elaborado pelos autores (2026).}
+\end{figure}
+
+A Figura~\ref{fig:fonte-redimensionavel} compara o painel gerencial na
+escala tipográfica padrão (Figura~\ref{fig:fonte-redimensionavel}\subref{fig:tela-principal-redim}) e após a ampliação do texto (Figura~\ref{fig:fonte-redimensionavel}\subref{fig:tela-principal-menu-redim}). A estrutura permanece
+organizada: menu lateral, cartões informativos, indicadores financeiros e botões de
+ação continuam identificáveis. Dessa forma, usuários que necessitam de maior tamanho
+de fonte podem consultar saldo atual, total orçado, total gasto e base ativa sem perder
+a hierarquia visual ou alterar a navegação.
+
+\begin{figure}[H]
+    \centering
+    \caption{Civitas --- Tela de Autenticação Antes e Após a Ativação do Contraste Elevado}
+    \label{fig:alto-contraste}
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=.92\textwidth]{../../Downloads/civitas-login-contraste-antes.png}
+        \caption{Tela de autenticação antes da ativação do contraste elevado.}
+        \label{fig:login-sem-contraste}
+    \end{subfigure}
+    \vspace{0.5cm}
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=.92\textwidth]{../../Downloads/civitas-login-contraste-depois.png}
+        \caption{Tela de autenticação após a ativação do contraste elevado.}
+        \label{fig:login-contraste}
+    \end{subfigure}
+    \fonte{Elaborado pelos autores (2026).}
+\end{figure}
+
+A Figura~\ref{fig:alto-contraste} demonstra a tela de autenticação antes
+(Figura~\ref{fig:alto-contraste}\subref{fig:login-sem-contraste}) e após a ativação
+do contraste elevado (Figura~\ref{fig:alto-contraste}\subref{fig:login-contraste}). O modo de contraste elevado preserva a estrutura e os componentes do login. Os campos de e-mail e senha,
+o botão \textbf{Entrar}, a opção \textbf{Lembrar-me}, o link de recuperação de senha
+e a ação de criação de conta permanecem nas mesmas posições. A alteração concentra-se
+na combinação de cores, ampliando a diferenciação entre fundos, textos, bordas dos
+campos, links e botões para favorecer a percepção dos elementos interativos.
+
+Além dos recursos apresentados, a interface aplica práticas que contribuem para a
+acessibilidade e a usabilidade: campos com rótulos textuais visíveis; botões com
+ações nomeadas, como \textbf{Atualizar painel}, \textbf{Exibir valores},
+\textbf{Cadastrar despesa}, \textbf{Aplicar agora}, \textbf{Limpar tudo},
+\textbf{Cancelar} e \textbf{Confirmar}; agrupamento de filtros por critério de
+consulta; formulários separados por grupos de informação; menu lateral consistente;
+e indicadores que combinam identificação textual e informação de situação. Essas
+decisões favorecem a perceptibilidade das informações, a compreensão das tarefas e a
+navegação previsível, em conformidade com os princípios das WCAG 2.2
+\parencite{W3CWCAG22_2024}.
 
 \chapter{Banco de Dados}
 
@@ -2773,14 +3092,6 @@ Dessa forma, observa-se que a segurança da informação envolve a combinação 
 
 
 %\section{Implantação do Sistema}
-
-
-
-
-
-
-
-
 
 
 
