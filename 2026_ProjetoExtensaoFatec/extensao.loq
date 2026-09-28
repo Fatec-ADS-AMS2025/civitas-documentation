@@ -2,60 +2,55 @@
 \addvspace {10\p@ }
 \contentsline {quadro}{\numberline {2.1}{\ignorespaces Comparação entre sistemas existentes e o Civitas}}{15}{quadro.caption.10}%
 \contentsline {quadro}{\numberline {2.2}{\ignorespaces Requisitos não funcionais do Civitas}}{19}{quadro.2.2}%
-\contentsline {quadro}{\numberline {2.3}{\ignorespaces Requisitos funcionais do sistema Civitas}}{21}{quadro.2.3}%
+\contentsline {quadro}{\numberline {2.3}{\ignorespaces Requisitos funcionais do sistema Civitas}}{22}{quadro.2.3}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {3.1}{\ignorespaces Dicionário de dados da entidade TipoDespesa}}{28}{quadro.caption.12}%
-\contentsline {quadro}{\numberline {3.2}{\ignorespaces Dicionário de dados da entidade UnidadeMedida}}{29}{quadro.caption.13}%
-\contentsline {quadro}{\numberline {3.3}{\ignorespaces Dicionário de dados da entidade Fornecedor}}{29}{quadro.caption.14}%
-\contentsline {quadro}{\numberline {3.4}{\ignorespaces Dicionário de dados da entidade Documento}}{30}{quadro.caption.15}%
-\contentsline {quadro}{\numberline {3.5}{\ignorespaces Dicionário de dados da entidade Secretaria}}{30}{quadro.caption.16}%
-\contentsline {quadro}{\numberline {3.6}{\ignorespaces Dicionário de dados da entidade TipoInstituicao}}{31}{quadro.caption.17}%
-\contentsline {quadro}{\numberline {3.7}{\ignorespaces Dicionário de dados da entidade Instituicao}}{32}{quadro.caption.18}%
-\contentsline {quadro}{\numberline {3.8}{\ignorespaces Dicionário de dados da entidade UnidadeConsumidora}}{33}{quadro.caption.19}%
-\contentsline {quadro}{\numberline {3.9}{\ignorespaces Dicionário de dados da entidade Orcamento}}{33}{quadro.caption.20}%
-\contentsline {quadro}{\numberline {3.10}{\ignorespaces Dicionário de dados da entidade Despesa}}{34}{quadro.caption.21}%
-\contentsline {quadro}{\numberline {3.11}{\ignorespaces Dicionário de dados da entidade Usuario}}{35}{quadro.caption.22}%
-\contentsline {quadro}{\numberline {3.12}{\ignorespaces Dicionário de dados da entidade Auditoria}}{35}{quadro.caption.23}%
-\contentsline {quadro}{\numberline {3.13}{\ignorespaces Dicionário de dados da entidade TipoCodigo}}{36}{quadro.caption.24}%
-\contentsline {quadro}{\numberline {3.14}{\ignorespaces Dicionário de dados do enum Situacao}}{36}{quadro.caption.25}%
-\contentsline {quadro}{\numberline {3.15}{\ignorespaces Dicionário de dados do enum SolicitaUC}}{36}{quadro.caption.26}%
-\contentsline {quadro}{\numberline {3.16}{\ignorespaces Dicionário de dados do enum TipoUsuario}}{37}{quadro.caption.27}%
-\contentsline {quadro}{\numberline {3.17}{\ignorespaces Dicionário de dados do enum Status}}{37}{quadro.caption.28}%
-\contentsline {quadro}{\numberline {3.18}{\ignorespaces Casos de Uso — Administrador}}{40}{quadro.3.18}%
-\contentsline {quadro}{\numberline {3.19}{\ignorespaces Casos de Uso — Funcionário}}{42}{quadro.3.19}%
-\contentsline {quadro}{\numberline {3.20}{\ignorespaces Casos de Uso — Enfermeiro}}{43}{quadro.3.20}%
-\contentsline {quadro}{\numberline {3.21}{\ignorespaces UC: Acessar SOAP}}{51}{quadro.caption.34}%
-\contentsline {quadro}{\numberline {3.22}{\ignorespaces UC: Registrar Anamnese}}{51}{quadro.caption.35}%
-\contentsline {quadro}{\numberline {3.23}{\ignorespaces UC: Registrar Avaliação}}{52}{quadro.caption.36}%
-\contentsline {quadro}{\numberline {3.24}{\ignorespaces UC: Registrar Exames}}{53}{quadro.caption.37}%
-\contentsline {quadro}{\numberline {3.25}{\ignorespaces UC: Registrar Plano de Cuidado}}{54}{quadro.caption.38}%
+\contentsline {quadro}{\numberline {3.1}{\ignorespaces Dicionário de dados da entidade TipoDespesa}}{27}{quadro.3.1}%
+\contentsline {quadro}{\numberline {3.2}{\ignorespaces Dicionário de dados da entidade UnidadeMedida}}{28}{quadro.3.2}%
+\contentsline {quadro}{\numberline {3.3}{\ignorespaces Dicionário de dados da entidade Fornecedor}}{28}{quadro.3.3}%
+\contentsline {quadro}{\numberline {3.4}{\ignorespaces Dicionário de dados da entidade Secretaria}}{29}{quadro.3.4}%
+\contentsline {quadro}{\numberline {3.5}{\ignorespaces Dicionário de dados da entidade TipoInstituicao}}{30}{quadro.3.5}%
+\contentsline {quadro}{\numberline {3.6}{\ignorespaces Dicionário de dados da entidade Instituicao}}{30}{quadro.3.6}%
+\contentsline {quadro}{\numberline {3.7}{\ignorespaces Dicionário de dados da entidade UnidadeConsumidora}}{31}{quadro.3.7}%
+\contentsline {quadro}{\numberline {3.8}{\ignorespaces Dicionário de dados da entidade Orcamento}}{32}{quadro.3.8}%
+\contentsline {quadro}{\numberline {3.9}{\ignorespaces Dicionário de dados da entidade Despesa}}{33}{quadro.3.9}%
+\contentsline {quadro}{\numberline {3.10}{\ignorespaces Dicionário de dados da entidade Usuario}}{35}{quadro.3.10}%
+\contentsline {quadro}{\numberline {3.11}{\ignorespaces Dicionário de dados da entidade Auditoria}}{35}{quadro.3.11}%
+\contentsline {quadro}{\numberline {3.12}{\ignorespaces Dicionário de dados da entidade TipoCodigo}}{36}{quadro.3.12}%
+\contentsline {quadro}{\numberline {3.13}{\ignorespaces Dicionário de dados do enum Situacao}}{37}{quadro.caption.12}%
+\contentsline {quadro}{\numberline {3.14}{\ignorespaces Dicionário de dados do enum SolicitaUc}}{37}{quadro.caption.13}%
+\contentsline {quadro}{\numberline {3.15}{\ignorespaces Dicionário de dados do enum TipoUsuario}}{37}{quadro.caption.14}%
+\contentsline {quadro}{\numberline {3.16}{\ignorespaces Dicionário de dados do enum Status}}{37}{quadro.caption.15}%
+\contentsline {quadro}{\numberline {3.17}{\ignorespaces Casos de uso – Administrador}}{39}{quadro.3.17}%
+\contentsline {quadro}{\numberline {3.18}{\ignorespaces Casos de uso – Funcionário}}{43}{quadro.3.18}%
+\contentsline {quadro}{\numberline {3.19}{\ignorespaces Casos de uso – Visitante}}{45}{quadro.3.19}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {4.1}{\ignorespaces Cenário — Registro de Religião}}{63}{quadro.caption.44}%
-\contentsline {quadro}{\numberline {4.2}{\ignorespaces Cenário — Registro e Consulta de Alergias}}{63}{quadro.caption.45}%
+\contentsline {quadro}{\numberline {4.1}{\ignorespaces Cenário -- Registro de despesa municipal}}{60}{quadro.caption.26}%
+\contentsline {quadro}{\numberline {4.2}{\ignorespaces Cenário -- Acompanhamento financeiro no painel}}{61}{quadro.caption.27}%
+\contentsline {quadro}{\numberline {4.3}{\ignorespaces Práticas de acessibilidade verificadas no frontend do Civitas}}{70}{quadro.caption.37}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {5.1}{\ignorespaces Script SQL --- Tabela \texttt {address}}}{82}{quadro.caption.62}%
-\contentsline {quadro}{\numberline {5.2}{\ignorespaces Script SQL --- Tabela \texttt {allergy}}}{82}{quadro.caption.63}%
-\contentsline {quadro}{\numberline {5.3}{\ignorespaces Script SQL --- Tabela \texttt {carrier}}}{82}{quadro.caption.64}%
-\contentsline {quadro}{\numberline {5.4}{\ignorespaces Script SQL --- Tabela \texttt {city}}}{83}{quadro.caption.65}%
-\contentsline {quadro}{\numberline {5.5}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance}}}{83}{quadro.caption.66}%
-\contentsline {quadro}{\numberline {5.6}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance\_plan}}}{83}{quadro.caption.67}%
-\contentsline {quadro}{\numberline {5.7}{\ignorespaces Script SQL --- Tabela \texttt {login}}}{84}{quadro.caption.68}%
-\contentsline {quadro}{\numberline {5.8}{\ignorespaces Script SQL --- Tabela \texttt {manufacturer}}}{84}{quadro.caption.69}%
-\contentsline {quadro}{\numberline {5.9}{\ignorespaces Script SQL --- Tabela \texttt {product}}}{84}{quadro.caption.70}%
-\contentsline {quadro}{\numberline {5.10}{\ignorespaces Script SQL --- Tabela \texttt {product\_category}}}{85}{quadro.caption.71}%
-\contentsline {quadro}{\numberline {5.11}{\ignorespaces Script SQL --- Tabela \texttt {product\_group}}}{85}{quadro.caption.72}%
-\contentsline {quadro}{\numberline {5.12}{\ignorespaces Script SQL --- Tabela \texttt {product\_type}}}{85}{quadro.caption.73}%
-\contentsline {quadro}{\numberline {5.13}{\ignorespaces Script SQL --- Tabela \texttt {profile}}}{85}{quadro.caption.74}%
-\contentsline {quadro}{\numberline {5.14}{\ignorespaces Script SQL --- Tabela \texttt {profile\_claim}}}{86}{quadro.caption.75}%
-\contentsline {quadro}{\numberline {5.15}{\ignorespaces Script SQL --- Tabela \texttt {profile\_resource}}}{86}{quadro.caption.76}%
-\contentsline {quadro}{\numberline {5.16}{\ignorespaces Script SQL --- Tabela \texttt {resident}}}{86}{quadro.caption.77}%
-\contentsline {quadro}{\numberline {5.17}{\ignorespaces Script SQL --- Tabela \texttt {resident\_allergy}}}{87}{quadro.caption.78}%
-\contentsline {quadro}{\numberline {5.18}{\ignorespaces Script SQL --- Tabela \texttt {resident\_health\_insurance}}}{87}{quadro.caption.79}%
-\contentsline {quadro}{\numberline {5.19}{\ignorespaces Script SQL --- Tabela \texttt {resident\_relative}}}{87}{quadro.caption.80}%
-\contentsline {quadro}{\numberline {5.20}{\ignorespaces Script SQL --- Tabela \texttt {resource}}}{88}{quadro.caption.81}%
-\contentsline {quadro}{\numberline {5.21}{\ignorespaces Script SQL --- Tabela \texttt {state}}}{88}{quadro.caption.82}%
-\contentsline {quadro}{\numberline {5.22}{\ignorespaces Script SQL --- Tabela \texttt {unitofmeasure}}}{88}{quadro.caption.83}%
-\contentsline {quadro}{\numberline {5.23}{\ignorespaces Script SQL --- Tabela \texttt {user}}}{88}{quadro.caption.84}%
+\contentsline {quadro}{\numberline {5.1}{\ignorespaces Script SQL --- Tabela \texttt {address}}}{73}{quadro.caption.39}%
+\contentsline {quadro}{\numberline {5.2}{\ignorespaces Script SQL --- Tabela \texttt {allergy}}}{73}{quadro.caption.40}%
+\contentsline {quadro}{\numberline {5.3}{\ignorespaces Script SQL --- Tabela \texttt {carrier}}}{74}{quadro.caption.41}%
+\contentsline {quadro}{\numberline {5.4}{\ignorespaces Script SQL --- Tabela \texttt {city}}}{74}{quadro.caption.42}%
+\contentsline {quadro}{\numberline {5.5}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance}}}{74}{quadro.caption.43}%
+\contentsline {quadro}{\numberline {5.6}{\ignorespaces Script SQL --- Tabela \texttt {health\_insurance\_plan}}}{75}{quadro.caption.44}%
+\contentsline {quadro}{\numberline {5.7}{\ignorespaces Script SQL --- Tabela \texttt {login}}}{75}{quadro.caption.45}%
+\contentsline {quadro}{\numberline {5.8}{\ignorespaces Script SQL --- Tabela \texttt {manufacturer}}}{75}{quadro.caption.46}%
+\contentsline {quadro}{\numberline {5.9}{\ignorespaces Script SQL --- Tabela \texttt {product}}}{76}{quadro.caption.47}%
+\contentsline {quadro}{\numberline {5.10}{\ignorespaces Script SQL --- Tabela \texttt {product\_category}}}{76}{quadro.caption.48}%
+\contentsline {quadro}{\numberline {5.11}{\ignorespaces Script SQL --- Tabela \texttt {product\_group}}}{76}{quadro.caption.49}%
+\contentsline {quadro}{\numberline {5.12}{\ignorespaces Script SQL --- Tabela \texttt {product\_type}}}{77}{quadro.caption.50}%
+\contentsline {quadro}{\numberline {5.13}{\ignorespaces Script SQL --- Tabela \texttt {profile}}}{77}{quadro.caption.51}%
+\contentsline {quadro}{\numberline {5.14}{\ignorespaces Script SQL --- Tabela \texttt {profile\_claim}}}{77}{quadro.caption.52}%
+\contentsline {quadro}{\numberline {5.15}{\ignorespaces Script SQL --- Tabela \texttt {profile\_resource}}}{77}{quadro.caption.53}%
+\contentsline {quadro}{\numberline {5.16}{\ignorespaces Script SQL --- Tabela \texttt {resident}}}{78}{quadro.caption.54}%
+\contentsline {quadro}{\numberline {5.17}{\ignorespaces Script SQL --- Tabela \texttt {resident\_allergy}}}{78}{quadro.caption.55}%
+\contentsline {quadro}{\numberline {5.18}{\ignorespaces Script SQL --- Tabela \texttt {resident\_health\_insurance}}}{78}{quadro.caption.56}%
+\contentsline {quadro}{\numberline {5.19}{\ignorespaces Script SQL --- Tabela \texttt {resident\_relative}}}{79}{quadro.caption.57}%
+\contentsline {quadro}{\numberline {5.20}{\ignorespaces Script SQL --- Tabela \texttt {resource}}}{79}{quadro.caption.58}%
+\contentsline {quadro}{\numberline {5.21}{\ignorespaces Script SQL --- Tabela \texttt {state}}}{79}{quadro.caption.59}%
+\contentsline {quadro}{\numberline {5.22}{\ignorespaces Script SQL --- Tabela \texttt {unitofmeasure}}}{79}{quadro.caption.60}%
+\contentsline {quadro}{\numberline {5.23}{\ignorespaces Script SQL --- Tabela \texttt {user}}}{80}{quadro.caption.61}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
