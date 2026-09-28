@@ -1,0 +1,5 @@
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'extensao.blg'
+[60] biber:342> INFO - === qua set 23, 2026, 16:56:36
+[167] Utils.pm:480> ERROR - Cannot find 'extensao.bcf'!
+[167] Biber.pm:137> INFO - ERRORS: 1
