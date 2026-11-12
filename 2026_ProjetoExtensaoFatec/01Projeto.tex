@@ -2049,611 +2049,459 @@ Em síntese, a combinação de alto contraste, texto redimensionável, compatibi
 
 \chapter{Banco de Dados}
 
-Os dados constituem um ativo central em sistemas de informação: deles derivam relatórios, análises e funcionalidades críticas do negócio. Nessa perspectiva, um banco de dados pode ser definido como um conjunto organizado de dados relacionados que representam aspectos do mundo real, armazenados com um propósito específico e de forma a permitir recuperação e atualização consistentes \parencite{Machado2020}.
+O banco de dados do Civitas organiza as informações necessárias ao controle administrativo e financeiro municipal, reunindo cadastros institucionais, classificações, planejamento orçamentário, unidades consumidoras e despesas. Sua estrutura também contempla dados de usuários, registros de auditoria, informações de recuperação de senha e registros de envio de mensagens eletrônicas. Esses elementos estabelecem a base de armazenamento das informações representadas pelo esquema disponibilizado.
 
-Dentre os paradigmas de armazenamento, o modelo relacional permanece hegemônico no processamento transacional e analítico de grande parte das aplicações. Nesse modelo, a informação é estruturada em tabelas (relações) formadas por tuplas (linhas) e atributos (colunas), sob um esquema que explicita domínios, chaves e restrições de integridade \parencite{Silberschatz2012}. Em um processo típico de projeto, parte-se de um modelo conceitual (E-R), mapeiam-se entidades e relacionamentos para o modelo lógico relacional e, por fim, define-se o esquema físico com chaves primárias e estrangeiras, índices e restrições. A normalização reduz redundâncias e anomalias de atualização, enquanto a criação criteriosa de índices e \emph{views} apoia desempenho e legibilidade das consultas \parencite{Silberschatz2012}.
+A modelagem de dados permite descrever as informações de um domínio, suas associações e as condições que precisam ser respeitadas durante o armazenamento. Conforme \textcite{WattEng2014}, o processo de projeto de um banco envolve a identificação dos dados, dos relacionamentos e das restrições, distinguindo sua representação conceitual das decisões de implementação. Essa separação contribui para que a estrutura de armazenamento permaneça coerente com as necessidades do sistema.
 
-No contexto deste projeto, adotou-se o PostgreSQL como SGBD relacional para gerenciar e processar o fluxo de dados de forma eficiente. Trata-se de uma plataforma objeto–relacional de código aberto, apta a implementar chaves, restrições, \emph{triggers}, funções e consultas complexas, alinhando-se às necessidades de integridade e desempenho esperadas em sistemas corporativos \parencite{Silberschatz2012}.
+No Civitas, o esquema disponibilizado utiliza a sintaxe do PostgreSQL e compreende 14 tabelas. A organização administrativa é representada por secretarias, instituições, tipos de instituição e fornecedores. As classificações financeiras envolvem tipos de despesa, unidades de medida e tipos de código. O planejamento e o acompanhamento financeiro são estruturados por orçamentos, unidades consumidoras e despesas, enquanto as demais tabelas apoiam a identificação dos usuários, a rastreabilidade e as funcionalidades operacionais.
 
-Operações de acesso e atualização são agrupadas em transações, unidades lógicas de trabalho que devem preservar as propriedades \emph{ACID} \parencite{Silberschatz2012}: (i) \textbf{atomicidade}, garantindo que todas as ações de uma transação sejam aplicadas integralmente ou, em caso de falha, nenhuma o seja; (ii) \textbf{consistência}, assegurando que o banco de dados transite apenas entre estados válidos; (iii) \textbf{isolamento}, evitando que execuções concorrentes interfiram entre si e produzam leituras sujas, não repetíveis ou fenômenos de fantasma; e (iv) \textbf{durabilidade}, pela qual os efeitos de uma transação confirmada permanecem mesmo diante de falhas do sistema. Em conjunto, essas propriedades permitem conciliar concorrência, integridade e desempenho, sustentando um comportamento previsível da aplicação \parencite{Silberschatz2012}.
+A integridade estrutural é apoiada por chaves primárias, chaves estrangeiras, definições de obrigatoriedade e valores padrão. Segundo a documentação do PostgreSQL \parencite{PostgreSQLConstraints2026}, as chaves primárias identificam os registros de forma única e não admitem valores nulos, enquanto as chaves estrangeiras exigem correspondência com registros existentes nas tabelas referenciadas. Essas restrições complementam as validações da aplicação, mas não substituem as regras de negócio que não estejam expressamente declaradas no banco.
 
+O esquema também diferencia situação funcional, condição financeira e exclusão lógica. O atributo situacao está presente em diversos cadastros, enquanto status aparece na tabela de despesas e na tabela de mensagens enviadas, com finalidades próprias de cada registro. Já os atributos excluido e dataexclusao representam informações de exclusão lógica nas tabelas que os possuem. A existência desses campos oferece suporte ao armazenamento dos estados correspondentes, mas seu tratamento depende das regras implementadas pela aplicação.
 
 \section{Modelo Entidade-Relacionamento}
 
-O Modelo Entidade–Relacionamento (E–R) é um artefato conceitual voltado a capturar,
-de forma independente de implementação, os aspectos de um domínio de dados. Por meio
-dele identificam-se \emph{entidades} e seus \emph{atributos} (simples, compostos,
-multivalorados ou derivados), bem como \emph{relacionamentos} (binários ou n‐ários)
-com suas \emph{cardinalidades} (1:1, 1:N, N:M) e \emph{participações} (total ou
-parcial). O modelo também evidencia chaves (candidatas e primária), entidades fracas
-e especializações/generalizações, oferecendo uma visão clara e compartilhável da
-estrutura informacional antes de decisões físicas \parencite{Silberschatz2012}.
+O Modelo Entidade-Relacionamento (MER) representa os elementos de um domínio e as associações existentes entre eles. Sua finalidade é organizar a compreensão dos dados antes ou independentemente das decisões específicas de armazenamento. Conforme \textcite{WattEng2014}, a modelagem entidade-relacionamento utiliza entidades, atributos e relacionamentos para descrever a estrutura informacional de um sistema e possibilita sua posterior transformação em relações.
 
-A passagem do E–R para o esquema relacional (\emph{mapeamento objeto–relacional}, no
-sentido de mapeamento conceitual→relacional) segue regras sistemáticas: entidades
-fortes tornam-se tabelas; entidades fracas geram tabelas que incorporam a chave do
-“dono”; relacionamentos 1:N tendem a ser implementados por chave estrangeira no lado N;
-relacionamentos N:M resultam em tabelas associativas; relacionamentos 1:1 podem ser
-implementados com chave estrangeira (com unicidade); atributos multivalorados e
-compostos demandam decomposição apropriada; e atributos derivados, em geral, não são
-persistidos. O resultado é um esquema relacional com chaves primárias e estrangeiras,
-restrições de integridade e base para normalização (1FN/2FN/3FN), reduzindo
-redundâncias e anomalias de atualização \parencite{Silberschatz2012}.
+As entidades representam elementos identificáveis do domínio, enquanto os atributos descrevem suas características. Os relacionamentos expressam associações entre entidades, e as cardinalidades indicam quantas ocorrências podem participar dessas associações. A distinção entre relacionamentos de um para um, um para muitos e muitos para muitos contribui para a definição das estruturas necessárias à implementação do banco (Watt; Eng, 2014).
 
-A Figura~\ref{fig:mapeamento-or} apresenta o mapeamento conceitual→relacional do sistema
-desenvolvido neste trabalho, evidenciando tabelas, atributos e relacionamentos. Essa
-visão auxilia a compreender a organização do banco de dados, destacando como as
-restrições de integridade e as dependências entre entidades foram traduzidas para o
-modelo relacional \parencite{Silberschatz2012}.
+Na passagem para o modelo lógico relacional, as entidades são representadas por tabelas e seus atributos por colunas. Nos relacionamentos de um para muitos, a tabela do lado de muitos pode receber uma chave estrangeira que referencia a tabela principal. A chave primária identifica cada registro, enquanto a chave estrangeira implementa o vínculo entre as estruturas relacionadas (Watt; Eng, 2014). No PostgreSQL, a obrigatoriedade dessa referência também depende da definição de nulabilidade da coluna, uma vez que uma chave estrangeira pode admitir valores nulos quando não estiver acompanhada de NOT NULL \parencite{PostgreSQLConstraints2026}.
 
+No Civitas, a estrutura administrativa é organizada pelas tabelas secretaria, instituicao e tipoinstituicao. Cada instituição possui uma referência obrigatória a uma secretaria e a um tipo de instituição. Como essas referências não apresentam restrições de unicidade, uma secretaria pode estar associada a diferentes instituições, assim como um mesmo tipo pode classificar diversas instituições. Considerando exclusivamente as restrições fornecidas, cada instituição referencia exatamente um registro de cada tabela principal, enquanto uma secretaria ou um tipo de instituição pode não possuir instituições vinculadas ou estar associado a várias delas.
 
-\begin{figure}[H]
-	\caption{Mapeamento Objeto-Relacional}
-	\label{fig:mapeamento-or}
-	\centering
-%	\includegraphics[width=.95\linewidth]{figs/mapeamento_or.jpg}
-	\fonte{Elaborada pelos autores.}
-\end{figure}
+As classificações relacionadas aos gastos são representadas por tipodespesa, unidademedida e tipocodigo. Cada tipo de despesa referencia obrigatoriamente uma unidade de medida e um tipo de código. A tabela fornecedor mantém referência obrigatória a um tipo de despesa, enquanto orcamento associa o exercício e os valores planejados a uma instituição e a um tipo de despesa. Os campos mensais do orçamento permitem armazenar separadamente quantidades e valores de consumo previstos ao longo do ano.
+
+A tabela unidadeconsumidora integra as informações administrativas e financeiras por meio de referências obrigatórias a instituição, tipo de despesa, secretaria, orçamento e fornecedor. A tabela despesa, por sua vez, possui relacionamentos diretos somente com usuario e unidadeconsumidora. Consequentemente, as informações de fornecedor, instituição, orçamento e tipo de despesa são alcançadas pela unidade consumidora vinculada, e não por chaves estrangeiras próprias da despesa.
+
+Os registros de apoio apresentam associações específicas. A tabela auditoria referencia obrigatoriamente um usuário, permitindo vincular uma ocorrência ao responsável registrado. A tabela \texttt{token\_recuperacao\_senha} também referencia um usuário e armazena informações de criação, expiração e utilização do token. A tabela emailenviado não apresenta chaves estrangeiras no esquema fornecido, permanecendo estruturalmente independente das demais tabelas.
+
+Um aspecto particular da implementação é a presença de quatro referências opcionais adicionais em unidadeconsumidora: \texttt{FornecedorIdFornecedor}, \texttt{InstituicaoId}, \texttt{OrcamentoIdOrcamento} e \texttt{TipoDespesaId}. Essas colunas possuem chaves estrangeiras próprias e coexistem com as referências obrigatórias correspondentes. Portanto, uma representação fiel do esquema físico precisa distingui-las. O material disponibilizado não permite determinar se essa coexistência constitui uma decisão intencional ou uma configuração que necessita de revisão.
+
+A análise dos relacionamentos também delimita as garantias do modelo. As chaves estrangeiras verificam a existência dos registros referenciados, mas não asseguram automaticamente a compatibilidade entre todas as referências de uma unidade consumidora. O esquema, por exemplo, não declara uma restrição que exija que a secretaria informada diretamente na unidade consumidora seja a mesma vinculada à instituição selecionada. Essa condição, caso exigida pelo domínio, depende de validação adicional. Assim, a consistência do sistema resulta da combinação entre as restrições relacionais e as regras efetivamente implementadas pela aplicação.
 
 \section{Script das Tabelas}
 
-Segundo \textcite{Machado2020}, um \emph{script} de tabelas corresponde a um conjunto de instruções SQL voltadas à definição do \emph{esquema} do banco de dados. Em termos clássicos, trata-se de comandos de \emph{Data Definition Language (DDL)}---como \texttt{CREATE}, \texttt{ALTER} e \texttt{DROP}---que estabelecem estruturas e restrições, em contraste com a \emph{Data Manipulation Language (DML)}, voltada ao manuseio dos dados em si. Na criação de tabelas, o comando \texttt{CREATE TABLE} especifica o nome da tabela, suas colunas e tipos de dados, bem como propriedades essenciais: nulabilidade (\texttt{NOT NULL}), valores padrão (\texttt{DEFAULT}), chaves primárias e únicas (\texttt{PRIMARY KEY}, \texttt{UNIQUE}), \emph{checks} (\texttt{CHECK}) e chaves estrangeiras (\texttt{FOREIGN KEY}) com suas ações
-referenciais (por exemplo, \texttt{ON DELETE} \texttt{CASCADE}/\texttt{RESTRICT}) \parencite{Machado2020}.
+Os scripts de definição do banco de dados reúnem instruções SQL responsáveis por estabelecer suas estruturas de armazenamento. A Linguagem de Definição de Dados, conhecida como DDL, abrange operações de criação e alteração dessas estruturas. Conforme \textcite{WattEng2014}, a SQL permite definir tabelas e suas características, distinguindo essas operações da manipulação dos registros armazenados.
 
-Boas práticas usuais incluem padronização de nomes, escolha adequada de tipos (evitando comprimentos excessivos ou tipos genéricos), definição explícita de restrições de integridade, comentários no esquema quando disponíveis e criação de índices auxiliares (\texttt{CREATE INDEX}) para colunas com alta seletividade. Essas decisões de projeto tornam o esquema mais claro e resiliente, e mitigam anomalias de atualização e gargalos de desempenho \parencite{Machado2020}.
+No PostgreSQL, o comando CREATE TABLE especifica o nome da tabela, suas colunas, os tipos de dados e as restrições aplicáveis. Sua definição pode incluir valores padrão, obrigatoriedade de preenchimento, chaves primárias, chaves estrangeiras e outras condições de integridade \parencite{PostgreSQLCreateTable2026}. A organização dos scripts deve considerar as dependências entre as tabelas, de modo que as estruturas referenciadas estejam disponíveis quando as respectivas chaves estrangeiras forem criadas.
 
-A seguir, nos Quadros \ref{quadro:script-address} a \ref{quadro:script-user} apresenta-se os scripts para geração do banco de dados utilizado no projeto.
+No Civitas, as tabelas utilizam identificadores inteiros, campos textuais, valores numéricos, datas, registros de data e hora e indicadores booleanos. Os campos textuais armazenam informações como nomes, documentos, endereços e descrições. Os campos numeric(18,2) são empregados em valores orçamentários, financeiros e de consumo, enquanto datas e instantes são representados por date e timestamp with time zone, conforme a finalidade declarada em cada tabela.
 
-% ---------------------------------
-% Script SQL — Tabela address
-% ---------------------------------
+As restrições PRIMARY KEY identificam os registros, FOREIGN KEY estabelecem os relacionamentos e NOT NULL determina a obrigatoriedade de preenchimento. A cláusula DEFAULT FALSE é utilizada nos atributos excluido, definindo o valor padrão aplicado quando esse campo não é informado. Essas declarações formalizam condições estruturais que são verificadas pelo banco durante as operações correspondentes \parencite{PostgreSQLConstraints2026}.
+
+As ações referenciais também integram os scripts. A cláusula ON DELETE RESTRICT impede a exclusão física de registros enquanto existirem referências dependentes, enquanto ON DELETE CASCADE determina a exclusão dos registros dependentes quando o registro referenciado é removido \parencite{PostgreSQLConstraints2026}. No esquema do Civitas, a exclusão em cascata está declarada no relacionamento de tipodespesa com tipocodigo e no relacionamento de \texttt{token\_recuperacao\_senha} com usuario. Essas ações não são acionadas pela simples alteração dos campos de exclusão lógica.
+
+A definição fornecida não apresenta restrições UNIQUE para CPF, CNPJ, e-mail ou matrícula, nem restrições CHECK para condições financeiras ou valores de enumerações. Portanto, não se pode atribuir aos scripts a garantia dessas validações. Se tais regras estiverem implementadas no sistema, sua verificação exige a análise dos serviços, dos validadores ou de outros artefatos técnicos.
+
+A seguir, os Quadros 5.1 a 5.14 apresentam os scripts de criação das tabelas do Civitas, conforme a estrutura disponibilizada. A sequência contempla as tabelas de apoio e classificação, os cadastros administrativos e as estruturas financeiras, respeitando as dependências declaradas entre elas.
+
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{address}]{Script SQL --- Tabela \texttt{address}}
-	\label{quadro:script-address}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE address (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		street character varying(255) NOT NULL,
-		number character varying(20) NOT NULL,
-		complement character varying(255),
-		neighborhood character varying(255) NOT NULL,
-		zip_code character varying(20) NOT NULL,
-		city_id integer NOT NULL,
-		CONSTRAINT "PK_address" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela emailenviado}
+\label{qua:script-emailenviado}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE emailenviado (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    emaildestinatario character varying(255) NOT NULL,
+    assunto character varying(200) NOT NULL,
+    conteudo character varying(10000) NOT NULL,
+    status integer NOT NULL,
+    mensagemerro character varying(1000),
+    dataenvio timestamp with time zone,
+    datacriacao timestamp with time zone NOT NULL,
+    CONSTRAINT "PK_emailenviado" PRIMARY KEY (id)
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela allergy
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{allergy}]{Script SQL --- Tabela \texttt{allergy}}
-	\label{quadro:script-allergy}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE allergy (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(100) NOT NULL,
-		type integer NOT NULL,
-		CONSTRAINT "PK_allergy" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela secretaria}
+\label{qua:script-secretaria}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE secretaria (
+    idsecretaria integer GENERATED BY DEFAULT AS IDENTITY,
+    situacao integer NOT NULL,
+    descricao character varying(500) NOT NULL,
+    cnpj character varying(14) NOT NULL,
+    nome character varying(150) NOT NULL,
+    logradouro character varying(200) NOT NULL,
+    numero character varying(10) NOT NULL,
+    bairro character varying(100) NOT NULL,
+    cep character varying(8) NOT NULL,
+    nomerazaosocial character varying(200) NOT NULL,
+    email character varying(255) NOT NULL,
+    telefone character varying(11) NOT NULL,
+    cidade character varying(100) NOT NULL,
+    estado character varying(2) NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_secretaria" PRIMARY KEY (idsecretaria)
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela carrier
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{carrier}]{Script SQL --- Tabela \texttt{carrier}}
-	\label{quadro:script-carrier}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE carrier (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		document_number character varying(18) NOT NULL,
-		email character varying(255),
-		phone_number character varying(20),
-		description character varying(255),
-		CONSTRAINT "PK_carrier" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela tipocodigo}
+\label{qua:script-tipocodigo}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE tipocodigo (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    nome text NOT NULL,
+    descricao text NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_tipocodigo" PRIMARY KEY (id)
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela city
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{city}]{Script SQL --- Tabela \texttt{city}}
-	\label{quadro:script-city}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE city (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		state_id integer NOT NULL,
-		CONSTRAINT "PK_city" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela tipoinstituicao}
+\label{qua:script-tipoinstituicao}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE tipoinstituicao (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    descricao character varying(150) NOT NULL,
+    situacao integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_tipoinstituicao" PRIMARY KEY (id)
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela health_insurance
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{health\_insurance}]{Script SQL --- Tabela \texttt{health\_insurance}}
-	\label{quadro:script-health-insurance}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE health_insurance (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		register_number character varying(50),
-		phone_number character varying(20),
-		email character varying(255),
-		description character varying(255),
-		CONSTRAINT "PK_health_insurance" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela unidademedida}
+\label{qua:script-unidademedida}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE unidademedida (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    descricao character varying(150) NOT NULL,
+    abreviatura character varying(45) NOT NULL,
+    situacao integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_unidademedida" PRIMARY KEY (id)
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela health_insurance_plan
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{health\_insurance\_plan}]{Script SQL --- Tabela \texttt{health\_insurance\_plan}}
-	\label{quadro:script-health-insurance-plan}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE health_insurance_plan (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		code character varying(50),
-		description character varying(255),
-		health_insurance_id integer NOT NULL,
-		CONSTRAINT "PK_health_insurance_plan" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela usuario}
+\label{qua:script-usuario}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE usuario (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    cpf character varying(11) NOT NULL,
+    nome character varying(150) NOT NULL,
+    rg character varying(20) NOT NULL,
+    logradouro character varying(200) NOT NULL,
+    numero character varying(10) NOT NULL,
+    cidade character varying(100) NOT NULL,
+    estado character varying(2) NOT NULL,
+    cep character varying(8) NOT NULL,
+    bairro character varying(100) NOT NULL,
+    email character varying(255) NOT NULL,
+    senha character varying(256) NOT NULL,
+    matricula character varying(100) NOT NULL,
+    tipousuario integer NOT NULL,
+    situacao integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_usuario" PRIMARY KEY (id)
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela login
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{login}]{Script SQL --- Tabela \texttt{login}}
-	\label{quadro:script-login}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE login (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		user_id integer NOT NULL,
-		login_date timestamp without time zone NOT NULL,
-		ip_address character varying(45),
-		user_agent character varying(255),
-		CONSTRAINT "PK_login" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela instituicao}
+\label{qua:script-instituicao}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE instituicao (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    cnpj character varying(14) NOT NULL,
+    nome character varying(150) NOT NULL,
+    logradouro character varying(255) NOT NULL,
+    numero character varying(4) NOT NULL,
+    bairro character varying(100) NOT NULL,
+    cep character varying(8) NOT NULL,
+    nomerazaosocial character varying(200) NOT NULL,
+    telefone character varying(15) NOT NULL,
+    email character varying(255) NOT NULL,
+    cidade character varying(100) NOT NULL,
+    estado character varying(2) NOT NULL,
+    situacao integer NOT NULL,
+    idtipoinstituicao integer NOT NULL,
+    idsecretaria integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_instituicao" PRIMARY KEY (id),
+    CONSTRAINT "FK_instituicao_secretaria_idsecretaria" FOREIGN KEY (idsecretaria) REFERENCES secretaria (idsecretaria) ON DELETE RESTRICT,
+    CONSTRAINT "FK_instituicao_tipoinstituicao_idtipoinstituicao" FOREIGN KEY (idtipoinstituicao) REFERENCES tipoinstituicao (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela manufacturer
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{manufacturer}]{Script SQL --- Tabela \texttt{manufacturer}}
-	\label{quadro:script-manufacturer}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE manufacturer (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		document_number character varying(18),
-		phone_number character varying(20),
-		email character varying(255),
-		description character varying(255),
-		CONSTRAINT "PK_manufacturer" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela tipodespesa}
+\label{qua:script-tipodespesa}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE tipodespesa (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    descricao character varying(500) NOT NULL,
+    idunidademedida integer NOT NULL,
+    solicitauc integer NOT NULL,
+    situacao integer NOT NULL,
+    idtipocodigo integer NOT NULL,
+    camposopcionais text,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_tipodespesa" PRIMARY KEY (id),
+    CONSTRAINT "FK_tipodespesa_tipocodigo_idtipocodigo" FOREIGN KEY (idtipocodigo) REFERENCES tipocodigo (id) ON DELETE CASCADE,
+    CONSTRAINT "FK_tipodespesa_unidademedida_idunidademedida" FOREIGN KEY (idunidademedida) REFERENCES unidademedida (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela product
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{product}]{Script SQL --- Tabela \texttt{product}}
-	\label{quadro:script-product}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE product (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		code character varying(50) NOT NULL,
-		description character varying(255),
-		product_group_id integer NOT NULL,
-		product_type_id integer NOT NULL,
-		manufacturer_id integer,
-		unit_of_measure_id integer NOT NULL,
-		CONSTRAINT "PK_product" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela auditoria}
+\label{qua:script-auditoria}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE auditoria (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    data character varying(10) NOT NULL,
+    hora character varying(8) NOT NULL,
+    operacao character varying(100) NOT NULL,
+    nome_entidade character varying(100) NOT NULL,
+    valores_atingidos character varying(500) NOT NULL,
+    novos_valores character varying(500) NOT NULL,
+    situacao integer NOT NULL,
+    usuario_id integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_auditoria" PRIMARY KEY (id),
+    CONSTRAINT "FK_auditoria_usuario_usuario_id" FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela product_category
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{product\_category}]{Script SQL --- Tabela \texttt{product\_category}}
-	\label{quadro:script-product-category}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE product_category (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		description character varying(255),
-		CONSTRAINT "PK_product_category" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela \texttt{token\_recuperacao\_senha}}
+\label{qua:script-token_recuperacao_senha}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE token_recuperacao_senha (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    usuario_id integer NOT NULL,
+    token_hash character varying(64) NOT NULL,
+    criado_em timestamp with time zone NOT NULL,
+    expira_em timestamp with time zone NOT NULL,
+    utilizado_em timestamp with time zone,
+    CONSTRAINT "PK_token_recuperacao_senha" PRIMARY KEY (id),
+    CONSTRAINT "FK_token_recuperacao_senha_usuario_usuario_id" FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela product_group
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{product\_group}]{Script SQL --- Tabela \texttt{product\_group}}
-	\label{quadro:script-product-group}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE product_group (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		description character varying(255),
-		product_category_id integer NOT NULL,
-		CONSTRAINT "PK_product_group" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela fornecedor}
+\label{qua:script-fornecedor}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE fornecedor (
+    idfornecedor integer GENERATED BY DEFAULT AS IDENTITY,
+    nomefantasia character varying(150) NOT NULL,
+    situacao integer NOT NULL,
+    cnpj character varying(14) NOT NULL,
+    nome character varying(150) NOT NULL,
+    logradouro character varying(200) NOT NULL,
+    numero character varying(20) NOT NULL,
+    bairro character varying(100) NOT NULL,
+    cep character varying(8) NOT NULL,
+    telefone character varying(11) NOT NULL,
+    email character varying(150) NOT NULL,
+    cidade character varying(100) NOT NULL,
+    estado character varying(2) NOT NULL,
+    idtipodespesa integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_fornecedor" PRIMARY KEY (idfornecedor),
+    CONSTRAINT "FK_fornecedor_tipodespesa_idtipodespesa" FOREIGN KEY (idtipodespesa) REFERENCES tipodespesa (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela product_type
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{product\_type}]{Script SQL --- Tabela \texttt{product\_type}}
-	\label{quadro:script-product-type}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE product_type (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		description character varying(255),
-		CONSTRAINT "PK_product_type" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela orcamento}
+\label{qua:script-orcamento}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE orcamento (
+    idorcamento integer GENERATED BY DEFAULT AS IDENTITY,
+    anoorcamento integer NOT NULL,
+    valororcamento numeric(18,2) NOT NULL,
+    janeiroquantidadeconsumo numeric(18,2),
+    janeirovalorconsumo numeric(18,2),
+    fevereiroquantidadeconsumo numeric(18,2),
+    fevereirovalorconsumo numeric(18,2),
+    marcoquantidadeconsumo numeric(18,2),
+    marcovalorconsumo numeric(18,2),
+    abrilquantidadeconsumo numeric(18,2),
+    abrilvalorconsumo numeric(18,2),
+    maioquantidadeconsumo numeric(18,2),
+    maiovalorconsumo numeric(18,2),
+    junhoquantidadeconsumo numeric(18,2),
+    junhovalorconsumo numeric(18,2),
+    julhoquantidadeconsumo numeric(18,2),
+    julhovalorconsumo numeric(18,2),
+    agostoquantidadeconsumo numeric(18,2),
+    agostovalorconsumo numeric(18,2),
+    setembroquantidadeconsumo numeric(18,2),
+    setembrovalorconsumo numeric(18,2),
+    outubroquantidadeconsumo numeric(18,2),
+    outubrovalorconsumo numeric(18,2),
+    novembroquantidadeconsumo numeric(18,2),
+    novembrovalorconsumo numeric(18,2),
+    dezembroquantidadeconsumo numeric(18,2),
+    dezembrovalorconsumo numeric(18,2),
+    idinstituicao integer NOT NULL,
+    idtipodespesa integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_orcamento" PRIMARY KEY (idorcamento),
+    CONSTRAINT "FK_orcamento_instituicao_idinstituicao" FOREIGN KEY (idinstituicao) REFERENCES instituicao (id) ON DELETE RESTRICT,
+    CONSTRAINT "FK_orcamento_tipodespesa_idtipodespesa" FOREIGN KEY (idtipodespesa) REFERENCES tipodespesa (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela profile
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{profile}]{Script SQL --- Tabela \texttt{profile}}
-	\label{quadro:script-profile}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE profile (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		description character varying(255),
-		CONSTRAINT "PK_profile" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela unidadeconsumidora}
+\label{qua:script-unidadeconsumidora}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE unidadeconsumidora (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    identificador character varying(100) NOT NULL,
+    idinstituicao integer NOT NULL,
+    idtipodespesa integer NOT NULL,
+    idsecretaria integer NOT NULL,
+    idorcamento integer NOT NULL,
+    idfornecedor integer NOT NULL,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    "FornecedorIdFornecedor" integer,
+    "InstituicaoId" integer,
+    "OrcamentoIdOrcamento" integer,
+    "TipoDespesaId" integer,
+    CONSTRAINT "PK_unidadeconsumidora" PRIMARY KEY (id),
+    CONSTRAINT "FK_unidadeconsumidora_fornecedor_FornecedorIdFornecedor" FOREIGN KEY ("FornecedorIdFornecedor") REFERENCES fornecedor (idfornecedor),
+    CONSTRAINT "FK_unidadeconsumidora_fornecedor_idfornecedor" FOREIGN KEY (idfornecedor) REFERENCES fornecedor (idfornecedor) ON DELETE RESTRICT,
+    CONSTRAINT "FK_unidadeconsumidora_instituicao_InstituicaoId" FOREIGN KEY ("InstituicaoId") REFERENCES instituicao (id),
+    CONSTRAINT "FK_unidadeconsumidora_instituicao_idinstituicao" FOREIGN KEY (idinstituicao) REFERENCES instituicao (id) ON DELETE RESTRICT,
+    CONSTRAINT "FK_unidadeconsumidora_orcamento_OrcamentoIdOrcamento" FOREIGN KEY ("OrcamentoIdOrcamento") REFERENCES orcamento (idorcamento),
+    CONSTRAINT "FK_unidadeconsumidora_orcamento_idorcamento" FOREIGN KEY (idorcamento) REFERENCES orcamento (idorcamento) ON DELETE RESTRICT,
+    CONSTRAINT "FK_unidadeconsumidora_secretaria_idsecretaria" FOREIGN KEY (idsecretaria) REFERENCES secretaria (idsecretaria) ON DELETE RESTRICT,
+    CONSTRAINT "FK_unidadeconsumidora_tipodespesa_TipoDespesaId" FOREIGN KEY ("TipoDespesaId") REFERENCES tipodespesa (id),
+    CONSTRAINT "FK_unidadeconsumidora_tipodespesa_idtipodespesa" FOREIGN KEY (idtipodespesa) REFERENCES tipodespesa (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
-% ---------------------------------
-% Script SQL — Tabela profile_claim
-% ---------------------------------
 \begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{profile\_claim}]{Script SQL --- Tabela \texttt{profile\_claim}}
-	\label{quadro:script-profile-claim}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE profile_claim (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		profile_id integer NOT NULL,
-		claim character varying(255) NOT NULL,
-		CONSTRAINT "PK_profile_claim" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela profile_resource
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{profile\_resource}]{Script SQL --- Tabela \texttt{profile\_resource}}
-	\label{quadro:script-profile-resource}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE profile_resource (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		profile_id integer NOT NULL,
-		resource_id integer NOT NULL,
-		CONSTRAINT "PK_profile_resource" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela resident
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{resident}]{Script SQL --- Tabela \texttt{resident}}
-	\label{quadro:script-resident}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE resident (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		date_of_birth date NOT NULL,
-		document_number character varying(20),
-		gender integer NOT NULL,
-		marital_status integer,
-		phone_number character varying(20),
-		email character varying(255),
-		address_id integer NOT NULL,
-		CONSTRAINT "PK_resident" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela resident_allergy
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{resident\_allergy}]{Script SQL --- Tabela \texttt{resident\_allergy}}
-	\label{quadro:script-resident-allergy}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE resident_allergy (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		resident_id integer NOT NULL,
-		allergy_id integer NOT NULL,
-		description character varying(255),
-		CONSTRAINT "PK_resident_allergy" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela resident_health_insurance
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{resident\_health\_insurance}]{Script SQL --- Tabela \texttt{resident\_health\_insurance}}
-	\label{quadro:script-resident-health-insurance}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE resident_health_insurance (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		resident_id integer NOT NULL,
-		health_insurance_plan_id integer NOT NULL,
-		card_number character varying(50),
-		expiration_date date,
-		CONSTRAINT "PK_resident_health_insurance" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela resident_relative
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{resident\_relative}]{Script SQL --- Tabela \texttt{resident\_relative}}
-	\label{quadro:script-resident-relative}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE resident_relative (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		resident_id integer NOT NULL,
-		name character varying(255) NOT NULL,
-		kinship_degree integer NOT NULL,
-		phone_number character varying(20),
-		email character varying(255),
-		CONSTRAINT "PK_resident_relative" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela resource
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{resource}]{Script SQL --- Tabela \texttt{resource}}
-	\label{quadro:script-resource}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE resource (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		description character varying(255),
-		CONSTRAINT "PK_resource" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela state
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{state}]{Script SQL --- Tabela \texttt{state}}
-	\label{quadro:script-state}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE state (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		abbreviation character varying(2) NOT NULL,
-		CONSTRAINT "PK_state" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela unitofmeasure
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{unitofmeasure}]{Script SQL --- Tabela \texttt{unitofmeasure}}
-	\label{quadro:script-unitofmeasure}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE unitofmeasure (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(50) NOT NULL,
-		abbreviation character varying(10) NOT NULL,
-		CONSTRAINT "PK_unitofmeasure" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
-\end{quadro}
-
-% ---------------------------------
-% Script SQL — Tabela user
-% ---------------------------------
-\begin{quadro}[H]
-	\caption[Script SQL --- Tabela \texttt{user}]{Script SQL --- Tabela \texttt{user}}
-	\label{quadro:script-user}
-	
-	\begin{minipage}{0.96\textwidth}
-		\begin{lstlisting}[style=academic-sql]
-	CREATE TABLE "user" (
-		id integer GENERATED BY DEFAULT AS IDENTITY,
-		name character varying(255) NOT NULL,
-		email character varying(255) NOT NULL,
-		password_hash character varying(255) NOT NULL,
-		is_active boolean NOT NULL,
-		profile_id integer NOT NULL,
-		CONSTRAINT "PK_user" PRIMARY KEY (id)
-	);
-		\end{lstlisting}
-	\end{minipage}
-	
-	\fonte{Elaborado pelos autores.}
+\caption{Script SQL — Tabela despesa}
+\label{qua:script-despesa}
+\begin{minipage}{0.96\textwidth}
+\begin{lstlisting}[style=academic-sql]
+CREATE TABLE despesa (
+    id integer GENERATED BY DEFAULT AS IDENTITY,
+    numerodocumento character varying(100) NOT NULL,
+    nomedocumento character varying(100),
+    hashdocumento text,
+    codigo character varying(100) NOT NULL,
+    dataemissao date NOT NULL,
+    valorprevisto numeric(18,2) NOT NULL,
+    valorpago numeric(18,2) NOT NULL,
+    juros numeric NOT NULL,
+    multa numeric NOT NULL,
+    desconto numeric NOT NULL,
+    consumoprevisto numeric(18,2) NOT NULL,
+    consumoreal numeric(18,2) NOT NULL,
+    datavencimento date NOT NULL,
+    datapagamento date,
+    status integer NOT NULL,
+    idusuario integer NOT NULL,
+    idunidadeconsumidora integer NOT NULL,
+    valoresopcionais text,
+    excluido boolean NOT NULL DEFAULT FALSE,
+    dataexclusao timestamp with time zone,
+    CONSTRAINT "PK_despesa" PRIMARY KEY (id),
+    CONSTRAINT "FK_despesa_unidadeconsumidora_idunidadeconsumidora" FOREIGN KEY (idunidadeconsumidora) REFERENCES unidadeconsumidora (id) ON DELETE RESTRICT,
+    CONSTRAINT "FK_despesa_usuario_idusuario" FOREIGN KEY (idusuario) REFERENCES usuario (id) ON DELETE RESTRICT
+);
+\end{lstlisting}
+\end{minipage}
+\fonte{Elaborado pelos autores.}
 \end{quadro}
 
 \section{Mapeamento Objeto Relacional}
 
-De acordo com \textcite{Silberschatz2012}, o Mapeamento Objeto-Relacional (ORM) é uma técnica que facilita a interação entre sistemas orientados a objetos e bancos de dados relacionais. Em essência, o ORM provê uma camada de abstração que representa tabelas, colunas e relações por meio de classes, atributos e associações, reduzindo o chamado ``descompasso'' objeto--relacional e evitando a escrita manual de comandos SQL para operações de criação, leitura, atualização e exclusão (\emph{CRUD}). Com isso, o desenvolvimento torna-se mais simples e coeso, favorecendo legibilidade,
-reuso e manutenção do código \parencite{Silberschatz2012}.
+O mapeamento objeto-relacional, conhecido como ORM, estabelece a correspondência entre os elementos de uma aplicação orientada a objetos e as estruturas de um banco de dados relacional. Nessa abordagem, classes podem representar entidades persistentes, propriedades podem corresponder a colunas e associações entre objetos podem representar relacionamentos do banco. Como exemplo dessa tecnologia, o Entity Framework Core permite que aplicações .NET trabalhem com dados por meio de objetos, reduzindo a necessidade de escrever manualmente grande parte do código de acesso e persistência \parencite{MicrosoftEFCore2024}.
 
-No contexto deste projeto, adotou-se o \emph{Entity Framework}, um \emph{framework} ORM difundido para a linguagem C\#. A abordagem permite mapear classes da aplicação para tabelas do banco com configurações mínimas (quando desejado), ao mesmo tempo em que respeita customizações do desenvolvedor \parencite{Silberschatz2012}. O processo de
-mapeamento ocorre de forma transparente: a camada de persistência assume tarefas como gerar instruções SQL, materializar objetos a partir de tuplas e sincronizar alterações, enquanto o desenvolvedor trabalha com modelos de domínio \parencite{Silberschatz2012}.
+O ORM não se confunde com a transformação do modelo conceitual em modelo lógico. Enquanto essa transformação organiza a representação dos dados no esquema relacional, o ORM trata da interação entre o modelo de objetos da aplicação e as estruturas persistidas. A configuração de relacionamentos envolve a correspondência entre referências ou coleções do modelo e as chaves primárias e estrangeiras utilizadas no banco \parencite{MicrosoftRelationships2023}.
 
-Além do mapeamento básico (classes $\rightarrow$ tabelas, atributos $\rightarrow$ colunas, associações $\rightarrow$ chaves estrangeiras), o uso de ORM favorece:
+No caso do Civitas, o material técnico disponibilizado para este capítulo permite identificar o esquema relacional, mas não comprova qual biblioteca ou estratégia de acesso aos dados está em uso. Os comandos CREATE TABLE documentam tabelas e restrições, porém não demonstram, isoladamente, a utilização de um ORM. Dessa forma, não é possível atribuir ao projeto o uso de Entity Framework Core ou de outra tecnologia de persistência apenas com base nesses scripts.
+
+Ainda assim, o esquema permite estabelecer as correspondências que uma camada de persistência precisa respeitar:
 \begin{itemize}
-	\item a definição explícita de relacionamentos (\emph{um-para-muitos}, \emph{muitos-para-muitos})
-	com integridade referencial preservada \parencite{Silberschatz2012};
-	\item o controle de transações e a aderência às propriedades \emph{ACID}, assegurando consistência
-	e durabilidade das operações \parencite{Silberschatz2012};
-	\item a validação de dados e o rastreamento de alterações (\emph{change tracking}) no ciclo de vida
-	dos objetos, reduzindo \emph{boilerplate} na camada de persistência \parencite{Silberschatz2012};
-	\item a otimização de acesso por consultas expressivas e carregamento apropriado de associações,
-	conforme a necessidade do caso de uso \parencite{Silberschatz2012}.
+\item Os identificadores das entidades devem corresponder às chaves primárias efetivamente declaradas, considerando que algumas tabelas utilizam \texttt{id}, enquanto outras adotam nomes como \texttt{idsecretaria}, \texttt{idfornecedor} e \texttt{idorcamento}.
+\item As propriedades utilizadas no armazenamento devem permanecer compatíveis com os tipos de dados, os tamanhos e a nulabilidade definidos nas colunas.
+\item Os relacionamentos devem corresponder às chaves estrangeiras existentes, sem acrescentar associações diretas que não estejam previstas no esquema.
+\item As operações de inclusão, consulta, atualização e exclusão devem respeitar as restrições relacionais e as regras de negócio aplicáveis.
+\item O tratamento da exclusão lógica deve distinguir a alteração dos atributos \texttt{excluido} e \texttt{dataexclusao} de uma operação de exclusão física.
 \end{itemize}
 
-Aplicado ao sistema em desenvolvimento, por exemplo, a entidade que representa \emph{pontos turísticos}
-é mapeada diretamente para uma tabela relacional; as operações de persistência são delegadas ao
-\emph{Entity Framework}, que trata a emissão de comandos, o gerenciamento de relacionamentos e as
-transações. O resultado é um ciclo de desenvolvimento mais ágil, com menor complexidade acoplada à
-camada de dados e com foco do time nas regras de negócio \parencite{Silberschatz2012}.
+A tabela despesa oferece um exemplo dessa correspondência. Uma representação dessa entidade na aplicação precisa contemplar os dados documentais, as datas, os valores financeiros, as informações de consumo e as referências obrigatórias ao usuário e à unidade consumidora. Os dados de fornecedor, instituição, orçamento e tipo de despesa devem ser obtidos pelo vínculo com a unidade consumidora, preservando os relacionamentos declarados no banco.
 
-Em suma, o uso de um ORM como o \emph{Entity Framework} viabiliza uma separação clara de
-responsabilidades: a aplicação concentra-se nas funcionalidades de domínio, enquanto o \emph{framework}
-atua sobre a persistência, mantendo as garantias do modelo relacional \parencite{Silberschatz2012}.
+A tabela unidadeconsumidora exige atenção específica porque apresenta referências obrigatórias e quatro referências opcionais adicionais para determinadas tabelas. Caso o projeto utilize um ORM, a configuração precisa identificar a correspondência entre essas chaves estrangeiras e as propriedades de relacionamento. Caso utilize SQL explícito ou outra estratégia de acesso, as consultas e operações de gravação também precisam distinguir essas colunas. A finalidade dos vínculos adicionais não pode ser determinada sem examinar os artefatos de implementação.
+
+O uso de um ORM pode reduzir o código repetitivo de acesso aos dados, mas não dispensa a compreensão do esquema nem a definição das regras do domínio. Da mesma forma, a existência de chaves estrangeiras não assegura todas as condições de coerência entre registros. Independentemente da tecnologia adotada, a camada de persistência do Civitas deve manter a correspondência entre os dados manipulados pela aplicação, os relacionamentos declarados e as restrições efetivamente implementadas.
+
+A identificação da tecnologia utilizada, dos componentes responsáveis pelas consultas e do mecanismo de gravação permanece condicionada à análise do código ou de outro artefato técnico oficial do Civitas. Até essa confirmação, a descrição desta seção limita-se às correspondências verificáveis no esquema e não apresenta uma implementação de ORM como fato estabelecido.
 
 
 \chapter{Arquitetura de Software}
