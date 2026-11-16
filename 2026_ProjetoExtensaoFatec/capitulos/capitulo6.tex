@@ -1,210 +1,249 @@
 \chapter{Arquitetura de Software}
 \label{cap:arquitetura-software}
 
-Segundo \textcite{Sommerville2018ES10}, a arquitetura de software estabelece a organização geral de um sistema, identificando seus principais componentes e as relações entre eles. Sua definição conecta os requisitos à estrutura da solução e orienta a distribuição das responsabilidades e a comunicação entre as partes da aplicação. O projeto arquitetural constitui, portanto, uma base para as decisões tomadas durante a implementação e a evolução do software.
+A arquitetura de software corresponde ao conjunto de estruturas necessárias para compreender um sistema, seus elementos, as relações entre eles e as propriedades relevantes para seu funcionamento. Sua definição envolve decisões sobre a distribuição de responsabilidades, a comunicação entre componentes e a organização das dependências, influenciando a evolução da aplicação \parencite{Bass2021SAP}.
 
-A arquitetura não se limita à escolha de linguagens, \textit{frameworks} ou bancos de dados. De acordo com \textcite{Bass2021SAP}, ela compreende as estruturas necessárias para raciocinar sobre o sistema, incluindo seus elementos, suas relações e suas propriedades. Sua finalidade é permitir a compreensão de como os componentes colaboram para atender às necessidades funcionais e aos atributos de qualidade esperados.
+Segundo \textcite{Sommerville2018ES10}, o projeto de arquitetura estabelece a ligação entre os requisitos e a organização do sistema. Essa relação permite compreender como as funcionalidades são distribuídas e quais decisões técnicas contribuem para atender às necessidades de manutenção, integração, desempenho e segurança.
 
-Uma organização arquitetural adequada contribui para separar responsabilidades, reduzir dependências desnecessárias e facilitar a identificação dos pontos que precisam ser modificados. \textcite{Parnas1972} destaca que a decomposição deve procurar isolar decisões sujeitas a mudanças, evitando que alterações localizadas provoquem impactos excessivos sobre o restante do sistema. Nesse sentido, a modularidade favorece a compreensão e a manutenção da aplicação.
+No Civitas, a arquitetura organiza uma aplicação \textit{web} destinada ao tratamento de informações administrativas e financeiras. A interface concentra a interação com os usuários, enquanto a API recebe as solicitações, executa os procedimentos necessários e acessa o banco de dados.
 
-A arquitetura também influencia características como segurança, manutenibilidade e escalabilidade. Entretanto, a utilização de um padrão não assegura, por si só, o atendimento desses atributos, pois os resultados dependem das decisões de implementação e das condições de operação \parencite{Bass2021SAP}. Assim, o planejamento arquitetural deve estabelecer uma estrutura coerente com os requisitos, permitindo que o software seja desenvolvido, verificado e aprimorado de maneira organizada.
+Este capítulo apresenta a organização das aplicações de \textit{back-end} e \textit{front-end}, sua comunicação e os mecanismos relacionados à segurança da informação. A descrição é documental e distingue os componentes identificados das condições que dependem de verificação em execução. Não foram realizados testes de desempenho, testes de intrusão ou avaliação do ambiente de produção.
 
 \section{Arquitetura de Desenvolvimento}
 \label{sec:cap6-arquitetura-desenvolvimento}
 
-A arquitetura de desenvolvimento organiza as tecnologias, os componentes e os mecanismos utilizados na construção de uma aplicação. Em sistemas \textit{web}, essa organização envolve a apresentação das informações, o processamento das solicitações e o armazenamento dos dados. A separação dessas responsabilidades permite definir onde cada comportamento deve ser implementado e como as diferentes partes da solução devem se comunicar.
+A organização estrutural de um software define como suas responsabilidades são distribuídas. \textcite{Parnas1972} demonstra que a decomposição em módulos deve considerar a ocultação das decisões com maior probabilidade de mudança, de modo que uma alteração possa permanecer concentrada em uma parte reduzida do sistema.
 
-Entre as formas de organização, a arquitetura cliente-servidor distribui responsabilidades entre uma aplicação que solicita serviços e outra que os disponibiliza. A divisão em camadas complementa essa estrutura ao agrupar operações de apresentação, regras de negócio e persistência, favorecendo a compreensão das dependências e a manutenção dos componentes \parencite{Sommerville2018ES10}.
+Esse princípio fundamenta a separação de responsabilidades. Cada componente assume uma finalidade delimitada e estabelece formas de interação com os demais, reduzindo a necessidade de conhecer detalhes internos de outras partes da aplicação. A organização das dependências também influencia a facilidade de manutenção e a capacidade de modificar o sistema sem provocar alterações desnecessárias em diferentes pontos \parencite{Martin2019ArquiteturaLimpa}.
 
-No Civitas, a solução é composta por um \textit{front-end} desenvolvido com Next.js e React, um \textit{back-end} implementado com ASP.NET Core e um banco de dados PostgreSQL. A interface recebe as interações do usuário e apresenta os resultados, enquanto a API concentra as regras de negócio e o acesso às informações persistidas. A descrição da implementação principal considera o \textit{back-end} no \textit{commit} \texttt{e7c3f30} e o \textit{front-end} no \textit{commit} \texttt{ed79c34}; as referências à \textit{branch} \texttt{dev} são utilizadas apenas para distinguir alterações posteriores \parencite{CivitasBackend2026,CivitasFrontend2026}. A Figura~\ref{fig:cap6-arquitetura} representa a organização geral das aplicações.
+A arquitetura em camadas agrupa responsabilidades relacionadas, enquanto o modelo cliente-servidor distribui a solução entre os clientes e os serviços acessados pela rede. Esses modelos podem ser utilizados conjuntamente: uma aplicação cliente-servidor pode organizar internamente seu processamento em camadas lógicas \parencite{Sommerville2018ES10}.
+
+O Civitas utiliza essa composição. O \textit{front-end} é responsável pela apresentação das informações e pela interação com o usuário. O \textit{back-end} disponibiliza uma API, concentra o processamento das solicitações e realiza o acesso ao PostgreSQL. A comunicação entre interface e servidor ocorre por requisições HTTP.
+
+A Figura~\ref{fig:cap6-arquitetura} apresenta a organização geral da aplicação e a separação entre interface, processamento e persistência.
 
 \begin{figure}[H]
 \centering
 \caption{Arquitetura de desenvolvimento do Civitas}
 \includegraphics[width=.92\linewidth]{figs/diagrama_arquitetura_civitas_atualizado.pdf}
 \label{fig:cap6-arquitetura}
-\fonte{Elaborado pelos autores.}
+\fonte{Elaborada pelos autores.}
 \end{figure}
 
-A comunicação entre as aplicações ocorre por requisições HTTP direcionadas aos recursos da API. O endereço utilizado pelo \textit{front-end} é configurado pela variável de ambiente \texttt{NEXT\_PUBLIC\_API\_URL}, com uma alternativa local definida no código. Os métodos HTTP, os formatos dos dados enviados e as estruturas de resposta precisam corresponder ao contrato de cada operação.
+A separação entre interface e API permite que as responsabilidades de apresentação não sejam confundidas com as regras de persistência. No fluxo da aplicação, o navegador solicita informações à API, e esta utiliza os componentes de acesso a dados para consultar ou atualizar o banco. A interface não realiza diretamente as operações de persistência no PostgreSQL.
 
-A separação entre interface e servidor permite que a apresentação seja modificada sem incorporar diretamente a lógica de persistência. Ao mesmo tempo, concentra no \textit{back-end} as verificações determinantes para o processamento dos dados. As validações dos formulários auxiliam o preenchimento e a comunicação com o usuário, mas não substituem as regras do servidor, pois as requisições podem ser produzidas independentemente da interface.
+Essa organização também exige a manutenção do contrato de comunicação. Os nomes das propriedades, os formatos dos dados, as rotas e os resultados esperados precisam permanecer compatíveis entre as aplicações. A existência dos componentes, isoladamente, não comprova que todos os fluxos estejam integrados corretamente.
 
-O projeto utiliza bibliotecas e ferramentas para apoiar essas responsabilidades. Entity Framework Core e Npgsql intermedeiam o acesso ao PostgreSQL; AutoMapper realiza conversões entre objetos; BCrypt.Net-Next participa do tratamento de senhas; e JWT Bearer oferece suporte à autenticação baseada em \textit{tokens}. O Quadro~\ref{qua:cap6-tecnologias} apresenta as principais tecnologias e suas utilizações.
+O Quadro~\ref{qua:cap6-tecnologias} apresenta as principais tecnologias relacionadas à organização do Civitas.
 
-\begin{quadro}[H]
-\caption{Tecnologias identificadas no Civitas e sua utilização}\label{qua:cap6-tecnologias}
+\begingroup
 \small
-\begin{tabularx}{\textwidth}{|P{.30\textwidth}|>{\RaggedRight\arraybackslash}X|}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longquadro}{|P{.27\textwidth}|P{.67\textwidth}|}
+\caption{Tecnologias utilizadas na arquitetura do Civitas}\label{qua:cap6-tecnologias}\\
 \hline
-\textbf{Tecnologia} & \textbf{Utilização identificada} \\ \hline
-C\# e ASP.NET Core 9 & Implementação da API, dos controladores e do \textit{pipeline} de processamento de requisições HTTP. \\ \hline
-Entity Framework Core 9 e Npgsql & Mapeamento objeto-relacional, operações de persistência e acesso ao PostgreSQL. \\ \hline
-PostgreSQL & Armazenamento relacional das informações administrativas e financeiras. \\ \hline
-AutoMapper & Conversão entre entidades e objetos de transferência de dados, conforme os mapeamentos do projeto. \\ \hline
-BCrypt.Net-Next e JWT Bearer & Geração e verificação de \textit{hash} de senhas e suporte à autenticação por \textit{tokens}. \\ \hline
-Swashbuckle & Geração da documentação OpenAPI e disponibilização da interface Swagger em ambiente de desenvolvimento. \\ \hline
-xUnit e SQLite & Estrutura de testes automatizados do \textit{back-end}, incluindo cenários com banco de dados em memória. \\ \hline
-Next.js 15, React 19 e TypeScript & Roteamento, renderização, composição de interfaces e verificação estática de tipos no \textit{front-end}. \\ \hline
-Tailwind CSS 4 & Estilização por classes utilitárias, em conjunto com variáveis e classes próprias. \\ \hline
-Zustand e Context API & Gerenciamento de estados compartilhados em funcionalidades específicas e no contexto de autenticação. \\ \hline
-Fetch API & Comunicação HTTP com o \textit{back-end} nos serviços examinados. \\ \hline
-ExcelJS e jsPDF & Implementação das exportações para XLSX e PDF. \\ \hline
-Git, GitHub e GitHub Actions & Versionamento, colaboração por \textit{branches} e \textit{pull requests} e definição de verificações automatizadas do \textit{front-end}. \\ \hline
-Docker & Definição da construção da imagem do \textit{front-end} por \texttt{Dockerfile} na implementação principal analisada. \\ \hline
-\end{tabularx}
-\fonte{Elaborado pelos autores.}
-\end{quadro}
+\textbf{Tecnologia} & \textbf{Utilização} \\ \hline
+\endfirsthead
+\caption[]{Tecnologias utilizadas na arquitetura do Civitas (continuação)}\\
+\hline
+\textbf{Tecnologia} & \textbf{Utilização} \\ \hline
+\endhead
+\multicolumn{2}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{2}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores.}\\
+\endlastfoot
+C\# & Linguagem utilizada no desenvolvimento da API. \\ \hline
+ASP.NET Core & Estrutura de execução da API, dos controladores e do processamento das requisições. \\ \hline
+Entity Framework Core & Mapeamento objeto-relacional, consultas e persistência das entidades. \\ \hline
+Npgsql & Integração entre Entity Framework Core e PostgreSQL. \\ \hline
+PostgreSQL & Armazenamento relacional dos dados. \\ \hline
+AutoMapper & Conversão entre entidades e objetos de transferência de dados. \\ \hline
+BCrypt.Net-Next & Geração e verificação de \textit{hashes} de senhas. \\ \hline
+JWT Bearer & Suporte à autenticação baseada em \textit{tokens}. \\ \hline
+Swashbuckle & Geração da documentação da API e disponibilização da interface Swagger. \\ \hline
+Next.js e React & Organização das páginas, dos componentes e das interações do \textit{front-end}. \\ \hline
+TypeScript & Definição e verificação estática dos tipos utilizados na interface. \\ \hline
+Tailwind CSS & Estilização dos componentes e das páginas. \\ \hline
+Context API & Compartilhamento de informações entre componentes, incluindo o contexto de autenticação. \\ \hline
+Zustand & Gerenciamento de estados compartilhados em funcionalidades específicas da interface. \\ \hline
+Fetch API & Comunicação HTTP com a API. \\ \hline
+ExcelJS e jsPDF & Recursos de exportação de informações em XLSX e PDF. \\ \hline
+xUnit e SQLite & Estrutura de testes automatizados e utilização de banco em memória nos cenários configurados. \\ \hline
+\end{longquadro}
+\endgroup
 
-O versionamento das aplicações é realizado com Git e GitHub, permitindo registrar alterações e organizar a integração do código por \textit{branches} e \textit{pull requests} \parencite{ChaconStraub2014}. A manutenção de repositórios separados permite evolução independente, mas exige atenção à compatibilidade entre os contratos das aplicações.
+A integração pode ser observada no processo de autenticação. A interface encaminha as credenciais à API, que realiza a verificação e devolve o resultado. Quando a autenticação é bem-sucedida, o cliente utiliza o \textit{token} recebido nas solicitações subsequentes que exigem identificação.
 
-Na comparação realizada, foram identificadas diferenças entre a implementação principal do \textit{back-end} e os recursos consumidos pelo \textit{front-end}. Essas diferenças incluem funcionalidades de unidades consumidoras e tipos de código. Portanto, a presença de uma página ou de um serviço no cliente não demonstra, isoladamente, que a operação correspondente esteja disponível na versão do servidor utilizada.
+As respostas da API são interpretadas pelos serviços da interface para apresentar informações, atualizar componentes ou comunicar erros. Essa troca depende tanto do tratamento realizado no servidor quanto da interpretação dos resultados pelo cliente.
 
-A \textit{branch} \texttt{dev} apresenta alterações em relação à implementação principal, incluindo um cadastro próprio de unidades consumidoras. Essas diferenças precisam ser consideradas na integração, sem atribuir às versões anteriores comportamentos introduzidos posteriormente. A compatibilidade efetiva depende da utilização de versões correspondentes e de testes específicos.
-
-A organização adotada pode favorecer a manutenção e a incorporação de funcionalidades. Entretanto, não foram realizadas medições que comprovem ganhos de desempenho, produtividade ou escalabilidade. Os benefícios apresentados correspondem às possibilidades da estrutura, e não a resultados quantitativos obtidos em execução.
-
-As descrições de funcionamento apresentadas neste capítulo decorrem da leitura do código e das configurações. Não foram executadas as aplicações nem os testes automatizados durante esta análise. Também não foram realizados testes de integração de ponta a ponta, testes de intrusão ou verificação do ambiente de produção. Assim, comportamentos inferidos da implementação são diferenciados de resultados comprovados em execução.
+A arquitetura estabelece condições favoráveis à manutenção, mas seus benefícios não devem ser apresentados como resultados automaticamente alcançados. Manutenibilidade, desempenho e escalabilidade dependem da implementação e precisam ser avaliados por procedimentos próprios \parencite{Bass2021SAP}.
 
 \subsection{Back-End}
 \label{subsec:cap6-back-end}
 
-O \textit{back-end} corresponde à parte da aplicação responsável por receber solicitações, aplicar regras de negócio e intermediar o acesso às informações persistidas. Sua organização deve permitir que o processamento dos dados seja separado da apresentação, evitando que regras determinantes dependam exclusivamente dos controles disponíveis na interface.
+O \textit{back-end} corresponde à parte da aplicação executada no servidor. Suas responsabilidades incluem receber solicitações, tratar dados, executar regras, controlar o acesso e persistir informações. A separação dessas atividades contribui para evitar que o processamento fique concentrado em um único componente.
 
-\textcite{Fowler2002PEAA} descreve a separação entre apresentação, domínio e fonte de dados como uma forma de organizar aplicações corporativas. No Civitas, essa divisão é representada por controladores, serviços, repositórios, entidades e objetos de transferência de dados. As responsabilidades são distribuídas principalmente por diretórios, \textit{namespaces} e convenções dentro do projeto \texttt{Civitas.WebAPI}.
+\textcite{Fowler2002PEAA} apresenta a organização em camadas e a utilização de componentes específicos para serviços e acesso a dados. \textcite{Evans2004DDD} também discute a importância de representar o domínio e organizar os mecanismos utilizados para recuperar e manter seus objetos.
 
-Os controladores constituem os pontos de entrada da API. Eles recebem parâmetros, encaminham o processamento aos serviços e produzem respostas HTTP. A utilização de \texttt{[ApiController]} habilita comportamentos do ASP.NET Core, como o tratamento automático de determinadas falhas de validação. As operações utilizam métodos como GET, POST, PUT e PATCH, conforme a finalidade de cada rota.
+No Civitas, o \textit{back-end} é desenvolvido em C\# com ASP.NET Core. Sua organização utiliza diretórios e \textit{namespaces} para separar controladores, serviços, acesso a dados e objetos. Essa divisão é lógica e não significa, necessariamente, a existência de aplicações independentes para cada camada.
 
-Os serviços concentram o processamento associado às operações. \texttt{GenericService} reúne comportamentos comuns de consulta, paginação, criação, atualização e remoção, enquanto serviços especializados acrescentam regras das respectivas entidades. Essa reutilização reduz a repetição, mas não significa que todos os módulos possuam a mesma abrangência de validação.
+Os controladores formam a entrada das solicitações. Eles recebem os parâmetros e os dados enviados pelo cliente, encaminham as operações aos serviços e organizam as respostas HTTP. Essa responsabilidade deve ser distinguida da execução das regras de negócio e do acesso ao banco.
 
-Os serviços examinados apresentam diferentes níveis de especialização. A utilização de uma classe genérica não permite concluir que todos os módulos possuam as mesmas regras de negócio ou verificações de entrada. Por isso, a abrangência das validações deve ser considerada individualmente para cada operação.
+A camada de serviços reúne o tratamento necessário às operações. Classes especializadas atendem às particularidades dos módulos, enquanto componentes genéricos permitem compartilhar comportamentos recorrentes. Essa organização reduz a repetição em operações semelhantes, sem eliminar a necessidade de regras específicas.
 
-Os repositórios encapsulam consultas e operações de persistência. \textcite{Evans2004} apresenta esse padrão como uma abstração que aproxima o acesso aos objetos do domínio de uma coleção, reduzindo a dispersão da lógica de obtenção dos dados. No Civitas, \texttt{GenericRepository} oferece operações comuns, enquanto repositórios especializados acrescentam consultas relacionadas às necessidades de cada entidade.
+A camada de acesso a dados utiliza componentes genéricos e especializados. GenericRepository oferece operações comuns de consulta e persistência, enquanto os componentes específicos acrescentam os procedimentos necessários a cada entidade. As interfaces estabelecem os contratos utilizados na comunicação entre as partes.
 
-A composição das dependências ocorre em \texttt{Program.cs}. O contêiner do ASP.NET Core associa interfaces às implementações de serviços e repositórios, permitindo que as classes recebam seus colaboradores pelos construtores. Essa abordagem evita a criação direta de determinadas dependências e torna mais explícitas as relações entre os componentes.
+A injeção de dependências permite que controladores e serviços recebam seus colaboradores pelo construtor. Em Program.cs, as interfaces são associadas às implementações utilizadas pela aplicação. Dessa forma, uma classe pode depender de um contrato sem assumir a responsabilidade de construir diretamente todos os objetos necessários ao seu funcionamento.
 
-As entidades representam os dados persistidos, enquanto os objetos de transferência de dados, ou DTOs, delimitam as informações transportadas nas operações. AutoMapper realiza conversões conforme as regras definidas em \texttt{MappingsProfile}. No caso do usuário, o tratamento do campo \texttt{Senha} procura impedir seu retorno nas respostas produzidas pelos caminhos de mapeamento e serviço correspondentes.
+Os objetos de domínio são separados dos objetos utilizados na troca de informações. As entidades representam os dados persistidos, enquanto os DTOs delimitam os dados recebidos e devolvidos em determinadas operações. Essa distinção permite organizar o contrato da API sem exigir que toda a estrutura interna das entidades seja exposta ao cliente \parencite{Fowler2002PEAA}.
 
-A persistência utiliza Entity Framework Core com Npgsql. \texttt{AppDbContext} organiza os conjuntos de entidades, enquanto as configurações de mapeamento estabelecem chaves, comprimentos, obrigatoriedade, índices e relacionamentos. Essas restrições complementam as regras dos serviços e permitem que o banco também imponha condições de integridade.
+O AutoMapper participa da conversão entre esses objetos. Entretanto, a existência do mapeamento não substitui a verificação dos campos disponibilizados em cada resposta. Informações de autenticação e outros dados sensíveis precisam receber tratamento compatível com sua finalidade.
 
-O mecanismo de \textit{migrations} permite representar alterações incrementais no esquema. Entretanto, a presença de um \textit{snapshot} não demonstra, isoladamente, a disponibilidade de todo o histórico necessário para reconstruir o banco. A reprodução do ambiente depende dos arquivos versionados e das instruções do projeto, não tendo sido executada nesta análise.
+A persistência utiliza Entity Framework Core com o provedor Npgsql. AppDbContext declara os conjuntos de entidades e reúne a configuração do modelo. A estrutura considerada nesta documentação contempla catorze conjuntos, incluindo os cadastros administrativos e financeiros, os registros de auditoria, as mensagens e os tokens de recuperação de senha.
 
-O cadastro de usuários reúne normalizações e verificações de dados pessoais, endereço, e-mail, senha e unicidade de identificadores. Essas regras devem ser diferenciadas das restrições de tipo, dos atributos de validação e das condições impostas pelo banco.
+As entidades utilizam atributos de mapeamento e configurações complementares em classes Builder. Essas configurações estabelecem chaves, comprimentos, precisão numérica, índices, obrigatoriedade e relacionamentos. Os procedimentos de persistência precisam ser interpretados a partir das configurações efetivamente incorporadas ao contexto.
 
-O cadastro de despesas exemplifica a colaboração entre as camadas. Na implementação principal examinada, \texttt{DespesaService} normaliza os campos, exige número de documento preenchido e composto por caracteres numéricos, verifica datas e impede emissão futura ou vencimento anterior à emissão. Também consulta diretamente tipo de despesa, orçamento, instituição, fornecedor e usuário.
+O relacionamento de Despesa com UnidadeConsumidora exemplifica essa organização. A despesa mantém uma referência direta à unidade consumidora e outra ao usuário. As informações de instituição, secretaria, fornecedor, orçamento e tipo de despesa são contextualizadas pela unidade consumidora, conforme a estrutura apresentada nos capítulos anteriores.
 
-Entre as verificações estão a correspondência do orçamento com a instituição informada, a compatibilidade com o tipo de despesa quando aplicável, a situação ativa do fornecedor e a existência de documento repetido para o mesmo fornecedor. Essas regras descrevem a implementação principal e não devem ser confundidas com alterações posteriores da \textit{branch} \texttt{dev}.
+As migrations registram alterações do esquema. A sequência considerada no Capítulo~5 inclui a criação das tabelas e a alteração posterior de auditoria. Portanto, a descrição da persistência deve considerar a evolução dessas definições, não apenas o estado de uma entidade em um momento anterior.
 
-A informação de Unidade Consumidora é tratada, nessa implementação, pelo campo textual \texttt{UC} do DTO. Quando \texttt{TipoDespesa.SolicitaUc} é igual a Sim, o serviço exige que o campo não esteja vazio. Não há, nesse fluxo, consulta a um cadastro independente de unidades consumidoras. Portanto, exigir o preenchimento de UC não significa que exista um recurso próprio de gerenciamento dessa entidade.
+O código de inicialização contém procedimentos relacionados à preparação do banco, incluindo chamadas de aplicação de migrations. A presença desses procedimentos não comprova que tenham sido executados com sucesso em todas as instalações. O estado de um ambiente depende das configurações utilizadas e das alterações efetivamente aplicadas.
 
-Na \textit{branch} \texttt{dev} consultada, a despesa utiliza \texttt{IdUnidadeConsumidora} e há um controlador específico para esse recurso. Trata-se de uma estrutura diferente, na qual o identificador da unidade é validado e o registro correspondente é consultado. A distinção evita confundir o preenchimento de uma informação textual com a referência a uma entidade cadastrada.
+Nas consultas, GenericRepository utiliza recursos como ausência de rastreamento, filtros e paginação. O filtro de exclusão lógica é aplicado nas operações correspondentes às entidades que implementam ISoftDeletable. A configuração das colunas no contexto, por si só, não constitui um filtro global para todas as consultas.
 
-A alteração entre ATIVO e INATIVO corresponde à mudança da situação funcional do registro. Esse comportamento não deve ser automaticamente denominado exclusão lógica. A remoção lógica precisa ser descrita conforme os atributos e as operações efetivamente utilizados por cada entidade e versão.
+A alteração de situação e a exclusão lógica possuem significados diferentes. Situacao representa a condição ativa ou inativa do cadastro. Excluido e DataExclusao representam a marcação de exclusão lógica nas entidades que adotam esse mecanismo. Alternar a situação de um registro não deve ser descrito como sinônimo de excluí-lo logicamente.
 
-As respostas dos controladores empregam a classe \texttt{Response}, com código de aplicação, mensagem e dados, em conjunto com os códigos HTTP. Determinadas respostas produzidas diretamente pelo \textit{framework} podem não seguir esse envelope. Assim, a padronização dos controladores não representa uniformidade absoluta de todas as respostas da API.
+O método de remoção do componente genérico de acesso a dados utiliza a exclusão física pelo conjunto. Assim, a existência de atributos de exclusão lógica não permite afirmar que qualquer operação de remoção seja automaticamente convertida em atualização desses atributos. O comportamento precisa ser examinado no serviço responsável pela operação.
 
-A documentação dos \textit{endpoints} utiliza Swashbuckle e OpenAPI, com interface Swagger habilitada no ambiente de desenvolvimento. O projeto de testes contém verificações automatizadas relacionadas a autenticação, controle de acesso e cadastros. Como não foram executadas nesta análise, sua existência não comprova aprovação dos cenários ou cobertura integral dos requisitos.
+A atualização dos dados utiliza o rastreamento e a identificação do estado das entidades. O componente de acesso a dados trata a possibilidade de uma instância já estar sendo acompanhada pelo contexto, marca a alteração e solicita sua gravação. A inclusão também distingue a adição da entidade ao contexto da efetiva persistência das mudanças.
+
+O cadastro de uma despesa ilustra o fluxo entre as camadas. O controlador recebe os dados, o serviço realiza os procedimentos de tratamento e validação, e o componente de acesso a dados encaminha a entidade para persistência. O resultado retorna pelas camadas até ser apresentado à interface.
+
+As regras específicas de cada operação não devem ser deduzidas apenas da existência dos controladores ou das entidades. Validações de campos, verificações de referências e restrições de negócio precisam ser examinadas nos serviços e nos componentes que efetivamente as executam.
+
+A API também possui recursos de documentação por OpenAPI e Swagger. Esses recursos apoiam a consulta dos endpoints e a compreensão dos formatos de entrada e saída. Sua utilização não substitui testes de integração nem comprova a segurança das operações disponibilizadas.
+
+O projeto de testes permite organizar verificações automatizadas para os cenários previstos. Entretanto, a existência dos testes não equivale a sua execução ou aprovação. Nesta revisão, não foram executados testes automatizados, razão pela qual não são apresentados resultados de cobertura ou de sucesso.
 
 \subsection{Front-End}
 \label{subsec:cap6-front-end}
 
-O \textit{front-end} constitui a camada de apresentação da aplicação, responsável por organizar informações, receber comandos e apresentar os resultados das operações. Sua construção deve considerar clareza, consistência visual e comunicação com os serviços do servidor.
+O \textit{front-end} corresponde à parte da aplicação com a qual o usuário interage diretamente. Sua responsabilidade é apresentar informações, receber comandos e transformar as respostas do servidor em elementos compreensíveis. Em interfaces construídas com React, a componentização permite dividir as páginas em partes reutilizáveis, combinando apresentação e comportamento \parencite{ReactComponents}.
 
-A componentização permite dividir a interface em partes que reúnem estrutura e comportamento, favorecendo o reaproveitamento entre telas (React, [s. d.])\nocite{ReactComponents}. No Civitas, essa abordagem está presente em formulários, tabelas, elementos de navegação e componentes dos cadastros administrativos e financeiros.
+O estado representa informações que podem mudar durante a interação. Sua organização influencia a forma como os componentes são atualizados e como os dados são compartilhados. Estados locais atendem a necessidades restritas, enquanto contextos e outros mecanismos de gerenciamento permitem compartilhar informações entre diferentes partes da interface \parencite{ReactManagingState}.
 
-A implementação utiliza Next.js, React e TypeScript. O roteamento é organizado pelo sistema de arquivos, com páginas e estruturas compartilhadas no diretório \texttt{app}. Os demais diretórios distribuem componentes, \textit{hooks}, tipos de dados, contextos e funcionalidades específicas, facilitando a localização das responsabilidades.
+No Civitas, a interface utiliza Next.js e React, com predominância de TypeScript. A organização por páginas, componentes e serviços separa a composição visual da comunicação com a API e das definições dos dados utilizados.
 
-A estilização utiliza Tailwind CSS em conjunto com variáveis e classes próprias. Essa estrutura apoia a padronização visual e os recursos de tema e contraste apresentados no capítulo de interface. Sua existência, entretanto, não comprova atendimento integral aos critérios de acessibilidade, que dependem de avaliação específica.
+As áreas da aplicação abrangem autenticação, painel, usuários, secretarias, instituições, fornecedores, orçamentos, despesas, unidades consumidoras, configurações e perfil. A organização dessas áreas acompanha os cadastros e os processos administrativos e financeiros descritos nos capítulos anteriores.
 
-Os formulários recebem configurações de campos, rótulos, máscaras e obrigatoriedade, permitindo reutilização em operações de criação, edição e visualização. As tabelas reúnem apresentação, ordenação e ações, enquanto ExcelJS e jsPDF apoiam as exportações para XLSX e PDF. A implementação no cliente deve ser distinguida da disponibilidade integral dos serviços correspondentes no servidor.
+Os componentes compartilhados apoiam a padronização das telas. Formulários configuráveis permitem reutilizar comportamentos de apresentação, máscaras, campos, seleção e validação de preenchimento. Componentes de listagem organizam colunas, ações, ordenação e outras formas de visualização.
 
-O gerenciamento de estado utiliza mecanismos diferentes conforme a finalidade. Os \textit{hooks} do React mantêm estados locais, \texttt{AuthProvider} compartilha a autenticação por Context API e Zustand atende a funcionalidades específicas, como a Central de Listagens e o indicador de progresso de navegação.
+Essa reutilização reduz a necessidade de reconstruir elementos semelhantes em cada módulo. Entretanto, os componentes compartilhados precisam permitir o tratamento das diferenças entre os cadastros, evitando que regras particulares sejam aplicadas indiscriminadamente.
 
-A comunicação utiliza Fetch API nos serviços examinados. \texttt{GenericService} reúne operações comuns, prepara URLs e cabeçalhos e interpreta respostas. \texttt{Authorization} é acrescentado quando \texttt{authStorage} disponibiliza um \textit{token}, não sendo incluído incondicionalmente em todas as chamadas.
+A estilização utiliza Tailwind CSS e definições próprias de apresentação. Os recursos de tema, contraste e organização visual integram a interface e devem ser avaliados em conjunto com os requisitos de usabilidade e acessibilidade.
 
-O tratamento das respostas utiliza mensagens e dados para apresentar retornos ao usuário. Algumas chaves técnicas são ignoradas na composição visual, mas essa filtragem não remove conteúdos da resposta HTTP. Métodos auxiliares também podem retornar coleções vazias ou valores nulos após falhas, exigindo cuidado para não confundir ausência de registros com problemas de comunicação.
+O gerenciamento de estado utiliza mecanismos com alcances diferentes. Estados locais atendem às interações dos componentes, a Context API compartilha informações de autenticação, e Zustand participa de funcionalidades específicas de estado compartilhado. A utilização dessas ferramentas não significa que todas as informações da aplicação estejam centralizadas em um único mecanismo.
 
-A sessão é persistida no \texttt{localStorage} por \texttt{authStorage}, que verifica a estrutura dos dados e o prazo indicado em \texttt{expiresAtUtc} durante a leitura. O \textit{layout} do \textit{dashboard} utiliza o estado de autenticação para orientar a navegação e encaminhar o usuário ao \textit{login} quando necessário. Esse controle ocorre no cliente e não substitui a autorização da API.
+A comunicação com o servidor utiliza serviços HTTP apoiados na Fetch API. Um serviço genérico organiza comportamentos comuns, enquanto serviços especializados representam os recursos utilizados por cada módulo. Essa estrutura permite concentrar o tratamento das chamadas e reduzir repetições.
 
-O encerramento da sessão remove os dados locais de autenticação, mas não deve ser descrito como revogação do \textit{token} no servidor. Da mesma forma, validações e máscaras dos formulários auxiliam o preenchimento, sem substituir as verificações do \textit{back-end}.
+O tratamento das respostas envolve a interpretação dos dados retornados e a apresentação de mensagens. Uma resposta de erro não deve ser confundida com uma consulta concluída sem registros, pois essas condições possuem significados diferentes para o usuário e para o diagnóstico da aplicação.
 
-Na implementação principal do \textit{front-end} examinada, \texttt{useForgotPassword} simula a solicitação de recuperação de senha por padrão. A chamada HTTP depende da variável \texttt{NEXT\_PUBLIC\_FORGOT\_PASSWORD\_REAL\_REQUEST}. Uma mensagem de sucesso nessa configuração não comprova envio de e-mail ou recuperação real. A \textit{branch} \texttt{dev} apresenta pontos de integração posteriores, que devem ser diferenciados desse comportamento.
+No processo de autenticação, a interface encaminha as credenciais, recebe a resposta e mantém as informações necessárias à navegação autenticada. A restauração e o encerramento da sessão precisam considerar o prazo de validade informado e a remoção dos dados locais correspondentes.
 
-O contexto de renderização também influencia a comunicação. Como \texttt{localStorage} depende do navegador, \texttt{authStorage} retorna nulo fora desse ambiente. Chamadas executadas no servidor que dependam exclusivamente desse armazenamento podem ser produzidas sem o cabeçalho de autenticação. Essa condição representa uma possibilidade de falha quando a API exige credencial, mas seu efeito em cada página não foi verificado em execução.
+O redirecionamento de páginas no navegador orienta a navegação, mas não substitui o controle de acesso no servidor. Mesmo quando uma funcionalidade não é exibida para determinado perfil, a API precisa verificar se a operação solicitada é permitida.
 
-A organização do \textit{front-end} oferece uma estrutura para cadastros, consultas e operações financeiras. Sua integração efetiva depende, entretanto, da compatibilidade entre as aplicações e da verificação dos fluxos de navegação, autenticação e tratamento de erros.
+Os formulários utilizam máscaras e transformações de valores para adequar a entrada ao formato esperado. Esses recursos melhoram a experiência de preenchimento, mas não impedem que uma solicitação seja enviada por outro cliente. Por esse motivo, as validações determinantes devem ser realizadas também no back-end.
+
+A exportação de informações utiliza recursos voltados à geração de arquivos em XLSX e PDF. A correspondência entre dados exibidos, filtros aplicados e conteúdo exportado deve ser verificada nos fluxos envolvidos, conforme os requisitos funcionais.
+
+A recuperação de senha precisa ser analisada como um processo integrado. A presença de uma tela, de um serviço registrado ou de uma tabela de tokens não comprova, isoladamente, o funcionamento completo da solicitação, do envio da mensagem, da validação do token e da alteração da senha. Esse fluxo depende da compatibilidade entre interface, API, persistência e configuração de envio.
+
+A organização da renderização também exige atenção à disponibilidade das informações de autenticação. Dados acessíveis somente no navegador não ficam automaticamente disponíveis em operações executadas no servidor. A compatibilidade entre carregamento de dados, armazenamento da sessão e envio das credenciais deve ser verificada em testes de integração.
+
+A estrutura de componentes, serviços e tipos pode facilitar a manutenção das diferentes áreas da aplicação. Esse benefício, contudo, depende da consistência dos contratos, da clareza das responsabilidades e da verificação dos fluxos, não constituindo resultado automaticamente assegurado pelas tecnologias adotadas.
 
 \section{Segurança da Informação}
 \label{sec:cap6-seguranca}
 
-A segurança da informação procura preservar confidencialidade, integridade e disponibilidade, protegendo os dados contra divulgação não autorizada, alterações indevidas e indisponibilidade para usuários autorizados. Essas propriedades dependem da combinação de medidas técnicas, processos e pessoas, não podendo ser asseguradas por um único mecanismo \parencite{Fontes2008,Anderson2020SecEng}.
+A segurança da informação busca preservar a confidencialidade, a integridade e a disponibilidade. Essas propriedades correspondem à proteção contra acesso indevido, à manutenção da exatidão das informações e à possibilidade de utilização dos recursos quando necessários. Sua preservação depende da combinação de medidas técnicas, processos e responsabilidades organizacionais \parencite{Fontes2008Infosec,Anderson2020SecEng}.
 
-Autenticação e autorização possuem finalidades distintas. A primeira verifica a identidade apresentada; a segunda determina quais operações essa identidade pode realizar. \textcite{SaltzerSchroeder1975} destacam princípios como menor privilégio, verificação dos acessos e negação por padrão, relevantes para sistemas multiusuários.
+Em sistemas multiusuário, autenticação e autorização possuem finalidades distintas. A autenticação verifica a identidade apresentada, enquanto a autorização determina quais operações essa identidade pode realizar. A presença de um mecanismo de \textit{login} não comprova, por si só, a aplicação de todas as permissões previstas.
 
-A proteção também envolve armazenamento de credenciais, validação de entradas, comunicação segura e rastreabilidade. O uso de controles técnicos deve considerar suas limitações e o contexto de implantação, sem atribuir à presença de código uma garantia absoluta de segurança.
+\textcite{SaltzerSchroeder1975} apresentam princípios como menor privilégio, verificação de acesso e adoção de uma condição restritiva como padrão. Esses princípios orientam a distribuição das permissões e a necessidade de verificar cada operação protegida.
 
-No Civitas, há implementação de autenticação por e-mail e senha e emissão de JWT. A configuração de JWT Bearer habilita verificações de emissor, audiência, assinatura e validade. O prazo definido no arquivo examinado é de 60 minutos, com \texttt{ClockSkew} igual a zero. Essas constatações resultam da análise estática, sem execução dos fluxos de autenticação.
+No Civitas, a estrutura de autenticação utiliza JWT Bearer. A API contém configuração para validação de emissor, audiência, assinatura e prazo dos \textit{tokens}. Esses elementos participam da verificação das credenciais apresentadas nas solicitações.
 
-O tratamento de senhas no \textit{back-end} utiliza BCrypt.Net-Next. Funções dessa natureza incorporam mecanismos destinados a dificultar a descoberta de senhas a partir dos \textit{hashes}, conforme discutido por \textcite{ProvosMazieres1999}. Esse controle é identificado como implementado no servidor, mas não protege automaticamente credenciais armazenadas por outros componentes.
+O \textit{token} identifica uma sessão de acesso, mas sua utilização exige cuidados com emissão, transporte, armazenamento e expiração. O encerramento da sessão no navegador não comprova a revogação de um \textit{token} no servidor. A existência de mecanismos de renovação, revogação e limitação de tentativas precisa ser verificada especificamente, sem ser deduzida da configuração básica de autenticação.
 
-No \textit{front-end}, \texttt{credentialsStorage} serializa diretamente e-mail e senha no \texttt{localStorage}. O \textit{token} também é mantido nesse armazenamento. Portanto, o \textit{hash} aplicado pelo \textit{back-end} não protege a cópia da senha eventualmente persistida pelo navegador, constituindo uma inadequação distinta do armazenamento no servidor.
+O tratamento de senhas utiliza uma implementação de serviço baseada em BCrypt. Esse mecanismo emprega uma função de derivação apropriada ao armazenamento de credenciais, associando custo computacional à verificação. \textcite{ProvosMazieres1999} apresentam o esquema de senhas adaptável que fundamenta essa abordagem.
 
-A exigência de autenticação precisa ser analisada em conjunto com a configuração. \texttt{Program.cs} registra \texttt{DevBypassAuthorizationHandler}, que lê \texttt{DEV} e, quando habilitado, considera atendidos os requisitos de autorização pendentes. Assim, o mecanismo JWT existe, mas a exigência de autenticação das rotas protegidas pode ser dispensada.
+A utilização de \textit{hash} no servidor não elimina os cuidados com a interface. Senhas não devem ser mantidas em armazenamento persistente do navegador para simplificar o preenchimento. Recursos de lembrança de acesso precisam ser avaliados sem pressupor que a conveniência justifique a retenção da senha.
 
-O \textit{handler} examinado não condiciona esse comportamento à identificação do ambiente como \textit{Development}. A configuração principal consultada apresenta \texttt{DEV} igual a \texttt{false}, enquanto a \textit{branch} \texttt{dev} apresenta \texttt{true} no arquivo versionado. Esses valores não comprovam a configuração de produção, que pode ser substituída por outras fontes durante a inicialização.
+A existência de TipoUsuario no modelo também não comprova a autorização por perfil. Os valores Administrador, Funcionário e Visitante precisam estar associados a verificações efetivas no servidor. Ocultar botões ou redirecionar páginas não impede, isoladamente, que uma operação seja solicitada diretamente à API.
 
-A autorização por perfil não foi identificada nos controles examinados. O uso de \texttt{[Authorize]} não estabelece automaticamente permissões distintas para Administrador, Funcionário e Visitante. Essa limitação diverge da separação de responsabilidades prevista na modelagem, mas não equivale à comprovação de execução de todas as operações por qualquer usuário.
+Para demonstrar o atendimento das permissões previstas, são necessários testes que verifiquem o acesso permitido e o acesso negado para cada perfil. Nesta revisão, não foram executados testes que comprovem integralmente essa matriz de autorização.
 
-A associação entre identidade autenticada e autoria também exige atenção. No fluxo principal de despesas, \texttt{IdUsuario} é recebido no DTO e sua existência é consultada. Isso não demonstra que o identificador corresponde ao titular do \textit{token}, sendo necessário distinguir a existência de um cadastro da vinculação da ação à identidade autenticada.
+A inicialização da aplicação registra um componente destinado ao tratamento de autorização em desenvolvimento. A presença desse recurso exige verificar suas condições de ativação e assegurar que ele não substitua indevidamente os controles esperados em uma implantação. Seu comportamento atual não deve ser presumido apenas pelo nome da classe.
 
-Nos componentes de autenticação examinados, não foram identificados mecanismos de revogação de \textit{tokens}, renovação por \textit{refresh token} ou limitação de tentativas de \textit{login}. Essa constatação se restringe aos componentes analisados e não abrange controles eventualmente aplicados por serviços externos ou pela infraestrutura. A remoção dos dados de sessão no navegador não comprova invalidação da credencial no servidor antes da expiração.
+A política de CORS identificada permite qualquer origem, método e cabeçalho. Essa configuração amplia as possibilidades de interação de aplicações \textit{web} com a API e precisa ser compatível com a estratégia de implantação. CORS não substitui autenticação ou autorização e não deve ser utilizado como único controle de acesso.
 
-A validação de entradas apresenta abrangência variável entre os módulos. Regras dos serviços e restrições do banco contribuem para a integridade, mas não demonstram cobertura equivalente de todas as operações. As verificações da interface auxiliam o usuário, sem substituir os controles do servidor.
+A aplicação também contém redirecionamento para HTTPS condicionado à configuração. A presença desse procedimento não comprova, isoladamente, a proteção das comunicações em produção. A avaliação precisa considerar os endereços utilizados, os certificados, os componentes intermediários e as condições de acesso efetivamente disponibilizadas.
 
-O tratamento de erros também varia. Alguns caminhos retornam mensagens genéricas, enquanto outros incluem detalhes de exceção e \textit{stack trace}. A filtragem visual no \textit{front-end} não elimina dados já transmitidos pela API. O risco deve ser associado aos tratamentos que retornam essas informações, sem generalização para todos os \textit{endpoints}.
+A validação das entradas contribui para preservar a integridade. Verificações de formato, conteúdo, referências e regras de negócio devem ocorrer no servidor, mesmo quando os formulários já orientam o preenchimento. Restrições do banco complementam essas verificações por meio de chaves, unicidade, nulabilidade e tipos adequados.
 
-A política de CORS permite qualquer origem, método e cabeçalho. Essa configuração não substitui autenticação ou autorização e não significa, isoladamente, que um navegador possua credenciais de outro usuário. Ainda assim, precisa ser adequada às origens que efetivamente consomem a API.
+O tratamento de erros também participa da proteção da aplicação. As respostas destinadas ao cliente devem apresentar informações suficientes para compreender o resultado da operação sem expor detalhes internos desnecessários. Mensagens técnicas, rastreamentos de execução e dados sensíveis precisam receber tratamento compatível com o ambiente.
 
-Quanto ao transporte, a implementação principal utiliza redirecionamento para HTTPS. Esse recurso não comprova proteção de toda a comunicação nem adequação de certificados, \textit{proxies} ou infraestrutura. O uso efetivo de TLS em produção não foi verificado.
+O uso de uma resposta padronizada favorece a interpretação pelos clientes, mas não demonstra que todos os caminhos de erro estejam protegidos. A revisão desse comportamento exige verificar tanto as respostas produzidas pelos controladores quanto aquelas geradas pelo processamento da plataforma.
 
-A auditoria possui estrutura de armazenamento e operações de cadastro e consulta. Entretanto, não foi identificado acionamento automático pelos serviços de negócio examinados. A presença de um \textit{endpoint} não assegura autenticidade, cobertura integral ou imutabilidade dos registros, assim como comentários no código não substituem restrições efetivas.
+A estrutura de auditoria mantém usuário, data, hora, operação, entidade afetada e valores envolvidos. Sua presença oferece suporte ao armazenamento e à consulta de ocorrências, mas não comprova que todas as operações relevantes produzam registros automaticamente.
 
-A proteção de segredos apresenta inadequações na configuração analisada. \texttt{appsettings.json} contém valores literais para conexão com o banco e assinatura JWT. A chave é identificada como destinada ao desenvolvimento, não havendo comprovação de uso dos mesmos valores em produção. O risco está em sua reutilização em ambientes que dependam de sua confidencialidade.
+A confiabilidade da auditoria também depende da identificação do autor, da abrangência dos eventos registrados e da proteção contra alterações indevidas. A simples descrição de um registro como imutável não estabelece essa propriedade. Ela precisa ser sustentada pelas operações disponibilizadas e pelos controles aplicados.
 
-A identificação desses valores no repositório não permite concluir como os segredos são gerenciados no ambiente implantado. Recomenda-se utilizar valores próprios por ambiente e substituir configurações conhecidas que tenham sido reutilizadas fora do contexto de desenvolvimento. Essa recomendação não representa comprovação de exposição de credenciais reais de produção.
+A recuperação de senha possui elementos de persistência e serviços associados na estrutura considerada. Entretanto, sua avaliação de segurança depende da verificação do fluxo completo, incluindo geração, armazenamento, validade, utilização e invalidação do \textit{token}, além da configuração de envio das mensagens.
 
-Na implementação principal do \textit{front-end}, a recuperação de senha apresenta solicitação simulada por padrão, e não foi identificado \textit{endpoint} correspondente no \textit{back-end} considerado. Essa condição deve ser diferenciada das alterações posteriores da \textit{branch} \texttt{dev}, na qual existem pontos de integração para recuperação e redefinição de senha. A existência desses pontos, por sua vez, não comprova o funcionamento integral do envio de mensagens.
+A proteção dos segredos de configuração exige tratamento específico para credenciais de conexão, chaves de assinatura e informações de serviços externos. A definição desses valores deve considerar as condições de implantação e o acesso concedido às configurações. Nesta revisão, não foi realizada uma nova conferência completa dos valores utilizados nos ambientes.
 
-A conformidade com a Lei Geral de Proteção de Dados Pessoais é classificada como não avaliada. A análise não abrangeu integralmente fundamentos do tratamento, finalidades, necessidade dos dados, retenção, direitos dos titulares e procedimentos organizacionais. A existência de autenticação e \textit{hash} de senhas não permite concluir pelo atendimento integral à legislação \parencite{brasil2018lgpd}.
+Os dados pessoais tratados pelo Civitas também exigem atenção à finalidade, à necessidade de exposição e às permissões de consulta. A utilização de autenticação não autoriza automaticamente a disponibilização de todos os campos a qualquer usuário. A seleção das informações devolvidas deve respeitar as necessidades da operação e as responsabilidades do perfil.
 
-O Quadro~\ref{qua:cap6-seguranca} sintetiza essas constatações. As classificações distinguem presença de implementação, implementação parcial, ausência de mecanismo identificado, inadequações de configuração e aspectos não avaliados. A identificação de um mecanismo não equivale à comprovação de eficácia ou aprovação em testes.
+No contexto brasileiro, o tratamento de dados pessoais está sujeito à Lei Geral de Proteção de Dados Pessoais. A presença de mecanismos técnicos de segurança não equivale, por si só, à conformidade com a legislação, que depende de avaliação mais ampla dos processos e das condições de tratamento \parencite{brasil2018lgpd}.
 
-\begin{quadro}[H]
-\caption{Situação dos mecanismos de segurança do Civitas}\label{qua:cap6-seguranca}
+O Quadro~\ref{qua:cap6-seguranca} distingue os elementos identificados e as verificações ainda necessárias. A classificação não representa certificação de segurança nem resultado de testes executados.
+
+\begingroup
 \small
-\begin{tabularx}{\textwidth}{|P{.27\textwidth}|P{.19\textwidth}|>{\RaggedRight\arraybackslash}X|}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longquadro}{|P{.22\textwidth}|P{.20\textwidth}|P{.48\textwidth}|}
+\caption{Elementos de segurança e condições de verificação do Civitas}\label{qua:cap6-seguranca}\\
 \hline
-\textbf{Mecanismo} & \textbf{Situação} & \textbf{Observação} \\ \hline
-Autenticação com JWT & Implementado & Emissão e validação presentes no código; a exigência de autenticação nas rotas pode ser dispensada pela configuração \texttt{DEV}. \\ \hline
-Hash de senhas com BCrypt & Implementado & Proteção aplicada no \textit{back-end}, sem abranger uma cópia da senha eventualmente persistida no cliente. \\ \hline
-Exigência de autenticação nos \textit{endpoints} & Parcialmente implementado & Uso de \texttt{[Authorize]} sujeito ao \textit{handler} que pode considerar atendidos os requisitos de autorização quando \texttt{DEV} está habilitado. \\ \hline
-Autorização por perfil & Não implementado nos controles examinados & Não foi identificada diferenciação de permissões correspondente aos perfis previstos na modelagem. \\ \hline
-Proteção de rotas na interface & Parcialmente implementado & Navegação controlada pelo estado de autenticação do cliente, sem substituir a autorização da API. \\ \hline
-Validação de dados & Parcialmente implementado & Regras nos serviços e restrições no banco, com abrangência variável entre módulos. \\ \hline
-Tratamento de erros & Parcialmente implementado & Determinados caminhos retornam detalhes internos, apesar da padronização de respostas dos controladores. \\ \hline
-CORS & Implementado com configuração permissiva & Ausência de restrição de origem, método e cabeçalho; não constitui controle de autenticação ou autorização. \\ \hline
-Proteção do transporte por HTTPS & Parcialmente implementado & Redirecionamento presente; proteção efetiva do ambiente implantado não verificada. \\ \hline
-Auditoria & Parcialmente implementado & Estrutura de registro e consulta, sem geração automática identificada nos serviços examinados e sem comprovação de cobertura integral ou imutabilidade. \\ \hline
-Proteção de segredos & Inadequações identificadas na configuração & Valores de conexão e assinatura JWT em arquivo versionado. Uso desses valores e gestão de segredos em produção não verificados. \\ \hline
-Armazenamento de credenciais no cliente & Implementado com inadequação & Função que persiste e-mail e senha diretamente no \texttt{localStorage}. \\ \hline
-Recuperação de senha & Parcialmente implementado na interface & Solicitação simulada por padrão no \textit{front-end} principal, sem \textit{endpoint} correspondente identificado no \textit{back-end} considerado. A \textit{branch} \texttt{dev} possui implementação posterior distinta. \\ \hline
-Conformidade com a LGPD & Não avaliada & Ausência de avaliação específica suficiente para concluir pelo atendimento integral à legislação. \\ \hline
-\end{tabularx}
-\fonte{Elaborado pelos autores.}
-\end{quadro}
+\textbf{Elemento} & \textbf{Situação nesta revisão} & \textbf{Condição de verificação} \\ \hline
+\endfirsthead
+\caption[]{Elementos de segurança e condições de verificação do Civitas (continuação)}\\
+\hline
+\textbf{Elemento} & \textbf{Situação nesta revisão} & \textbf{Condição de verificação} \\ \hline
+\endhead
+\multicolumn{3}{r}{\footnotesize Continua na próxima página.}\\
+\endfoot
+\multicolumn{3}{@{}l@{}}{\footnotesize\textit{Fonte:} Elaborado pelos autores.}\\
+\endlastfoot
+Configuração de JWT Bearer & Identificada & Há configuração de validação de emissor, audiência, assinatura e prazo. O funcionamento deve ser confirmado em execução. \\ \hline
+Serviço de \textit{hash} com BCrypt & Identificado & Existe implementação destinada à geração e à verificação de \textit{hashes} de senhas. \\ \hline
+Autorização por perfil & Não validada integralmente & Exige inspeção dos controles e testes de acesso permitido e negado para cada perfil. \\ \hline
+Proteção das páginas & Descrita na interface & O controle de navegação não substitui a autorização da API. \\ \hline
+Tratamento de autorização em desenvolvimento & Componente registrado & É necessário verificar suas condições de ativação e seu comportamento na implantação. \\ \hline
+Validação de dados & Distribuída entre aplicação e banco & A cobertura das regras precisa ser verificada por módulo e por operação. \\ \hline
+Tratamento de erros & Requer verificação & É necessário conferir os diferentes caminhos de resposta e a ausência de exposição indevida. \\ \hline
+CORS & Configuração permissiva identificada & Permite qualquer origem, método e cabeçalho; sua adequação depende do ambiente de utilização. \\ \hline
+HTTPS & Redirecionamento condicionado à configuração & A proteção efetiva em produção não foi comprovada nesta revisão. \\ \hline
+Auditoria & Estrutura de dados identificada & Registro automático, abrangência e proteção das ocorrências não foram integralmente validados. \\ \hline
+Recuperação de senha & Elementos de suporte identificados & O fluxo completo e suas condições de segurança precisam ser testados. \\ \hline
+Armazenamento de credenciais no navegador & Requer verificação & É necessário confirmar que senhas não sejam persistidas e avaliar a proteção dos dados de sessão. \\ \hline
+Proteção de segredos & Não reavaliada integralmente & Exige conferência das configurações e dos mecanismos utilizados em cada ambiente. \\ \hline
+Conformidade com a LGPD & Não comprovada & Depende de avaliação técnica e organizacional específica. \\ \hline
+\end{longquadro}
+\endgroup
 
-Os riscos apresentados não constituem comprovação de exploração, incidente ou exposição de dados em ambiente real. A configuração de implantação e os comportamentos descritos precisam ser verificados por testes específicos, considerando as versões efetivamente utilizadas.
+A leitura conjunta dos elementos demonstra que a avaliação de segurança precisa considerar o funcionamento dos mecanismos e as condições de implantação. A presença de autenticação, persistência e registros de auditoria não constitui, isoladamente, comprovação de eficácia.
 
-Conclui-se que o Civitas apresenta mecanismos de autenticação, proteção de senhas e organização do acesso aos dados, acompanhados de limitações. Entre os pontos identificados estão a ausência de autorização por perfil nos controles examinados, a possibilidade de dispensa dos requisitos de acesso pela configuração \texttt{DEV}, o armazenamento inadequado de credenciais no cliente, os valores presentes na configuração versionada e as limitações relacionadas ao tratamento de erros e à auditoria.
+As verificações prioritárias abrangem a autorização por perfil, a proteção das credenciais, o comportamento dos recursos de desenvolvimento, a abrangência da auditoria, o tratamento de erros, a recuperação de senha e a configuração das comunicações.
 
-As recomendações possuem finalidade documental e podem fundamentar tarefas posteriores de desenvolvimento, sem exigir alteração do código-fonte nesta atividade. A implementação de melhorias e sua eficácia deverão ser verificadas por testes adequados. Conforme \textcite{Anderson2020SecEng}, a segurança deve ser reavaliada continuamente à medida que o software e seu contexto de operação evoluem.
+Esses aspectos devem ser avaliados por testes específicos e revistos conforme a evolução da aplicação. A segurança não decorre apenas da escolha de tecnologias, mas da implementação, da configuração e da manutenção contínua dos controles adotados \parencite{Anderson2020SecEng}.
