@@ -43,9 +43,9 @@ As ações de exclusão física variam conforme o relacionamento. A maioria das 
 
 Os scripts de definição de dados estabelecem a estrutura física do banco por meio de instruções SQL. O comando CREATE TABLE define tabelas, colunas e restrições de integridade. As definições devem corresponder à implementação, preservando nomes, tipos, nulabilidade e relacionamentos \parencite{Machado2020}.
 
-Os scripts do Civitas apresentados nesta seção foram organizados a partir das migrations da branch dev do back-end, no commit 058871e1827b6ba86e124cda3cb2d4258c906b47 \parencite{CivitasBackend2026}. A estrutura considera a sequência de criação das tabelas e a alteração posterior identificada por 20261108032544\_remocao-campos-auditoria.
+Os scripts apresentados nesta seção foram organizados a partir das migrations do back-end do Civitas. A estrutura documentada considera a sequência de criação das tabelas e a alteração posterior identificada por \texttt{20261108032544\_remocao-campos-auditoria}, utilizada como referência para a apresentação do esquema.
 
-Os Quadros 5.1 a 5.14 representam o estado final dessa sequência. Por isso, auditoria é apresentada sem os campos situacao, excluido e dataexclusao, removidos pela migration posterior. A forma varchar é utilizada como equivalente a character varying, mantendo os comprimentos declarados.
+Os Quadros 5.1 a 5.14 representam o estado final dessa sequência. Por isso, a tabela auditoria é apresentada sem os campos situacao, excluido e dataexclusao, removidos pela migration posterior. A forma varchar é utilizada como equivalente a character varying, mantendo os comprimentos declarados.
 
 Os scripts constituem uma transcrição documental para criação de um esquema vazio, não um procedimento de atualização de banco existente. Não incluem dados de inicialização nem o histórico interno do Entity Framework Core e não foram executados em PostgreSQL durante esta revisão. A organização segue a ordem de dependência entre tabelas.
 
@@ -75,7 +75,7 @@ CREATE TABLE usuario (
     CONSTRAINT "PK_usuario" PRIMARY KEY (id)
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela secretaria armazena informações dos órgãos administrativos. Sua chave primária utiliza o nome idsecretaria, preservado nas referências das tabelas relacionadas.
@@ -103,7 +103,7 @@ CREATE TABLE secretaria (
     CONSTRAINT "PK_secretaria" PRIMARY KEY (idsecretaria)
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela tipocodigo mantém as classificações de códigos utilizadas pelos tipos de despesa. Nome e descrição são armazenados como text, sem limite de comprimento declarado na migration.
@@ -120,7 +120,7 @@ CREATE TABLE tipocodigo (
     CONSTRAINT "PK_tipocodigo" PRIMARY KEY (id)
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela unidademedida padroniza a descrição e a abreviatura das unidades utilizadas no sistema. A situação funcional é armazenada separadamente da marcação de exclusão lógica.
@@ -138,7 +138,7 @@ CREATE TABLE unidademedida (
     CONSTRAINT "PK_unidademedida" PRIMARY KEY (id)
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela tipoinstituicao representa as classificações das instituições. Um mesmo tipo pode ser referenciado por várias instituições.
@@ -155,7 +155,7 @@ CREATE TABLE tipoinstituicao (
     CONSTRAINT "PK_tipoinstituicao" PRIMARY KEY (id)
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela tipodespesa mantém a classificação, a unidade de medida, o tipo de código e as informações opcionais. O campo camposopcionais utiliza jsonb. A referência a tipocodigo possui ação CASCADE, enquanto a referência a unidademedida utiliza RESTRICT.
@@ -180,7 +180,7 @@ CREATE TABLE tipodespesa (
         FOREIGN KEY (idunidademedida) REFERENCES unidademedida (id) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela fornecedor reúne dados cadastrais e referencia um tipo de despesa. A chave primária é identificada por idfornecedor.
@@ -210,7 +210,7 @@ CREATE TABLE fornecedor (
         FOREIGN KEY (idtipodespesa) REFERENCES tipodespesa (id) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela instituicao mantém informações cadastrais e referências obrigatórias à secretaria e ao tipo de instituição. As duas chaves estrangeiras utilizam RESTRICT.
@@ -243,7 +243,7 @@ CREATE TABLE instituicao (
         FOREIGN KEY (idtipoinstituicao) REFERENCES tipoinstituicao (id) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela orcamento armazena o exercício, o valor total e as previsões mensais de quantidade e valor de consumo. Os campos mensais admitem nulos, enquanto o exercício, o valor do orçamento e as referências são obrigatórios.
@@ -278,7 +278,7 @@ CREATE TABLE orcamento (
         FOREIGN KEY (idtipodespesa) REFERENCES tipodespesa (id) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela unidadeconsumidora possui cinco chaves estrangeiras. Na migration examinada, existe somente idfornecedor para a referência ao fornecedor, sem uma coluna adicional denominada FornecedorIdFornecedor.
@@ -309,7 +309,7 @@ CREATE TABLE unidadeconsumidora (
         FOREIGN KEY (idfornecedor) REFERENCES fornecedor (idfornecedor) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela despesa mantém informações documentais, financeiras e de consumo. As referências diretas são usuario e unidadeconsumidora. Juros, multa e desconto utilizam numeric sem precisão explícita, enquanto os campos de valores e consumos indicados utilizam numeric(18,2).
@@ -346,7 +346,7 @@ CREATE TABLE despesa (
         FOREIGN KEY (idusuario) REFERENCES usuario (id) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela auditoria é apresentada no estado posterior à remoção de situacao, excluido e dataexclusao. Data e hora permanecem campos textuais, conforme a implementação, sem conversão documental para tipos temporais.
@@ -368,7 +368,7 @@ CREATE TABLE auditoria (
         FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE RESTRICT
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas, incluindo a alteração 20261108032544\_remocao-campos-auditoria.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas, considerando a remoção dos campos de situação e exclusão lógica.}
 \end{quadro}
 
 A tabela emailenviado mantém destinatário, assunto, conteúdo e informações de envio. Mensagem de erro e data de envio são opcionais. Não há chave estrangeira definida nessa tabela.
@@ -388,7 +388,7 @@ CREATE TABLE emailenviado (
     CONSTRAINT "PK_emailenviado" PRIMARY KEY (id)
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 A tabela token\_recuperacao\_senha referencia usuario com ação CASCADE. A migration também define índices para o hash e para os tokens não utilizados; esses comandos não são reproduzidos nos scripts desta seção.
@@ -408,7 +408,7 @@ CREATE TABLE token_recuperacao_senha (
         FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE
 );
 \end{lstlisting}
-\fonte{Elaborado pelos autores com base nas migrations do Civitas.}
+\fonte{Elaborado pelos autores com base nas migrations do back-end do Civitas.}
 \end{quadro}
 
 \section{Mapeamento Objeto-Relacional}
