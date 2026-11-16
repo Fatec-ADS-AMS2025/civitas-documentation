@@ -4,43 +4,44 @@
 \contentsline {quadro}{\numberline {2.2}{\ignorespaces Requisitos não funcionais do Civitas}}{19}{quadro.2.2}%
 \contentsline {quadro}{\numberline {2.3}{\ignorespaces Requisitos funcionais do sistema Civitas}}{22}{quadro.2.3}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {3.1}{\ignorespaces Dicionário de dados da entidade TipoDespesa}}{27}{quadro.3.1}%
-\contentsline {quadro}{\numberline {3.2}{\ignorespaces Dicionário de dados da entidade UnidadeMedida}}{28}{quadro.3.2}%
-\contentsline {quadro}{\numberline {3.3}{\ignorespaces Dicionário de dados da entidade Fornecedor}}{28}{quadro.3.3}%
-\contentsline {quadro}{\numberline {3.4}{\ignorespaces Dicionário de dados da entidade Secretaria}}{29}{quadro.3.4}%
-\contentsline {quadro}{\numberline {3.5}{\ignorespaces Dicionário de dados da entidade TipoInstituicao}}{30}{quadro.3.5}%
-\contentsline {quadro}{\numberline {3.6}{\ignorespaces Dicionário de dados da entidade Instituicao}}{30}{quadro.3.6}%
-\contentsline {quadro}{\numberline {3.7}{\ignorespaces Dicionário de dados da entidade UnidadeConsumidora}}{31}{quadro.3.7}%
-\contentsline {quadro}{\numberline {3.8}{\ignorespaces Dicionário de dados da entidade Orcamento}}{32}{quadro.3.8}%
-\contentsline {quadro}{\numberline {3.9}{\ignorespaces Dicionário de dados da entidade Despesa}}{33}{quadro.3.9}%
-\contentsline {quadro}{\numberline {3.10}{\ignorespaces Dicionário de dados da entidade Usuario}}{35}{quadro.3.10}%
-\contentsline {quadro}{\numberline {3.11}{\ignorespaces Dicionário de dados da entidade Auditoria}}{35}{quadro.3.11}%
-\contentsline {quadro}{\numberline {3.12}{\ignorespaces Dicionário de dados da entidade TipoCodigo}}{36}{quadro.3.12}%
-\contentsline {quadro}{\numberline {3.13}{\ignorespaces Dicionário de dados do enum Situacao}}{37}{quadro.caption.12}%
-\contentsline {quadro}{\numberline {3.14}{\ignorespaces Dicionário de dados do enum SolicitaUc}}{37}{quadro.caption.13}%
-\contentsline {quadro}{\numberline {3.15}{\ignorespaces Dicionário de dados do enum TipoUsuario}}{37}{quadro.caption.14}%
-\contentsline {quadro}{\numberline {3.16}{\ignorespaces Dicionário de dados do enum Status}}{37}{quadro.caption.15}%
-\contentsline {quadro}{\numberline {3.17}{\ignorespaces Casos de uso – Administrador}}{39}{quadro.3.17}%
-\contentsline {quadro}{\numberline {3.18}{\ignorespaces Casos de uso – Funcionário}}{43}{quadro.3.18}%
-\contentsline {quadro}{\numberline {3.19}{\ignorespaces Casos de uso – Visitante}}{45}{quadro.3.19}%
+\contentsline {quadro}{\numberline {3.1}{\ignorespaces Dicionário da classe TipoDespesa}}{27}{quadro.3.1}%
+\contentsline {quadro}{\numberline {3.2}{\ignorespaces Dicionário da classe UnidadeMedida}}{28}{quadro.3.2}%
+\contentsline {quadro}{\numberline {3.3}{\ignorespaces Dicionário da classe Fornecedor}}{29}{quadro.3.3}%
+\contentsline {quadro}{\numberline {3.4}{\ignorespaces Dicionário da classe Secretaria}}{29}{quadro.3.4}%
+\contentsline {quadro}{\numberline {3.5}{\ignorespaces Dicionário da classe TipoInstituicao}}{30}{quadro.3.5}%
+\contentsline {quadro}{\numberline {3.6}{\ignorespaces Dicionário da classe Instituicao}}{31}{quadro.3.6}%
+\contentsline {quadro}{\numberline {3.7}{\ignorespaces Dicionário da classe UnidadeConsumidora}}{32}{quadro.3.7}%
+\contentsline {quadro}{\numberline {3.8}{\ignorespaces Dicionário da classe Orcamento}}{32}{quadro.3.8}%
+\contentsline {quadro}{\numberline {3.9}{\ignorespaces Dicionário da classe Despesa}}{34}{quadro.3.9}%
+\contentsline {quadro}{\numberline {3.10}{\ignorespaces Dicionário da classe Usuario}}{35}{quadro.3.10}%
+\contentsline {quadro}{\numberline {3.11}{\ignorespaces Dicionário da classe Auditoria}}{37}{quadro.3.11}%
+\contentsline {quadro}{\numberline {3.12}{\ignorespaces Dicionário da classe TipoCodigo}}{37}{quadro.3.12}%
+\contentsline {quadro}{\numberline {3.13}{\ignorespaces Dicionário da enumeração Situacao}}{38}{quadro.caption.12}%
+\contentsline {quadro}{\numberline {3.14}{\ignorespaces Dicionário da enumeração SolicitaUc}}{38}{quadro.caption.13}%
+\contentsline {quadro}{\numberline {3.15}{\ignorespaces Dicionário da enumeração TipoUsuario}}{38}{quadro.caption.14}%
+\contentsline {quadro}{\numberline {3.16}{\ignorespaces Dicionário da enumeração Status}}{39}{quadro.caption.15}%
+\contentsline {quadro}{\numberline {3.17}{\ignorespaces Casos de uso – Administrador}}{41}{quadro.3.17}%
+\contentsline {quadro}{\numberline {3.18}{\ignorespaces Casos de uso – Funcionário}}{45}{quadro.3.18}%
+\contentsline {quadro}{\numberline {3.19}{\ignorespaces Casos de uso – Visitante}}{47}{quadro.3.19}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {4.1}{\ignorespaces Cenário — Registro de Religião}}{61}{quadro.caption.26}%
-\contentsline {quadro}{\numberline {4.2}{\ignorespaces Cenário — Registro e Consulta de Alergias}}{61}{quadro.caption.27}%
+\contentsline {quadro}{\numberline {4.1}{\ignorespaces Cenário -- Registro de despesa municipal}}{62}{quadro.caption.26}%
+\contentsline {quadro}{\numberline {4.2}{\ignorespaces Cenário -- Acompanhamento financeiro no painel}}{63}{quadro.caption.27}%
+\contentsline {quadro}{\numberline {4.3}{\ignorespaces Práticas de acessibilidade verificadas no frontend do Civitas}}{72}{quadro.caption.37}%
 \addvspace {10\p@ }
-\contentsline {quadro}{\numberline {5.1}{\ignorespaces Script de criação da tabela usuario}}{83}{quadro.caption.44}%
-\contentsline {quadro}{\numberline {5.2}{\ignorespaces Script de criação da tabela secretaria}}{83}{quadro.caption.45}%
-\contentsline {quadro}{\numberline {5.3}{\ignorespaces Script de criação da tabela tipocodigo}}{84}{quadro.caption.46}%
-\contentsline {quadro}{\numberline {5.4}{\ignorespaces Script de criação da tabela unidademedida}}{84}{quadro.caption.47}%
-\contentsline {quadro}{\numberline {5.5}{\ignorespaces Script de criação da tabela tipoinstituicao}}{84}{quadro.caption.48}%
-\contentsline {quadro}{\numberline {5.6}{\ignorespaces Script de criação da tabela tipodespesa}}{85}{quadro.caption.49}%
-\contentsline {quadro}{\numberline {5.7}{\ignorespaces Script de criação da tabela fornecedor}}{85}{quadro.caption.50}%
-\contentsline {quadro}{\numberline {5.8}{\ignorespaces Script de criação da tabela instituicao}}{86}{quadro.caption.51}%
-\contentsline {quadro}{\numberline {5.9}{\ignorespaces Script de criação da tabela orcamento}}{87}{quadro.caption.52}%
-\contentsline {quadro}{\numberline {5.10}{\ignorespaces Script de criação da tabela unidadeconsumidora}}{88}{quadro.caption.53}%
-\contentsline {quadro}{\numberline {5.11}{\ignorespaces Script de criação da tabela despesa}}{89}{quadro.caption.54}%
-\contentsline {quadro}{\numberline {5.12}{\ignorespaces Script de criação da tabela auditoria}}{89}{quadro.caption.55}%
-\contentsline {quadro}{\numberline {5.13}{\ignorespaces Script de criação da tabela emailenviado}}{90}{quadro.caption.56}%
-\contentsline {quadro}{\numberline {5.14}{\ignorespaces Script de criação da tabela token\_recuperacao\_senha}}{90}{quadro.caption.57}%
+\contentsline {quadro}{\numberline {5.1}{\ignorespaces Script de criação da tabela usuario}}{77}{quadro.caption.39}%
+\contentsline {quadro}{\numberline {5.2}{\ignorespaces Script de criação da tabela secretaria}}{77}{quadro.caption.40}%
+\contentsline {quadro}{\numberline {5.3}{\ignorespaces Script de criação da tabela tipocodigo}}{78}{quadro.caption.41}%
+\contentsline {quadro}{\numberline {5.4}{\ignorespaces Script de criação da tabela unidademedida}}{78}{quadro.caption.42}%
+\contentsline {quadro}{\numberline {5.5}{\ignorespaces Script de criação da tabela tipoinstituicao}}{78}{quadro.caption.43}%
+\contentsline {quadro}{\numberline {5.6}{\ignorespaces Script de criação da tabela tipodespesa}}{79}{quadro.caption.44}%
+\contentsline {quadro}{\numberline {5.7}{\ignorespaces Script de criação da tabela fornecedor}}{79}{quadro.caption.45}%
+\contentsline {quadro}{\numberline {5.8}{\ignorespaces Script de criação da tabela instituicao}}{80}{quadro.caption.46}%
+\contentsline {quadro}{\numberline {5.9}{\ignorespaces Script de criação da tabela orcamento}}{81}{quadro.caption.47}%
+\contentsline {quadro}{\numberline {5.10}{\ignorespaces Script de criação da tabela unidadeconsumidora}}{82}{quadro.caption.48}%
+\contentsline {quadro}{\numberline {5.11}{\ignorespaces Script de criação da tabela despesa}}{83}{quadro.caption.49}%
+\contentsline {quadro}{\numberline {5.12}{\ignorespaces Script de criação da tabela auditoria}}{83}{quadro.caption.50}%
+\contentsline {quadro}{\numberline {5.13}{\ignorespaces Script de criação da tabela emailenviado}}{84}{quadro.caption.51}%
+\contentsline {quadro}{\numberline {5.14}{\ignorespaces Script de criação da tabela token\_recuperacao\_senha}}{84}{quadro.caption.52}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
