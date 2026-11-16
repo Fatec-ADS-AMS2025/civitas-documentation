@@ -28,26 +28,28 @@ A estrutura administrativa é representada pelas tabelas secretaria, instituicao
 
 Os cadastros auxiliares incluem unidademedida, tipocodigo e tipodespesa. Cada tipo de despesa referencia uma unidade de medida e um tipo de código. A tabela fornecedor também possui referência a tipodespesa, mantendo a associação entre o cadastro do fornecedor e sua classificação no sistema.
 
-O planejamento financeiro é representado por orcamento, associado a instituicao e tipodespesa. Essa tabela armazena o exercício, o valor do orçamento e os campos de quantidade e valor de consumo previstos para os doze meses do ano. Os campos mensais admitem valores nulos, conforme a implementação examinada.
+O planejamento financeiro é representado por orcamento, associado a instituicao e tipodespesa. Essa tabela armazena o exercício, o valor do orçamento e os campos de quantidade e valor de consumo previstos para os doze meses do ano. Os campos mensais admitem valores nulos no esquema documentado.
 
-A tabela unidadeconsumidora estabelece referências à instituição, ao tipo de despesa, à secretaria, ao orçamento e ao fornecedor. Essas referências são obrigatórias em cada unidade consumidora. O campo identificador é obrigatório em cada registro da tabela.
+A tabela unidadeconsumidora estabelece referências à instituição, ao tipo de despesa, à secretaria, ao orçamento e ao fornecedor. Essas referências são obrigatórias em cada unidade consumidora. O campo identificador possui índice único, impedindo a repetição do mesmo valor entre os registros da tabela.
 
-As despesas possuem referências diretas ao usuário e à unidade consumidora. Dessa forma, fornecedor, instituição, orçamento e tipo de despesa são alcançados por meio da unidade consumidora, não constituindo chaves estrangeiras diretas da tabela despesa na estrutura examinada. Cada despesa referencia um usuário e uma unidade consumidora. Em sentido inverso, um usuário ou uma unidade consumidora pode estar associado a nenhuma ou várias despesas.
+A tabela despesa possui referências diretas a usuario e unidadeconsumidora. As informações de fornecedor, instituição, orçamento, secretaria e tipo de despesa são alcançadas por meio da unidade consumidora. Dessa forma, essas informações não constituem chaves estrangeiras diretas da tabela despesa na estrutura apresentada.
 
-A tabela auditoria referencia usuario e mantém informações sobre operações. A tabela token\_recuperacao\_senha também está vinculada ao usuário e possui uma restrição para registros de tokens não utilizados. Já emailenviado armazena informações das mensagens sem possuir chave estrangeira nas migrations examinadas.
+Cada despesa referencia um usuário e uma unidade consumidora. Em sentido inverso, um usuário ou uma unidade consumidora pode estar associado a nenhuma ou várias despesas. A obrigatoriedade das referências no registro dependente não exige que todo registro principal possua registros associados.
+
+A tabela auditoria referencia usuario e mantém informações sobre as operações registradas. A tabela token\_recuperacao\_senha também está vinculada ao usuário e possui restrições específicas para identificação dos tokens e controle dos registros não utilizados. Já emailenviado armazena informações das mensagens sem possuir chave estrangeira no esquema apresentado.
 
 As ações de exclusão física variam conforme o relacionamento. A maioria das referências utiliza RESTRICT, enquanto as associações de tipodespesa com tipocodigo e de token\_recuperacao\_senha com usuario utilizam CASCADE. Essas ações não devem ser confundidas com exclusão lógica, representada pelos atributos excluido e dataexclusao nas tabelas que adotam esse mecanismo.
 
 \section{Script das Tabelas}
 \label{sec:scripts-tabelas}
 
-Os scripts de definição de dados estabelecem a estrutura física do banco por meio de instruções SQL. O comando CREATE TABLE define tabelas, colunas e restrições de integridade. As definições devem corresponder à implementação, preservando nomes, tipos, nulabilidade e relacionamentos \parencite{Machado2020}.
+Os scripts de definição de dados estabelecem a estrutura física do banco por meio de instruções SQL. O comando CREATE TABLE define tabelas, colunas e restrições, enquanto CREATE INDEX permite criar índices utilizados na organização e no acesso aos registros. As definições devem corresponder à implementação, preservando nomes, tipos, nulabilidade e relacionamentos \parencite{Machado2020}.
 
-Os scripts apresentados nesta seção foram organizados a partir das migrations do back-end do Civitas. A estrutura documentada considera a sequência de criação das tabelas e a alteração posterior identificada por \texttt{20261108032544\_remocao-campos-auditoria}, utilizada como referência para a apresentação do esquema.
+Os scripts apresentados nesta seção consideram a sequência de criação das tabelas e a alteração posterior identificada por \texttt{20261108032544\_remocao-campos-auditoria}. Essa migration delimita o estado do esquema utilizado como referência para a documentação.
 
-Os Quadros 5.1 a 5.14 representam o estado final dessa sequência. Por isso, a tabela auditoria é apresentada sem os campos situacao, excluido e dataexclusao, removidos pela migration posterior. A forma varchar é utilizada como equivalente a character varying, mantendo os comprimentos declarados.
+Os Quadros 5.1 a 5.14 apresentam a estrutura consolidada após essa alteração. Por isso, a tabela auditoria é apresentada sem os campos situacao, excluido e dataexclusao. A forma varchar é utilizada como equivalente a character varying, mantendo os comprimentos declarados.
 
-Os scripts constituem uma transcrição documental para criação de um esquema vazio, não um procedimento de atualização de banco existente. Não incluem dados de inicialização nem o histórico interno do Entity Framework Core e não foram executados em PostgreSQL durante esta revisão. A organização segue a ordem de dependência entre tabelas.
+A organização dos quadros respeita as dependências entre as tabelas. Os scripts constituem uma transcrição documental para criação de um esquema vazio, não um procedimento de atualização de banco existente. Não incluem dados de inicialização nem o histórico interno do Entity Framework Core e não foram executados em PostgreSQL durante esta revisão.
 
 A tabela usuario reúne dados de identificação, endereço e acesso. CPF, e-mail e matrícula possuem índices únicos, enquanto tipousuario e situacao são armazenados como valores inteiros.
 
