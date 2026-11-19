@@ -7,5 +7,15 @@
 	backrefstyle=three+
 }
 
+% Use publication year for citations; the access date remains in the reference
+% entry and does not become the citation year for undated online sources.
+\DeclareLabeldate[online]{%
+  \field{date}%
+  \field{year}%
+  \field{eventdate}%
+  \field{origdate}%
+  \literal{nodate}%
+}
+
 
 
